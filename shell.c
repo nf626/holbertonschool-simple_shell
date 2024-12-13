@@ -54,3 +54,24 @@ int main(int argc, char *argv[], char **env)
 	free(line);
 	return (0);
 }
+
+
+int _execute(char * arguments, struct stat *statbuf, char **envp)
+{
+	int argc;
+	char **argv;
+	char *exe;
+
+	argv = split_string(arguments, " ", &argc);
+
+	if (!check_file_status(argv[0], statbuf))
+	{
+		perror("Error (file status)");
+		exit(EXIT_FAILURE);
+	}
+
+	execve(argv[0], argv, envp);
+
+	perror("Error (execve)");
+	exit(EXIT_FAILURE);
+}
