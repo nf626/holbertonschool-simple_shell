@@ -1,20 +1,11 @@
 #include "shell.h"
 #include <stdio.h>
-<<<<<<< HEAD
 #include <stdlib.h>
-
-int main(int argc, char *argv[], char **env)
-{
-	char *buff, *prompt= "$ ";
-	size_t buff_size = 0;
-=======
-#include <stlib.h>
 
 int main(int argc, char *argv[], char **env)
 {
 	char *line = NULL, *prompt = "$ ";
 	size_t line_len = 0;
->>>>>>> 003d257b91b4261d919574114936f87193c6b6e6
 	ssize_t bytes;
 	pid_t wpid;
 	int wstatus;
@@ -28,20 +19,6 @@ int main(int argc, char *argv[], char **env)
 			from_pipe = true;
 		}
 
-<<<<<<< HEAD
-		write(STDOUT_FILEO, prompt, 2);
-
-		bytes = getline(&buff, &buff_size, stdin);
-		if (bytes == -1)
-		{
-			perror("Error (getline)");
-			free(buff);
-			exit(EXIT_FAILURE);
-		}
-
-	}
-
-=======
 		write(STDOUT_FILE, prompt, 2);
 
 		bytes = getline(&line, &line-len, stdin);
@@ -97,5 +74,4 @@ int _execute(char * arguments, struct stat *statbuf, char **envp)
 
 	perror("Error (execve)");
 	exit(EXIT_FAILURE);
->>>>>>> 003d257b91b4261d919574114936f87193c6b6e6
 }
