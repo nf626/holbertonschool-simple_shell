@@ -75,3 +75,15 @@ int _execute(char * arguments, struct stat *statbuf, char **envp)
 	perror("Error (execve)");
 	exit(EXIT_FAILURE);
 }
+
+bool check_file_status(char *pathname, struct stat *statbuf)
+{
+	int stat_return;
+	stat_return = stat(pathname, statbuf);
+
+	if (stat_buf == 0)
+	{
+		return (true);
+	}
+	return (false):
+}
