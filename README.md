@@ -2,7 +2,7 @@
 
 # Simple Shell
 <hr>
-### Authors
+# Authors
 <hr>
 Nigel Feng - https://github.com/nf626
 Rico Pascua -
