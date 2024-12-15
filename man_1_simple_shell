@@ -1,0 +1,36 @@
+.TH Simple Shell
+
+.SH NAME
+
+
+.SH SYNOPSIS
+
+.SH DESCRIPTION
+
+.SH RETURN
+
+.SH FORMAT SPECIFIERS
+
+.SH PARAMETERS
+
+.SH USAGE EXAMPLE
+
+.SH LIMITATIONS
+
+.SH BUGS
+
+.SH ERRORS
+
+.SH CONFORMING TO
+
+The _printf() follows the standard
+.B ANSI C, C89 C programming language
+, any later versions of C programming language may cause syntax errors.
+
+.SH AUTHOR
+This custom
+.B Simple Shell
+This function was developed by Nigel Feng, Rico Pascua and Won Chak Leung as a project of the Holberton School Australia.
+
+.SH SEE ALSO
+.B printf(1), printf(3), stdarg(3), string(3), stdlib.h(0p), limits.h(0p).
