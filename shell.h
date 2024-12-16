@@ -9,7 +9,6 @@
 
 extern char **environ;
 
-void read_prompt(char **lineptr, size_t *n, ssize_t char_read);
-
+void print_env(void);
 
 #endif
