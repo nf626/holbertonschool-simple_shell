@@ -23,6 +23,7 @@ int main(void)
       char_read = getline(&lineptr, &n, stdin);
       if (char_read == -1)
 	{
+	  free(lineptr);
 	  break;
 	}
       /** strtok */
@@ -42,6 +43,7 @@ int main(void)
 	  if (strncmp(lineptr, "exit", 4) == 0)
 	    {
 	      free(lineptr);
+	      free(cmd);
 	      exit(EXIT_SUCCESS);
 	    }
 	  cmd[i] = NULL;
@@ -49,6 +51,8 @@ int main(void)
 	  child_pid = fork();
 	  if (child_pid < 0)
 	    {
+	      free(lineptr);
+	      free(cmd);
 	      exit(EXIT_FAILURE);
 	    }
 	  else if (child_pid == 0)
@@ -56,8 +60,9 @@ int main(void)
 	      if (strcmp(lineptr, "env") == 0)
 		{
 		  print_env();
+		  free(cmd);
 		  free(lineptr);
-		  return (0);
+		  exit(EXIT_SUCCESS);
 		}
 	      if (strcmp(cmd[0], "ls") == 0)
 		{
@@ -66,7 +71,9 @@ int main(void)
 		  if (execve("/bin/ls", ls_argv, environ) == -1)
 		    {
 		      free(lineptr);
+		      free(cmd);
 		      perror("./shell");
+		      exit(EXIT_FAILURE);
 		    }
 		}
 	      if (execve(cmd[0], cmd, environ) == -1)
@@ -82,6 +89,7 @@ int main(void)
 	    }
 	}
     }
+  free(cmd);
   free(lineptr);
   return (0);
 }
