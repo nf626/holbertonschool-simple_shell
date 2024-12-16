@@ -23,7 +23,6 @@ int main(void)
       char_read = getline(&lineptr, &n, stdin);
       if (char_read == -1)
 	{
-	  free(lineptr);
 	  break;
 	}
       /** strtok */
@@ -61,7 +60,6 @@ int main(void)
 		{
 		  print_env();
 		  free(cmd);
-		  free(lineptr);
 		  exit(EXIT_SUCCESS);
 		}
 	      if (strcmp(cmd[0], "ls") == 0)
@@ -70,7 +68,6 @@ int main(void)
        
 		  if (execve("/bin/ls", ls_argv, environ) == -1)
 		    {
-		      free(lineptr);
 		      free(cmd);
 		      perror("./shell");
 		      exit(EXIT_FAILURE);
