@@ -1,92 +1,70 @@
-#include "shell.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <string.h>
+#include <sys/types.h>
+#include <sys/wait.h>
 
 /**
- * main - Initialises simple shell and
+ * main - write a first version of a super simple shell
+ *        that can run commands with their full path, without any argument.
  *
- * Return: 0 on Success and -1 on Error.
+ * Return: Always 0.
  */
 int main(void)
 {
-  char *lineptr = NULL, *token;
-  size_t n = 64, i = 0;
-  ssize_t char_read = 0;
+  char *buffer;
+  char *token;
+  size_t buffersize = 64;
+  char **cmd;
+  int i = 0, status;
   pid_t child_pid;
-  int status;
-  char **cmd = malloc(sizeof(n) * sizeof(char *));
-  
+
+  buffer = malloc(sizeof(buffersize) * sizeof(char *));
+  if (buffer == NULL)
+    {
+      free(buffer);
+      exit(1);
+    }
   while (1)
     {
-      if (isatty(STDIN_FILENO) == 1)
+      printf("#cisfun$ ");
+      getline(&buffer, &buffersize, stdin);
+      token = strtok(buffer, "\t\n");
+      cmd = malloc(sizeof(buffersize) * sizeof(char *));
+      if (cmd == NULL)
 	{
-	  printf("#cisfun$ ");
+	  free(cmd);
+	  exit(1);
 	}
-      char_read = getline(&lineptr, &n, stdin);
-      if (char_read == -1)
+      while (token != NULL)
 	{
-	  break;
+	  cmd[i] = token;
+	  token = strtok(NULL, "\t\n");
+	  i = i + 1;
 	}
-      /** strtok */
-      token = strtok(lineptr, "\t\n");
-      if (lineptr[char_read - 1] == '\n')
+      cmd[i] = NULL;
+      child_pid = fork();
+      if (child_pid == -1)
 	{
-	  lineptr[char_read - 1] = '\0';
+	  perror("Error pid:");
+	  exit(-1);
 	}
-      if (token != NULL)
+      if (child_pid == 0)
 	{
-	  while (i < n && token != NULL)
+	  if (execve(cmd[0], cmd, NULL) == -1)
 	    {
-	      cmd[i] = token;
-	      token = strtok(NULL, "\t\n");
-	      i = i + 1;
-	    }
-	  if (strncmp(lineptr, "exit", 4) == 0)
-	    {
-	      free(lineptr);
-	      free(cmd);
-	      exit(EXIT_SUCCESS);
-	    }
-	  cmd[i] = NULL;
-	  /** fork */
-	  child_pid = fork();
-	  if (child_pid < 0)
-	    {
-	      free(lineptr);
-	      free(cmd);
-	      exit(EXIT_FAILURE);
-	    }
-	  else if (child_pid == 0)
-	    {
-	      if (strcmp(lineptr, "env") == 0)
-		{
-		  print_env();
-		  free(cmd);
-		  exit(EXIT_SUCCESS);
-		}
-	      if (strcmp(cmd[0], "ls") == 0)
-		{
-		  char *ls_argv[] = {"ls", NULL};
-       
-		  if (execve("/bin/ls", ls_argv, environ) == -1)
-		    {
-		      free(cmd);
-		      perror("./shell");
-		      exit(EXIT_FAILURE);
-		    }
-		}
-	      if (execve(cmd[0], cmd, environ) == -1)
-		{
-		  free(lineptr);
-		  perror("./shell");
-		}
-	      exit(EXIT_SUCCESS);
-	    }
-	  else
-	    {
-	      wait(&status);
+	      perror("Error execve:");
 	    }
 	}
+      else
+	{
+	  wait(&status);
+	}
+      /** Restart */
+      i = 0;
+      free(cmd);
     }
-  free(cmd);
-  free(lineptr);
+  free(buffer);
   return (0);
 }
