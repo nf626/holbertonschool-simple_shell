@@ -1,65 +1,28 @@
 #include "shell.h"
 
 /**
- * main - write a first version of a super simple shell
- *        that can run commands with their full path, without any argument.
+ * main - Initialises simple shell and
  *
- * Return: Always 0.
+ * Return: 0 on Success and -1 on Error.
  */
 int main(void)
 {
-  char *buffer;
-  char *token;
-  size_t buffersize = 64;
-  char **cmd;
-  int i = 0, status;
-  pid_t child_pid;
+  char *lineptr = NULL;
+  size_t n = 0;
+  ssize_t char_read = 0;
 
-  buffer = malloc(sizeof(buffersize) * sizeof(char *));
-  if (buffer == NULL)
-    {
-      free(buffer);
-      exit(1);
-    }
   while (1)
     {
-      printf("#cisfun$ ");
-      getline(&buffer, &buffersize, stdin);
-      token = strtok(buffer, "\t\n");
-      cmd = malloc(sizeof(buffersize) * sizeof(char *));
-      if (cmd == NULL)
+      if (isatty(STDIN_FILENO) == 1)
 	{
-	  free(cmd);
-	  exit(1);
+	  printf("#cisfun$ ");
 	}
-      while (token != NULL)
+      char_read = getline(&lineptr, &n, stdin);
+      if (char_read == -1)
 	{
-	  cmd[i] = token;
-	  token = strtok(NULL, "\t\n");
-	  i = i + 1;
+	  break;
 	}
-      cmd[i] = NULL;
-      child_pid = fork();
-      if (child_pid == -1)
-	{
-	  perror("Error pid:");
-	  exit(-1);
-	}
-      if (child_pid == 0)
-	{
-	  if (execve(cmd[0], cmd, NULL) == -1)
-	    {
-	      perror("Error execve:");
-	    }
-	}
-      else
-	{
-	  wait(&status);
-	}
-      /** Restart */
-      i = 0;
-      free(cmd);
     }
-  free(buffer);
+  free(lineptr);
   return (0);
 }

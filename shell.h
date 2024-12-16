@@ -7,6 +7,9 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 
+extern char **environ;
+
+void read_prompt(char **lineptr, size_t *n, ssize_t char_read);
 
 
 #endif
