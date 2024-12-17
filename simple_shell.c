@@ -1,92 +1,102 @@
-#include "shell.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <string.h>
+#include <sys/types.h>
+#include <sys/wait.h>
 
-/**
- * main - Initialises simple shell and
- *
- * Return: 0 on Success and -1 on Error.
- */
+extern char **environ;
+
+void print_env(void)
+{
+  unsigned int i = 0;
+  while (environ[i] != NULL)
+    {
+      printf("%s\n", environ[i]);
+      i++;
+    }
+}
+
 int main(void)
 {
-  char *lineptr = NULL, *token;
-  size_t n = 64, i = 0;
+  char *lineptr = NULL;
+  size_t n = 1024;
   ssize_t char_read = 0;
+  char **user_cmd = malloc(sizeof(n));
+  char *token;
   pid_t child_pid;
-  int status;
-  char **cmd = malloc(sizeof(n) * sizeof(char *));
+  int i = 0, status;
   
   while (1)
     {
-      if (isatty(STDIN_FILENO) == 1)
+      /** Read line and check if user input */
+      if (isatty(STDIN_FILENO))
 	{
 	  printf("#cisfun$ ");
 	}
-      char_read = getline(&lineptr, &n, stdin);
-      if (char_read == -1)
+      if (getline(&lineptr, &n, stdin) == -1)
 	{
-	  break;
-	}
-      /** strtok */
-      token = strtok(lineptr, "\t\n");
-      if (lineptr[char_read - 1] == '\n')
-	{
-	  lineptr[char_read - 1] = '\0';
-	}
-      if (token != NULL)
-	{
-	  while (i < n && token != NULL)
+/** feof which returns a non-zero value only if the end of the file has reached, otherwise, it returns 0. */
+	  if (feof(stdin))
 	    {
-	      cmd[i] = token;
-	      token = strtok(NULL, "\t\n");
-	      i = i + 1;
-	    }
-	  if (strncmp(lineptr, "exit", 4) == 0)
-	    {
-	      free(lineptr);
-	      free(cmd);
-	      exit(EXIT_SUCCESS);
-	    }
-	  cmd[i] = NULL;
-	  /** fork */
-	  child_pid = fork();
-	  if (child_pid < 0)
-	    {
-	      free(lineptr);
-	      free(cmd);
-	      exit(EXIT_FAILURE);
-	    }
-	  else if (child_pid == 0)
-	    {
-	      if (strcmp(lineptr, "env") == 0)
-		{
-		  print_env();
-		  free(cmd);
-		  exit(EXIT_SUCCESS);
-		}
-	      if (strcmp(cmd[0], "ls") == 0)
-		{
-		  char *ls_argv[] = {"ls", NULL};
-       
-		  if (execve("/bin/ls", ls_argv, environ) == -1)
-		    {
-		      free(cmd);
-		      perror("./shell");
-		      exit(EXIT_FAILURE);
-		    }
-		}
-	      if (execve(cmd[0], cmd, environ) == -1)
-		{
-		  free(lineptr);
-		  perror("./shell");
-		}
 	      exit(EXIT_SUCCESS);
 	    }
 	  else
 	    {
-	      wait(&status);
+	      perror("readline");
+	      exit(EXIT_FAILURE);
 	    }
 	}
+      
+      if (user_cmd == NULL)
+	{
+	  free(user_cmd);
+	  exit(EXIT_FAILURE);
+	}
+      /** parse line (token)*/
+      token = strtok(lineptr, "\t\n");
+      
+      while (token != NULL)
+	{
+	  user_cmd[i] = token;
+	  i = i + 1;
+	  if (user_cmd == NULL)
+	    {
+	      free(user_cmd);
+	      exit(EXIT_FAILURE);
+	    }
+	  token = strtok(NULL, "\t\n");
+	}
+      if (strncmp(lineptr, "exit", 4) == 0)
+	{
+	  free(lineptr);
+	  exit(EXIT_SUCCESS);
+	}
+      user_cmd[i] = NULL;
+      /** fork */
+      child_pid = fork();
+      if (child_pid == 0)
+	{
+	  if (strncmp(lineptr, "ls", 2) == 0)
+	    {
+	      char *argv[] = {"ls", NULL};
+	      if (execve("/bin/ls", argv, environ) == -1)
+		{
+		  perror("Error execve");
+		}
+	    }
+	}
+      else if (child_pid < 0)
+	{
+	  perror("Error < 0");
+	}
+      else
+	{
+	  wait(&status);
+	}
+      i = 0;
+      free(user_cmd);
     }
-  free(cmd);
   free(lineptr);
   return (0);
 }
