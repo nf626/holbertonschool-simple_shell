@@ -11,12 +11,26 @@ Allows a user to interact with the operating system
 
 .SH RETURN
 
-.SH COMMANDS
+.SH BUILTIN COMMANDS
 
+env - environment 
+Run a program in a modified environment.
+
+exit - 
+Exits the currently running program.
+
+ls - list directory
+List information about the files and directories in the current directory. 
 
 .SH PARAMETERS
 
 .SH USAGE EXAMPLE
+
+Initilize the program with ./hsh 
+
+Input a given command and press enter
+
+View the bulitin commands section for list of avaliable commands. 
 
 .SH LIMITATIONS
 
