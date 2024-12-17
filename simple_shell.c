@@ -21,7 +21,6 @@ int main(void)
 {
   char *lineptr = NULL;
   size_t n = 1024;
-  ssize_t char_read = 0;
   char **user_cmd = malloc(sizeof(n));
   char *token;
   pid_t child_pid;
@@ -67,6 +66,7 @@ int main(void)
 	    }
 	  token = strtok(NULL, "\t\n");
 	}
+      /** exit terminal */
       if (strncmp(lineptr, "exit", 4) == 0)
 	{
 	  free(lineptr);
@@ -83,8 +83,14 @@ int main(void)
 	      if (execve("/bin/ls", argv, environ) == -1)
 		{
 		  perror("Error execve");
+		  exit(EXIT_FAILURE);
 		}
 	    }
+	  if (execve(user_cmd[0], user_cmd, environ) == -1)
+	    {
+	      perror("Error user_cmd");
+	    }
+	  exit(EXIT_SUCCESS);
 	}
       else if (child_pid < 0)
 	{
