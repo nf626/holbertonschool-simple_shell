@@ -2,14 +2,17 @@
 
 .SH NAME
 
+hsh - initializes the simple shell
 
 .SH SYNOPSIS
 
 .SH DESCRIPTION
+Allows a user to interact with the operating system
 
 .SH RETURN
 
-.SH FORMAT SPECIFIERS
+.SH COMMANDS
+
 
 .SH PARAMETERS
 
@@ -28,7 +31,7 @@ The _printf() follows the standard
 , any later versions of C programming language may cause syntax errors.
 
 .SH AUTHOR
-This custom
+This function was developed by Nigel Feng, Rico Pascua and Won Chak Leung as a project of the Holberton School Australia.
 .B Simple Shell
 This function was developed by Nigel Feng, Rico Pascua and Won Chak Leung as a project of the Holberton School Australia.
 
