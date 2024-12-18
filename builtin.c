@@ -1,12 +1,17 @@
 #include "shell.h"
 
-void print_env(void)
+int builtin_exit(char **argv);
+
+char *builtin_string[] = {"exit"};
+
+int (*builtin_function[])(char **) = {&builtin_exit};
+
+int builtin_number()
 {
-  unsigned int i = 0;
-  
-  while (environ[i] != NULL)
-    {
-      printf("%s\n", environ[i]);
-      i++;
-    }
+  return (sizeof(builtin_string) / sizeof(char *));
+}
+
+int builtin_exit(char **argv)
+{
+  return (0);
 }

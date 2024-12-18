@@ -1,0 +1,17 @@
+#include "shell.h"
+
+/**
+ * execute
+ *
+ */
+int execute(char **argv)
+{
+  int i = 0;
+
+  if (argv[0] == NULL)
+    {
+      return (1);
+    }
+
+  
+}
