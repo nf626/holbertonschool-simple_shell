@@ -1,18 +1,19 @@
-.TH Simple Shell
+.TH PROLOG
+This manual is for the ./hsh simple shell program made for Holberton school. 
 
 .SH NAME
-
 hsh - initializes the simple shell
 
 .SH SYNOPSIS
 
+
 .SH DESCRIPTION
-Allows a user to interact with the operating system
+The .hsh program is a command language interpreter that reads and executes commands from a command
+line string or standard input.
 
 .SH RETURN
 
 .SH BUILTIN COMMANDS
-
 env - environment 
 Run a program in a modified environment.
 
@@ -25,7 +26,6 @@ List information about the files and directories in the current directory.
 .SH PARAMETERS
 
 .SH USAGE EXAMPLE
-
 Initilize the program with ./hsh 
 
 Input a given command and press enter
@@ -51,3 +51,6 @@ This function was developed by Nigel Feng, Rico Pascua and Won Chak Leung as a p
 
 .SH SEE ALSO
 .B printf(1), printf(3), stdarg(3), string(3), stdlib.h(0p), limits.h(0p).
+
+.SH COPYRIGHT
+lolololololol
