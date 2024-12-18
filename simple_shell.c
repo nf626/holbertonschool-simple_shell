@@ -7,6 +7,23 @@
 
 extern char **environ;
 
+char *_getenv(const char *name)
+{
+  unsigned int i = 0;
+  char *token;
+  
+  while(environ[i] != NULL)
+    {
+      token = strtok(environ[i], "=");
+      if (strcmp(token, name) == 0)
+	{
+	  token = strtok(NULL, "=");
+	  return (token);
+	}
+      i++;
+    }
+  return (NULL);
+}
 void print_env(void)
 {
   unsigned int i = 0;
@@ -26,13 +43,10 @@ int main(void)
   pid_t child_pid;
   int i = 0, status;
   
-  while (1)
+  while (1) /** User input */
     {
-      /** Read line and check if user input */
-      if (isatty(STDIN_FILENO))
-	{
+      /** Read line */
 	  printf("#cisfun$ ");
-	}
       if (getline(&lineptr, &n, stdin) == -1)
 	{
 /** feof which returns a non-zero value only if the end of the file has reached, otherwise, it returns 0. */
