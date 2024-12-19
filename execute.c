@@ -13,7 +13,7 @@ int execute(char **argv)
       return (1);
     }
 
-  while (i < 2)
+  while (i < 3)
     {
       if (strcmp(argv[0], ss_str[i]) == 0)
 	{

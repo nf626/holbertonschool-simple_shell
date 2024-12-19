@@ -3,16 +3,19 @@
 /** Function declaration */
 int ss_cd(char **argv);
 int ss_exit(char **argv);
+int ss_env(char **argv);
 
 /** List of builtin commands */
 char *ss_str[] = {
   "cd",
-  "exit"
+  "exit",
+  "env"
 };
 
 int (*ss_func[])(char **) = {
   &ss_cd,
-  &ss_exit
+  &ss_exit,
+  &ss_env
 };
 
 unsigned int ss_num(void)
@@ -21,6 +24,7 @@ unsigned int ss_num(void)
 }
 
 /** Builtin function implementation */
+/** change directory */
 int ss_cd(char **argv)
 {
   /** error */
@@ -36,8 +40,19 @@ int ss_cd(char **argv)
     }
   return (1);
 }
-
+/** exit */
 int ss_exit(char **argv)
 {
   exit(EXIT_SUCCESS);
+}
+/** print env */
+int ss_env(char **argv)
+{
+   unsigned int i = 0;
+
+    while (environ[i] != NULL)
+    {
+        printf("%s\n", environ[i]);
+        i++;
+    }
 }
