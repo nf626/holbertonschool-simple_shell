@@ -1,14 +1,10 @@
 #include "shell.h"
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <string.h>
-#include <sys/types.h>
-#include <sys/wait.h>
 
 /**
+ * main - Begin Simple Shell start-up and
+ * reads line, parses line and execute line. 
  *
- *
+ * Return: 0, Success.
  */
 int main(void)
 {

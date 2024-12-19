@@ -48,3 +48,21 @@ int ss_env(char **argv)
     }
     return (1);
 }
+/** get environment */
+char *_getenv(const char *name)
+{
+  unsigned int i = 0;
+  char *token;
+  
+  while(environ[i] != NULL)
+    {
+      token = strtok(environ[i], "=");
+      if (strcmp(token, name) == 0)
+	{
+	  token = strtok(NULL, "=");
+	  return (token);
+	}
+      i++;
+    }
+  return (NULL);
+}
