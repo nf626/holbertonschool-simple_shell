@@ -7,7 +7,7 @@ int ss_env(char **argv);
 
 /** List of builtin commands, followed by their corresponding functions. */
 char *ss_str[] = {
-  "ls",
+  "/bin/ls",
   "exit",
   "env"
 };

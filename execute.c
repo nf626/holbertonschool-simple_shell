@@ -7,7 +7,7 @@
 int execute(char **argv)
 {
  unsigned int i = 0;
-
+ /** An empty command was entered. */
   if (argv[0] == NULL)
     {
       return (1);
