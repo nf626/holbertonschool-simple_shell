@@ -6,7 +6,7 @@
  *
  * Return: 0, Success.
  */
-int main()
+int main(int argc, char* argv[], char* envp[])
 {
   char *lineptr = NULL;
   char **argv;
@@ -16,6 +16,7 @@ int main()
   
   while (1)
     {
+      while (tty == 0 &&)
       printf("#cisfun$ ");
       /** Reads an entire line from stream */
       lineptr = read_line();

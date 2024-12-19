@@ -2,6 +2,7 @@
 /**
  * fork_process
  *
+ * Return: 1 to continue process.
  */
 int fork_process(char **argv)
 {
