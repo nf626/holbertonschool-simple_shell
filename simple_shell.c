@@ -10,9 +10,11 @@ int main(void)
 {
   char *lineptr = NULL;
   char **argv;
-  int status = 1;
+  int status, tty = 1;
 
-  while (status)
+  tty = isatty(STDIN_FILENO);
+  
+  while (1)
     {
       printf("#cisfun$ ");
       /** Reads an entire line from stream */
@@ -21,7 +23,7 @@ int main(void)
       argv = parse_line(lineptr);
       /** Execute args */
       status = execute(argv);
-      /** Free memory */
+    /** Free memory */
       free(lineptr);
       free(argv);
     }

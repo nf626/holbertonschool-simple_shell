@@ -6,34 +6,45 @@
  */
 char *read_line(void)
 {
-  size_t buff_size = 2092, position = 0, character;
-  char *lineptr = malloc(sizeof(char *) * buff_size);
-  char *new_line;
- 
+  size_t buffer_size = 1024;
+  char *lineptr = malloc(sizeof(char) * buffer_size);
+  int position = 0, character;
+
   if (lineptr == NULL)
     {
+      fprintf(stderr, "shell: allocation error\n");
       exit(EXIT_FAILURE);
     }
-  /** find EOF exit or newline and replace with null and return lineptr*/
-      while (1)
-	{
-	  character = getchar();
-	  if (character == EOF)
-	    {
-	      exit(EXIT_SUCCESS);
-	    }
-	  else if (character == '\n')
-	    {
-	      lineptr[position] == '\0';
-	      return (lineptr);
-	    }
-	  else
-	    {
-	      lineptr[position] = character;
-	    }
-	  position = position + 1;
-	}
-  return (lineptr);
+  while (1) {
+    character = getchar();
+    
+    if (character == EOF)
+      {
+	printf("\n");
+	exit(EXIT_SUCCESS);
+      }
+    else if (character == '\n')
+      {
+	lineptr[position] = '\0';
+	return (lineptr);
+      }
+    else
+      {
+	lineptr[position] = character;
+      }
+    position = position + 1;
+
+    if (position >= buffer_size)
+      {
+	buffer_size = buffer_size + 1024;
+	lineptr = realloc(lineptr, buffer_size);
+	if (lineptr == NULL)
+	  {
+	    fprintf(stderr, "shell: allocation error\n");
+	    exit(EXIT_FAILURE);
+	  }
+      }
+  }
 }
 /**
  * parse_line
@@ -41,7 +52,7 @@ char *read_line(void)
 char **parse_line(char *lineptr)
 {
   size_t n = 1024;
-  char **user_cmd = malloc(sizeof(n));
+  char **user_cmd = malloc(sizeof(char *) * n);
   char *token;
   pid_t child_pid;
   int i = 0, status;
