@@ -28,12 +28,13 @@ unsigned int ss_num(void)
 int ss_echo(char **argv)
 {
   printf("Found echo\n");
-  return (0);
+  return (1);
 }
 /** exit */
 int ss_exit(char **argv)
 {
-  exit(EXIT_SUCCESS);
+   exit(EXIT_SUCCESS);
+   return (0);
 }
 /** print env */
 int ss_env(char **argv)
@@ -45,4 +46,5 @@ int ss_env(char **argv)
         printf("%s\n", environ[i]);
         i++;
     }
+    return (1);
 }
