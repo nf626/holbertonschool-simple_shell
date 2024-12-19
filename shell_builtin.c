@@ -16,7 +16,7 @@ char *ss_str[] = {
 
 int (*ss_func[])(char **) = {
   &ss_echo,
-  &ls,
+  &ss_ls,
   &ss_exit,
   &ss_env
 };
@@ -33,9 +33,9 @@ int ss_echo(char **argv)
   printf("Found echo\n");
   return (1);
 }
+/** ls */
 int ss_ls(char **argv)
 {
-  
   return (1);
 }
 /** exit */
@@ -52,25 +52,7 @@ int ss_env(char **argv)
     while (environ[i] != NULL)
     {
         printf("%s\n", environ[i]);
-        i++;
+        i = i + 1;
     }
     return (1);
-}
-/** get environment */
-char *_getenv(const char *name)
-{
-  unsigned int i = 0;
-  char *token;
-  
-  while(environ[i] != NULL)
-    {
-      token = strtok(environ[i], "=");
-      if (strcmp(token, name) == 0)
-	{
-	  token = strtok(NULL, "=");
-	  return (token);
-	}
-      i++;
-    }
-  return (NULL);
 }
