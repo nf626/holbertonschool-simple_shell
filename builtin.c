@@ -1,44 +1,34 @@
 #include "shell.h"
 
 /** Function declaration */
-int ss_cd(char **argv);
+int ss_echo(char **argv);
 int ss_exit(char **argv);
 int ss_env(char **argv);
 
-/** List of builtin commands */
+/** List of builtin commands, followed by their corresponding functions. */
 char *ss_str[] = {
-  "cd",
+  "echo",
   "exit",
   "env"
 };
 
 int (*ss_func[])(char **) = {
-  &ss_cd,
+  &ss_echo,
   &ss_exit,
   &ss_env
 };
 
 unsigned int ss_num(void)
 {
-  return ((sizeof(ss_str) / sizeof(char *)));
+  return (sizeof(ss_str) / sizeof(char *));
 }
 
 /** Builtin function implementation */
-/** change directory */
-int ss_cd(char **argv)
+/** echo */
+int ss_echo(char **argv)
 {
-  /** error */
-  if (argv[1] == NULL) {
-    fprintf(stderr, "/bin/sh: 1: qwerty: not found");
-  }
-  else
-    {
-      if (chdir(argv[1]) != 0)
-	{
-	  perror("simple shell");
-	}
-    }
-  return (1);
+  printf("Found echo\n");
+  return (0);
 }
 /** exit */
 int ss_exit(char **argv)
