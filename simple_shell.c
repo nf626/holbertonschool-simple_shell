@@ -6,17 +6,14 @@
  *
  * Return: 0, Success.
  */
-int main(int argc, char* argv[], char* envp[])
+int main()
 {
   char *lineptr = NULL;
   char **argv;
-  int status, tty = 1;
-
-  tty = isatty(STDIN_FILENO);
-  
-  while (1)
+  int status = 1;
+ 
+  while (status)
     {
-      while (tty == 0 &&)
       printf("#cisfun$ ");
       /** Reads an entire line from stream */
       lineptr = read_line();

@@ -15,11 +15,13 @@ int execute(char **argv)
 
   while (i < ss_num())
     {
+      /** Builtin shell functions call */
       if (strcmp(argv[0], ss_str[i]) == 0)
 	{
 	  return ((*ss_func[i])(argv));
 	}
       i = i + 1;
     }
+  /** user-fork functions call */
   return (fork_process(argv));
 }
