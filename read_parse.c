@@ -6,19 +6,15 @@
  */
 char *read_line(void)
 {
-  ssize_t n = 1024;
-  char *lineptr = malloc(sizeof(n));
-  int position = 0, character;
-
+  size_t buff_size = 2092, position = 0, character;
+  char *lineptr = malloc(sizeof(char *) * buff_size);
+  char *new_line;
+ 
   if (lineptr == NULL)
     {
-      free(lineptr);
       exit(EXIT_FAILURE);
     }
-  /** reads an entire line from stream */
-  if (getline(&lineptr, &n, stdin) == -1)
-    {
-      /** find EOF exit or newline and replace with null and return lineptr*/
+  /** find EOF exit or newline and replace with null and return lineptr*/
       while (1)
 	{
 	  character = getchar();
@@ -36,20 +32,7 @@ char *read_line(void)
 	      lineptr[position] = character;
 	    }
 	  position = position + 1;
-
-	  /** exceed the buffer, reallocate memory */
-	  if (position >= n)
-	    {
-	      n = 2 * n;
-	      lineptr = realloc(lineptr, n);
-	      if (lineptr == NULL)
-		{
-		  free(lineptr);
-		  exit(EXIT_FAILURE);
-		}
-	    }
 	}
-    }
   return (lineptr);
 }
 /**
