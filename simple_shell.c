@@ -24,7 +24,7 @@ int main(void)
       status = execute(argv);
       
       free(lineptr);
-      free(args);
+      free(argv);
     }
   return (0);
 }

@@ -9,6 +9,14 @@
 
 extern char **environ;
 
-void print_env(void);
+char *read_line(void);
+char **parse_line(char *lineptr);
+int fork_process(char **argv);
+int builtin_exit(char **argv);
+char *builtin_string;
+int (*builtin_function[])(char **);
+int builtin_number();
+int builtin_exit(char **argv);
+int execute(char **argv);
 
 #endif
