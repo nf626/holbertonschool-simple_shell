@@ -6,7 +6,7 @@
 #include <sys/wait.h>
 
 extern char **environ;
-
+/**
 int main(int argc, char *argv[], char *envp[])
 {
   char *lineptr = NULL;
@@ -16,18 +16,18 @@ int main(int argc, char *argv[], char *envp[])
   pid_t child_pid;
   int i = 0, status, tty = 1;
 
-  /** check user input or terminal */
+  /** check user input or terminal 
   tty = isatty(STDIN_FILENO);
 
-  /** terminal input - echo */
+  /** terminal input - echo 
   
-  while (1) /** User input */
+  while (1) /** User input 
     {
-      /** Read line */
+      /** Read line 
 	  printf("#cisfun$ ");
       if (getline(&lineptr, &n, stdin) == -1)
 	{
-/** feof which returns a non-zero value only if the end of the file has reached, otherwise, it returns 0. */
+/** feof which returns a non-zero value only if the end of the file has reached, otherwise, it returns 0. 
 	  if (feof(stdin))
 	    {
 	      exit(EXIT_SUCCESS);
@@ -44,7 +44,7 @@ int main(int argc, char *argv[], char *envp[])
 	  free(user_cmd);
 	  exit(EXIT_FAILURE);
 	}
-      /** parse line (token)*/
+      /** parse line (token)
       token = strtok(lineptr, "\t\n");
       
       while (token != NULL)
@@ -58,14 +58,14 @@ int main(int argc, char *argv[], char *envp[])
 	    }
 	  token = strtok(NULL, "\t\n");
 	}
-      /** exit terminal */
+      /** exit terminal 
       if (strncmp(lineptr, "exit", 4) == 0)
 	{
 	  free(lineptr);
 	  exit(EXIT_SUCCESS);
 	}
       user_cmd[i] = NULL;
-      /** fork */
+      /** fork 
       child_pid = fork();
       if (child_pid == 0)
 	{
@@ -97,4 +97,4 @@ int main(int argc, char *argv[], char *envp[])
     }
   free(lineptr);
   return (0);
-}
+  }*/

@@ -8,15 +8,14 @@
 #include <sys/wait.h>
 
 extern char **environ;
+extern char *ss_str[];
+extern int (*ss_func[])(char **);
 
 char *read_line(void);
 char **parse_line(char *lineptr);
 int fork_process(char **argv);
-int builtin_exit(char **argv);
-char *builtin_string;
-int (*builtin_function[])(char **);
-int builtin_number();
-int builtin_exit(char **argv);
+unsigned int ss_num(void);
+int ss_exit(char **argv);
 int execute(char **argv);
 
 #endif
