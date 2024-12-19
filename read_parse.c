@@ -1,24 +1,53 @@
 #include "shell.h"
+
 /**
  * read_line -
  *
  */
 char *read_line(void)
 {
-  char *lineptr = NULL;
   ssize_t n = 1024;
+  char *lineptr = malloc(sizeof(n));
   int position = 0, character;
 
+  if (lineptr == NULL)
+    {
+      free(lineptr);
+      exit(EXIT_FAILURE);
+    }
+  /** reads an entire line from stream */
   if (getline(&lineptr, &n, stdin) == -1)
     {
-      if (feof(stdin))
+      /** find EOF exit or newline and replace with null and return lineptr*/
+      while (1)
 	{
-	  exit(EXIT_SUCCESS);
-	}
-      else
-	{
-	  perror("readline");
-	  exit(EXIT_FAILURE);
+	  character = getchar();
+	  if (character == EOF)
+	    {
+	      exit(EXIT_SUCCESS);
+	    }
+	  else if (character == '\n')
+	    {
+	      lineptr[position] == '\0';
+	      return (lineptr);
+	    }
+	  else
+	    {
+	      lineptr[position] = character;
+	    }
+	  position = position + 1;
+
+	  /** exceed the buffer, reallocate memory */
+	  if (position >= n)
+	    {
+	      n = 2 * n;
+	      lineptr = realloc(lineptr, n);
+	      if (lineptr == NULL)
+		{
+		  free(lineptr);
+		  exit(EXIT_FAILURE);
+		}
+	    }
 	}
     }
   return (lineptr);
