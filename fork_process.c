@@ -6,7 +6,7 @@
  */
 int fork_process(char **argv)
 {
-  pid_t child_pid;
+  pid_t child_pid, wpid;
   int status;
 
   child_pid = fork();
@@ -25,7 +25,7 @@ int fork_process(char **argv)
   else
     {
       do {
-        wait(&status);
+        wpid = waitpid(pid, &status, WUNTRACED);
       } while (!WIFEXITED(status) && !WIFSIGNALED(status)); 
     }
     

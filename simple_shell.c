@@ -14,7 +14,7 @@ int main()
  
   while (status)
     {
-      if (isatty(STDIN_FILENO))
+      if (isatty(STDIN_FILENO) == 1)
 	{
 	  printf("#cisfun$ ");
 	}

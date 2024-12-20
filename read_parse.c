@@ -17,6 +17,7 @@ char *read_line(void)
       exit(EXIT_FAILURE);
     }
   while (1) {
+    /** Can't use getchar */
     character = getchar();
     
     if (character == EOF)
