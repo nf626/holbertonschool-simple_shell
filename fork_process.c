@@ -6,7 +6,7 @@
  */
 int fork_process(char **argv)
 {
-  pid_t child_pid, wpid;
+  pid_t child_pid;
   int status;
 
   child_pid = fork();
@@ -14,18 +14,18 @@ int fork_process(char **argv)
     {
       if (execve(argv[0], argv, environ) == -1)
 	{
-	  perror("Error execve");
+	  perror("Error execve:");
 	}
       exit(EXIT_FAILURE);
     }
   else if (child_pid < 0)
     {
-      perror("Error:");
+      perror("Error child:");
     }
   else
     {
       do {
-	wpid = waitpid(child_pid, &status, WUNTRACED);
+        wait(&status);
       } while (!WIFEXITED(status) && !WIFSIGNALED(status)); 
     }
     

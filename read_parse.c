@@ -8,7 +8,8 @@ char *read_line(void)
 {
   size_t buffer_size = 1024;
   char *lineptr = malloc(sizeof(char) * buffer_size);
-  int position = 0, character;
+  size_t position = 0;
+  int character;
 
   if (lineptr == NULL)
     {
@@ -54,8 +55,7 @@ char **parse_line(char *lineptr)
   size_t n = 1024;
   char **user_cmd = malloc(sizeof(char *) * n);
   char *token;
-  pid_t child_pid;
-  int i = 0, status;
+  int i = 0;
 
   if (user_cmd == NULL)
     {
