@@ -14,7 +14,10 @@ int main()
  
   while (status)
     {
-      printf("#cisfun$ ");
+      if (isatty(STDIN_FILENO))
+	{
+	  printf("#cisfun$ ");
+	}
       /** Reads an entire line from stream */
       lineptr = read_line();
       /** Split lines to args */
