@@ -25,11 +25,11 @@ char *read_line(void)
 		if (character == EOF) /* Handle EOF (Ctrl+D)*/
 		{
 			free(lineptr); /* Free the buffer to avoid memory leaks */
-			write(STDOUT_FILENO, "\n", 1); /* Print a newline in interactive mode */
-			exit(EXIT_SUCCESS);
+			return (NULL);
 		}
 		else if (character == '\n') /* Handle end of line */
 		{
+			write(STDOUT_FILENO, "DEBUG: Newline detected in read_line\n", 37);
 			lineptr[position] = '\0'; /* Null-terminate the string */
 			return lineptr; /* Return the completed line */
 		}
@@ -46,7 +46,7 @@ char *read_line(void)
 			lineptr = realloc(lineptr, buffer_size);
 			if (lineptr == NULL)
 			{
-				write(STDERR_FILENO, "shell: allocation error\n", 24);
+				write(STDERR_FILENO, "shell: allocation error\n", 23);
 				exit(EXIT_FAILURE);
 			}
 		}
@@ -69,7 +69,7 @@ char **parse_line(char *lineptr)
 
 	if (user_cmd == NULL)
 	{
-		write(STDERR_FILENO, "shell: allocation error\n", 24);
+		write(STDERR_FILENO, "shell: allocation error\n", 23);
 		return (NULL);
 	}
 
@@ -77,6 +77,13 @@ char **parse_line(char *lineptr)
 	token = strtok(lineptr, " \t\n");
 	while (token != NULL)
 	{
+		/* user_cmd[i] = token;
+		i++;*/
+
+		write(STDOUT_FILENO, "DEBUG: Token found: ", 20);
+		write(STDOUT_FILENO, token, strlen(token));
+		write(STDOUT_FILENO, "\n", 1);
+		
 		user_cmd[i] = token;
 		i++;
 
@@ -87,7 +94,7 @@ char **parse_line(char *lineptr)
 			user_cmd = realloc(user_cmd, sizeof(char *) * buffer_size);
 			if (user_cmd == NULL)
 			{
-				write(STDERR_FILENO, "shell: allocation error\n", 24);
+				write(STDERR_FILENO, "shell: allocation error\n", 23);
 				return (NULL);
 			}
 		}

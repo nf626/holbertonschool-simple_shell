@@ -5,20 +5,23 @@ int ss_ls(char **argv);
 int ss_exit(char **argv);
 int ss_env(char **argv);
 int ss_printenv(char **argv);
+int ss_echo(char **argv);
 
 /** List of builtin commands, followed by their corresponding functions. */
 char *ss_str[] = {
 	"ls",
 	"exit",
 	"env",
-	"printenv"
+	"printenv",
+	"echo"
 };
 
 int (*ss_func[])(char **) = {
 	&ss_ls,
 	&ss_exit,
 	&ss_env,
-	&ss_printenv
+	&ss_printenv,
+	&ss_echo
 };
 
 unsigned int ss_num(void)
@@ -90,5 +93,20 @@ int ss_env(char **argv)
 int ss_printenv(char **argv)
 {
 	ss_env(argv);
+	return (1);
+}
+
+/* print "echo" */
+int ss_echo(char **argv)
+{
+	for (int i = 1; argv[i] != NULL; i++) /* Start from 1 to skip "echo" */
+	{
+		write(STDOUT_FILENO, argv[i], strlen(argv[i]));
+		if (argv[i + 1] != NULL)
+		{
+			write(STDOUT_FILENO, " ", 1); /* Add a space between arguments */
+		}
+	}
+	write(STDOUT_FILENO, "\n", 1); /* Newline at the end */
 	return (1);
 }

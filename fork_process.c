@@ -12,7 +12,7 @@ int fork_process(char **argv)
 	int status;
 	char *path = getenv("PATH");
 	char *path_token;
-	char *full_path;
+	char *full_path = NULL;
 
 	child_pid = fork();
 
@@ -20,6 +20,11 @@ int fork_process(char **argv)
 	{
 		if (argv[0][0] == '/')
 		{
+
+			write(STDOUT_FILENO, "DEBUG: Executing absolute command: ", 36);
+			write(STDOUT_FILENO, argv[0], strlen(argv[0]));
+			write(STDOUT_FILENO, "\n", 1);
+
 			/* If command is an absolute path */
 			execve(argv[0], argv, environ);
 			perror("Error execve");

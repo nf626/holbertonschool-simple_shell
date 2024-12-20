@@ -35,7 +35,7 @@ int main()
 			}
 			break;
 		}
-		
+				
 		/* Split lines to args */
 		argv = parse_line(lineptr);
 		
@@ -46,6 +46,11 @@ int main()
 		free(lineptr);
 		lineptr = NULL; /* Reset pointer to avoid dangling references */
 		free(argv);
+
+		if (!is_interactive)
+		{
+			break;
+		}
 	}
 	return (0);
 }
