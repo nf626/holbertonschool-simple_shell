@@ -1,75 +1,102 @@
 #include "shell.h"
 
 /**
- * read_line -
+ * read_line - Reads a line of input from the user.
  *
+ * Return: Pointer to the line of input (dynamically allocated).
  */
 char *read_line(void)
 {
-  size_t buffer_size = 1024;
-  char *lineptr = malloc(sizeof(char) * buffer_size);
-  int position = 0, character;
+	size_t buffer_size = 1024;
+	char *lineptr = malloc(buffer_size); /* Allocate memory for the buffer */
+	size_t position = 0; /* Track the current position in the buffer */
+	int character;
 
-  if (lineptr == NULL)
-    {
-      fprintf(stderr, "shell: allocation error\n");
-      exit(EXIT_FAILURE);
-    }
-  while (1) {
-    character = getchar();
-    
-    if (character == EOF)
-      {
-	printf("\n");
-	exit(EXIT_SUCCESS);
-      }
-    else if (character == '\n')
-      {
-	lineptr[position] = '\0';
-	return (lineptr);
-      }
-    else
-      {
-	lineptr[position] = character;
-      }
-    position = position + 1;
-
-    if (position >= buffer_size)
-      {
-	buffer_size = buffer_size + 1024;
-	lineptr = realloc(lineptr, buffer_size);
 	if (lineptr == NULL)
-	  {
-	    fprintf(stderr, "shell: allocation error\n");
-	    exit(EXIT_FAILURE);
-	  }
-      }
-  }
+	{
+		write(STDERR_FILENO, "shell: allocation error\n", 24);
+		exit(EXIT_FAILURE);
+	}
+
+	while (1)
+	{
+		character = getchar(); /* Read one character at a time */
+
+		if (character == EOF) /* Handle EOF (Ctrl+D)*/
+		{
+			free(lineptr); /* Free the buffer to avoid memory leaks */
+			write(STDOUT_FILENO, "\n", 1); /* Print a newline in interactive mode */
+			exit(EXIT_SUCCESS);
+		}
+		else if (character == '\n') /* Handle end of line */
+		{
+			lineptr[position] = '\0'; /* Null-terminate the string */
+			return lineptr; /* Return the completed line */
+		}
+		else
+		{
+			lineptr[position] = character; /* Store the character in the buffer */
+		}
+
+		position++; /* Move to the next position */
+
+		if (position >= buffer_size) /* Reallocate buffer if necessary */
+		{
+			buffer_size += 1024; /* Increase buffer size */
+			lineptr = realloc(lineptr, buffer_size);
+			if (lineptr == NULL)
+			{
+				write(STDERR_FILENO, "shell: allocation error\n", 24);
+				exit(EXIT_FAILURE);
+			}
+		}
+	}
 }
+
+
 /**
- * parse_line
+ * parse_line - Splits a line into tokens (arguments).
+ * @lineptr: The input line to parse.
+ *
+ * Return: An array of tokens (arguments). NULL-terminated.
  */
 char **parse_line(char *lineptr)
 {
-  size_t n = 1024;
-  char **user_cmd = malloc(sizeof(char *) * n);
-  char *token;
-  pid_t child_pid;
-  int i = 0, status;
+	size_t buffer_size = 1024; /* Initial buffer size for tokens */
+	char **user_cmd = malloc(sizeof(char *) * buffer_size);
+	char *token;
+	int i = 0;
 
-  if (user_cmd == NULL)
-    {
-      exit(EXIT_FAILURE);
-    }
+	if (user_cmd == NULL)
+	{
+		write(STDERR_FILENO, "shell: allocation error\n", 24);
+		return (NULL);
+	}
 
-  token = strtok(lineptr, " \t\n");
-  while (token != NULL)
-    {
-      user_cmd[i] = token;
-      i = i + 1;
-      token = strtok(NULL, " \t\n");
-    }
-  user_cmd[i] = NULL;
+	/* Tokenize the input line */
+	token = strtok(lineptr, " \t\n");
+	while (token != NULL)
+	{
+		user_cmd[i] = token;
+		i++;
 
-  return (user_cmd);
+		/* Resize the buffer if needed */
+		if (i >= (int)buffer_size)
+		{
+			buffer_size += 1024;
+			user_cmd = realloc(user_cmd, sizeof(char *) * buffer_size);
+			if (user_cmd == NULL)
+			{
+				write(STDERR_FILENO, "shell: allocation error\n", 24);
+				return (NULL);
+			}
+		}
+		
+		token = strtok(NULL, " \t\n");
+	}
+
+	/* Null-terminate the array of tokens */
+	user_cmd[i] = NULL;
+	
+	return user_cmd;
 }

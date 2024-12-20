@@ -52,6 +52,7 @@ int ss_ls(char **argv)
 	{
 		do {
 			wpid = waitpid(child_pid, &status, WUNTRACED);
+			(void)wpid;
 		} while (!WIFEXITED(status) && !WIFSIGNALED(status)); 
 	}
 	

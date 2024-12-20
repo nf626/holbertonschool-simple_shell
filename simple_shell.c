@@ -12,10 +12,16 @@ int main()
 	char **argv;
 	int status = 1;
 
+	/* Determine if the shell is in interactive mode */
+	int is_interactive = isatty(STDIN_FILENO);
+	
 	while (status)
 	{
-		/* Always display prompt */
-		write(STDOUT_FILENO, "#cisfun$ ", 9);
+		/* Display prompt only in interactive mode */
+		if (is_interactive) 
+		{
+			write(STDOUT_FILENO, "#cisfun$ ", 9);
+		}
 		
 		/** Reads an entire line from stream */
 		lineptr = read_line();
@@ -23,6 +29,10 @@ int main()
 		/* Handle EOF (Ctrl+D or non-interactive EOF) */
 		if (lineptr == NULL)
 		{
+			if (is_interactive) 
+			{
+				write(STDOUT_FILENO, "\n", 1);
+			}
 			break;
 		}
 		

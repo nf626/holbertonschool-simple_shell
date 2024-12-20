@@ -8,7 +8,7 @@
  */
 int fork_process(char **argv)
 {
-	pid_t child_pid, wpid;
+	pid_t child_pid;
 	int status;
 	char *path = getenv("PATH");
 	char *path_token;
@@ -63,7 +63,7 @@ int fork_process(char **argv)
 	{
 		do 
 		{
-			wpid = waitpid(child_pid, &status, WUNTRACED);
+			waitpid(child_pid, &status, WUNTRACED);
 		} while (!WIFEXITED(status) && !WIFSIGNALED(status));
 	}
 	
