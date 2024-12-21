@@ -11,5 +11,9 @@ int main(void)
     {
       interactive();
     }
+  else
+    {
+      non_interactive();
+    }
   return (0);
 }
