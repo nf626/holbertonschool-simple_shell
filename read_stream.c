@@ -7,15 +7,24 @@
  */
 char *read_stream(void)
 {
-  int buffer_size = 1024, i = 0, character;
-  char *lineptr = malloc(sizeof(char) * buffer_size);
+  size_t buffer_size = 0;
+  char *lineptr = NULL; /**malloc(sizeof(char) * buffer_size);*/
+  ssize_t char_read;
 
   if (lineptr == NULL)
     {
       fprintf(stderr, "allocation error in read_stream");
       exit(EXIT_FAILURE);
     }
-  while (1)
+  char_read = getline(&lineptr, &buffer_size, stdin);
+  if (char_read == -1)
+    {
+      free(lineptr);
+      printf("\n");
+      exit(EXIT_FAILURE);
+    }
+  
+      /**while (1)
     {
       character = getchar();
       if (character == EOF)
@@ -42,6 +51,8 @@ char *read_stream(void)
 	      fprintf(stderr, "reallocation error in read_stream");
 	      exit(EXIT_FAILURE);
 	    }
-	}
-    }
+	    }
+	    
+	    }*/
+  return (lineptr);
 }
