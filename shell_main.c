@@ -7,13 +7,7 @@
  */
 int main(void)
 {
-  int tty = isatty(STDIN_FILENO);
-
-  if inter the go to int function
-    else
-      go to non-int function
-	
-  if (tty)
+  if (isatty(STDIN_FILENO) == 1)
     {
       interactive();
     }

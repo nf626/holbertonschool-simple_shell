@@ -16,6 +16,7 @@ char *read_input(void)
   if (char_read == -1)
     {
       free(lineptr);
+      printf("\n");
       exit(EXIT_FAILURE);
     }
   return (lineptr);
