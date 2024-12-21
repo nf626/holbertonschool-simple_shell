@@ -80,12 +80,17 @@ char **parse_line(char *lineptr)
 		/* user_cmd[i] = token;
 		i++;*/
 
-		write(STDOUT_FILENO, "DEBUG: Token found: ", 20);
-		write(STDOUT_FILENO, token, strlen(token));
-		write(STDOUT_FILENO, "\n", 1);
-		
-		user_cmd[i] = token;
-		i++;
+		/* Detect unsupported tokens */
+	if (manual_strcmp(token, "|") == 0 ||
+			manual_strcmp(token, ">") == 0 ||
+			manual_strcmp(token, "<") == 0)
+	{
+		write(STDERR_FILENO, "Error: Unsupported feature\n", 27);
+		free(user_cmd);
+		return (NULL); /* Stop parsing and return NULL */
+	}
+	user_cmd[i] = token;
+	i++;
 
 		/* Resize the buffer if needed */
 		if (i >= (int)buffer_size)
