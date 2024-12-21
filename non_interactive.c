@@ -10,8 +10,6 @@ void non_interactive(void)
   int status = 1;
 
   do {
-    printf("#cisfun$ ");
-    printf("\n");
     lineptr = read_stream(); /** Read line */
     argv = parse_line(lineptr); /** Splits line */
     status = execute(argv); /** returns int value to determine do-while loop */
