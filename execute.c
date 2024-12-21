@@ -1,13 +1,15 @@
 #include "shell.h"
 
 /**
- * execute
+ * execute - map if command is a builtin or a process.
+ * @argv: command arguments.
  *
+ * Return: 1 on Success, 0 otherwise.
  */
 int execute(char **argv)
-{
- unsigned int i = 0;
- /** An empty command was entered. */
+{ 
+  int i = 0;
+  /** empty command was entered */
   if (argv[0] == NULL)
     {
       return (1);
@@ -15,13 +17,11 @@ int execute(char **argv)
 
   while (i < ss_num())
     {
-      /** Builtin shell functions call */
-      if (strcmp(argv[0], ss_str[i]) == 0)
+      if (strcmp(argv[0], builtin_list[i]) == 0)
 	{
-	  return ((*ss_func[i])(argv));
+	  return ((*builtin_func[i])(argv));
 	}
       i = i + 1;
     }
-  /** user-fork functions call */
   return (fork_process(argv));
 }

@@ -7,15 +7,28 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 
+/** Global environment */
 extern char **environ;
-extern char *ss_str[];
-extern int (*ss_func[])(char **);
 
-char *read_line(void);
+/** shell_main.c */
+void interactive(void);
+void non_interactive(void);
+
+/** Shell interactive */
+char *read_input(void);
 char **parse_line(char *lineptr);
-int fork_process(char **argv);
-unsigned int ss_num(void);
-int ss_exit(char **argv);
 int execute(char **argv);
+
+/** Execute arguments */
+int fork_process(char **argv);
+
+/** Shell non-interactive */
+char *read_stream(void);
+
+/** Builtin functions */
+extern char *builtin_list[];
+extern int (*builtin_func[])(char **);
+int ss_num(void);
+int ss_exit(char **argv);
 
 #endif

@@ -1,12 +1,14 @@
 #include "shell.h"
+
 /**
- * fork_process
+ * fork_process - Create a new process.
+ * @argv: command arguments.
  *
- * Return: 1 to continue process.
+ * Return: 1 on Success, 0 otherwise.
  */
 int fork_process(char **argv)
 {
-  pid_t child_pid, wpid;
+  pid_t child_pid;
   int status;
 
   child_pid = fork();
@@ -14,20 +16,19 @@ int fork_process(char **argv)
     {
       if (execve(argv[0], argv, environ) == -1)
 	{
-	  perror("Error execve:");
+	  perror("./shell");
 	}
       exit(EXIT_FAILURE);
     }
   else if (child_pid < 0)
     {
-      perror("Error child:");
+      perror("Error fork failed");
     }
   else
     {
       do {
-        wpid = waitpid(pid, &status, WUNTRACED);
-      } while (!WIFEXITED(status) && !WIFSIGNALED(status)); 
+	waitpid(child_pid, &status, WUNTRACED);
+      } while (!WIFEXITED(status) && !WIFSIGNALED(status));
     }
-    
   return (1);
 }
