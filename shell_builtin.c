@@ -36,7 +36,7 @@ int ss_env(char **argv)
     {
       print_env();
     }
-  return (1);
+  return (0);
 }
 /** ls call */
 int ss_ls(char **argv)
