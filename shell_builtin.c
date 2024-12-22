@@ -19,16 +19,6 @@ int ss_num(void)
 int ss_exit(char **argv)
 {
   (void)argv;
-  /** Exit with status */
-  /** if (argv[1] != NULL)
-    {
-      return (atoi(argv[1]));
-    }
-   exit success 
-  else
-    {
-      return (0);
-      }*/
   return (0);
 }
 /** Environment call */
@@ -45,27 +35,56 @@ int ss_ls(char **argv)
 {
   pid_t child_pid;
   int status;
-  (void)argv;
-  
-  child_pid = fork();
-  if (child_pid == 0)
+
+  if (strcmp(argv[0], "ls") == 0)
     {
-      char *argv[] = {"ls", NULL};
-      if (execve("/bin/ls", argv, environ) == -1)
+      char *ls_argv[] = {"ls", NULL};
+      child_pid = fork();
+      if (child_pid == 0)
+	{
+	  if (execve("/bin/ls", ls_argv, environ) == -1)
+	    {
+	      perror("Error:");
+	    }
+	  exit(EXIT_FAILURE);
+	}
+      else if (child_pid < 0)
 	{
 	  perror("Error:");
 	}
-      exit(EXIT_FAILURE);
+      else
+	{
+	  do {
+	    waitpid(child_pid, &status, WUNTRACED);
+	  } while (!WIFEXITED(status) && !WIFSIGNALED(status)); 
+	}
     }
-  else if (child_pid < 0)
+
+  if (argv[1] != NULL)
     {
-      perror("Error:");
-    }
-  else
-    {
-      do {
-	waitpid(child_pid, &status, WUNTRACED);
-      } while (!WIFEXITED(status) && !WIFSIGNALED(status)); 
+      if (strcmp(argv[0], "ls") == 0 && strcmp(argv[1], "-l") == 0)
+	{
+	  char *l_flag[] = {"ls", "-l", NULL};
+	  child_pid = fork();
+	  if (child_pid == 0)
+	    {
+	      if (execve("/bin/ls", l_flag, environ) == -1)
+		{
+		  perror("Error:");
+		}
+	      exit(EXIT_FAILURE);
+	    }
+	  else if (child_pid < 0)
+	    {
+	      perror("Error:");
+	    }
+	  else
+	    {
+	      do {
+		waitpid(child_pid, &status, WUNTRACED);
+	      } while (!WIFEXITED(status) && !WIFSIGNALED(status)); 
+	    }
+	}
     }
   return (0);
 }
