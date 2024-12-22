@@ -35,9 +35,16 @@ int main()
 			}
 			break;
 		}
-				
+
 		/* Split lines to args */
 		argv = parse_line(lineptr);
+		
+		/* Skip execution if parsing failed (e.g., unsupported features) */
+		if (argv == NULL)
+		{
+			free(lineptr);
+			continue; /* Skip this iteration and prompt again */
+		}
 		
 		/* Execute args */
 		status = execute(argv);

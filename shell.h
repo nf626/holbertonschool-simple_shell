@@ -21,7 +21,10 @@ int ss_exit(char **argv);
 int execute(char **argv);
 
 /* Helper functions for string manipulation */
-void manual_strcpy(char *dest, const char *src);
+void _strcpy(char *dest, const char *src);
+int _strcmp(const char *str1, const char *str2);
+char *_strdup(const char *src);
+size_t _strlen(const char *str);
 void manual_strcat(char *dest, const char *src);
 char *construct_path(const char *directory, const char *command);
 

@@ -77,20 +77,29 @@ char **parse_line(char *lineptr)
 	token = strtok(lineptr, " \t\n");
 	while (token != NULL)
 	{
-		/* user_cmd[i] = token;
-		i++;*/
-
 		/* Detect unsupported tokens */
-	if (manual_strcmp(token, "|") == 0 ||
-			manual_strcmp(token, ">") == 0 ||
-			manual_strcmp(token, "<") == 0)
-	{
-		write(STDERR_FILENO, "Error: Unsupported feature\n", 27);
-		free(user_cmd);
-		return (NULL); /* Stop parsing and return NULL */
-	}
-	user_cmd[i] = token;
-	i++;
+		if (_strcmp(token, "|") == 0 ||
+				_strcmp(token, ">") == 0 ||
+				_strcmp(token, "<") == 0)
+		{
+			write(STDERR_FILENO, "Error: Unsupported feature\n", 27);
+			free(user_cmd);
+			return (NULL); /* Stop parsing and return NULL */
+		}
+
+		/* Allow quotes to pass as valid tokens */
+		if (*token == '\"' || *token == '\'')
+		{
+			token++; /* Skip the quote character */
+			char *end = strchr(token, *token == '\"' ? '\"' : '\'');
+			if (end)
+			{
+				*end = '\0'; /* Null-terminate inside the quotes */
+			}
+		}
+
+		user_cmd[i] = token;
+		i++;
 
 		/* Resize the buffer if needed */
 		if (i >= (int)buffer_size)

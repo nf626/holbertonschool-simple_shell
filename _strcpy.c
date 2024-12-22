@@ -1,11 +1,11 @@
 #include "shell.h"
 
 /**
- * manual_strcpy - Copies a string from src to dest.
+ * _strcpy - Copies a string from src to dest.
  * @dest: Destination buffer.
  * @src: Source string.
  */
-void manual_strcpy(char *dest, const char *src)
+void _strcpy(char *dest, const char *src)
 {
 	while (*src != '\0')
 	{

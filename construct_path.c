@@ -27,13 +27,13 @@ char *construct_path(const char *directory, const char *command)
 	}
 	
 	/* Copy directory to full_path */
-	manual_strcpy(full_path, directory);
+	_strcpy(full_path, directory);
 	
 	/* Add '/' separator */
 	full_path[dir_len] = '/';
 	
 	/* Concatenate command to the path */
-	manual_strcpy(full_path + dir_len + 1, command);
+	_strcpy(full_path + dir_len + 1, command);
 	
 	return full_path; // Caller must free this memory
 }
