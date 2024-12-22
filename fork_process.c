@@ -16,9 +16,10 @@ int fork_process(char **argv)
     {
       if (execve(argv[0], argv, environ) == -1)
 	{
-	  fprintf(stderr, "./shell: %d", 2);
+	  perror("./shell");
 	}
       exit(EXIT_FAILURE);
+      return (2);
     }
   else if (child_pid < 0)
     {
