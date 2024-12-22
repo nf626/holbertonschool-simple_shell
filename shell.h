@@ -31,6 +31,7 @@ extern int (*builtin_func[])(char **);
 int ss_num(void);
 int ss_exit(char **argv);
 int ss_env(char **argv);
+int ss_ls(char **argv);
 
 /** Environment variables */
 int print_env(void);

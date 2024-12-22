@@ -33,7 +33,7 @@ char *read_stream(void)
 	{
 	  lineptr[i] = character;
 	}
-      i++;
+      i = i + 1;
       if (i >= buffer_size)
 	{
 	  buffer_size = buffer_size + buffer_size;
