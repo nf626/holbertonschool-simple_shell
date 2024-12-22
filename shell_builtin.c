@@ -36,6 +36,8 @@ int ss_ls(char **argv)
   pid_t child_pid;
   int status;
 
+  if (argv[1] == NULL)
+    {
   if (strcmp(argv[0], "ls") == 0)
     {
       char *ls_argv[] = {"ls", NULL};
@@ -59,7 +61,7 @@ int ss_ls(char **argv)
 	  } while (!WIFEXITED(status) && !WIFSIGNALED(status)); 
 	}
     }
-
+    }
   if (argv[1] != NULL)
     {
       if (strcmp(argv[0], "ls") == 0 && strcmp(argv[1], "-l") == 0)
