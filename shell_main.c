@@ -10,12 +10,10 @@ int main(void)
   if (isatty(STDIN_FILENO) == 1)
     {
       interactive();
-       return (0);
     }
   else
     {
       non_interactive();
-       return (0);
     }
-  return (1);
+  return (0);
 }

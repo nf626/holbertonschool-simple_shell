@@ -10,7 +10,7 @@ void interactive(void)
   int status = 1;
 
   do {
-    printf("#cisfun$ ");
+    printf("#cisfun$ ");    
     lineptr = read_input(); /** Read line */
     argv = parse_line(lineptr); /** Splits line */
     status = execute(argv); /** returns int value to determine do-while loop */
