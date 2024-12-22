@@ -19,7 +19,6 @@ int fork_process(char **argv)
 	  perror("./shell");
 	}
       exit(EXIT_FAILURE);
-      return (2);
     }
   else if (child_pid < 0)
     {

@@ -41,4 +41,6 @@ char *_getenv(const char *name);
 int _print_str(char *string);
 int _putchar(char c);
 
+int ls_process(char **argv);
+int ls_l_process(char **argv);
 #endif
