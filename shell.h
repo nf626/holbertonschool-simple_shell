@@ -36,4 +36,8 @@ int ss_env(char **argv);
 int print_env(void);
 char *_getenv(const char *name);
 
+/** Check input */
+int _print_str(char *string);
+int _putchar(char c);
+
 #endif
