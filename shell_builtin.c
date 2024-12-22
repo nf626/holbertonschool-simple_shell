@@ -26,7 +26,7 @@ int ss_exit(char **argv)
   /** exit success */
   else
     {
-      return (0);
+      return (2);
     }
 }
 /** Environment call */
