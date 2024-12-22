@@ -11,6 +11,12 @@ int fork_process(char **argv)
   pid_t child_pid;
   int status;
 
+  if (argv == NULL)
+    {
+      return (0);
+    }
+  else
+    {
   child_pid = fork();
   if (child_pid == 0)
     {
@@ -31,4 +37,5 @@ int fork_process(char **argv)
       } while (!WIFEXITED(status) && !WIFSIGNALED(status));
     }
   return (0);
+    }
 }
