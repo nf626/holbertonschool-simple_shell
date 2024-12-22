@@ -36,8 +36,6 @@ int ss_ls(char **argv)
   pid_t child_pid;
   int status;
 
-  if (argv[1] == NULL)
-    {
   if (strcmp(argv[0], "ls") == 0)
     {
       char *ls_argv[] = {"ls", NULL};
@@ -61,12 +59,13 @@ int ss_ls(char **argv)
 	  } while (!WIFEXITED(status) && !WIFSIGNALED(status)); 
 	}
     }
-    }
-  if (argv[1] != NULL)
+  
+  
+  /** if (argv[1] != NULL)
     {
-      if (strcmp(argv[0], "ls") == 0 && strcmp(argv[1], "-l") == 0)
+      if (strcmp(argv[1], "-l") == 0)
 	{
-	  char *l_flag[] = {"ls", "-l", NULL};
+	  char *l_flag[] = {"-l", "/usr/", NULL};
 	  child_pid = fork();
 	  if (child_pid == 0)
 	    {
@@ -87,6 +86,6 @@ int ss_ls(char **argv)
 	      } while (!WIFEXITED(status) && !WIFSIGNALED(status)); 
 	    }
 	}
-    }
+	}*/
   return (0);
 }
