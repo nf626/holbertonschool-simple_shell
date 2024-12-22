@@ -19,15 +19,16 @@ int ss_num(void)
 int ss_exit(char **argv)
 {
   /** Exit with status */
-  if (argv[1] != NULL)
+  /** if (argv[1] != NULL)
     {
       return (atoi(argv[1]));
     }
-  /** exit success */
+   exit success 
   else
     {
       return (0);
-    }
+      }*/
+  return (0);
 }
 /** Environment call */
 int ss_env(char **argv)
