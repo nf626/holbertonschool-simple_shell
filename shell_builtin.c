@@ -18,6 +18,7 @@ int ss_num(void)
 /** Exit call */
 int ss_exit(char **argv)
 {
+  (void)argv;
   /** Exit with status */
   /** if (argv[1] != NULL)
     {
