@@ -10,7 +10,7 @@ void non_interactive(void)
  int status = 1;
 
  do {
-   lineptr = read_stream();
+   lineptr = read_input();
    argv = parse_line(lineptr);
    status = execute(argv);
    
