@@ -18,6 +18,5 @@ void interactive(void)
     /** free memory */
     free(lineptr);
     free(argv);
-
   } while (status);
 }
