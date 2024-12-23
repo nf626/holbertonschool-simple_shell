@@ -32,6 +32,7 @@ int ss_num(void);
 int ss_exit(char **argv);
 int ss_env(char **argv);
 int ss_ls(char **argv);
+int multi_ls_process(char **argv);
 
 /** Environment variables */
 int print_env(void);
@@ -43,4 +44,5 @@ int _putchar(char c);
 
 int ls_process(char **argv);
 int ls_l_process(char **argv);
+
 #endif

@@ -11,31 +11,32 @@ int fork_process(char **argv)
   pid_t child_pid;
   int status;
 
+  /** no commands entered by user */
   if (argv == NULL)
     {
       return (0);
     }
   else
     {
-  child_pid = fork();
-  if (child_pid == 0)
-    {
-      if (execve(argv[0], argv, environ) == -1)
+      child_pid = fork();
+      if (child_pid == 0)
 	{
-	  perror("./shell");
+	  if (execve(argv[0], argv, environ) == -1)
+	    {
+	      perror("./shell");
+	    }
+	  exit(EXIT_FAILURE);
 	}
-      exit(EXIT_FAILURE);
-    }
-  else if (child_pid < 0)
-    {
-      perror("Error fork failed");
-    }
-  else
-    {
-      do {
-	waitpid(child_pid, &status, WUNTRACED);
-      } while (!WIFEXITED(status) && !WIFSIGNALED(status));
-    }
-  return (0);
+      else if (child_pid < 0)
+	{
+	  perror("Error fork failed");
+	}
+      else
+	{
+	  do {
+	    waitpid(child_pid, &status, WUNTRACED);
+	  } while (!WIFEXITED(status) && !WIFSIGNALED(status));
+	}
+      return (0);
     }
 }
