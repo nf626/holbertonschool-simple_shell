@@ -9,34 +9,36 @@
  */
 char **parse_line(char *lineptr)
 {
-  int buffer_size = 64, i = 0;
-  char *token;
-  char **cmd = malloc(sizeof(char *) * buffer_size);
+	size_t buffer_size = 1024;
+	char **user_cmd = malloc(sizeof(char *) * buffer_size);
+	char *token;
+	int i = 0;
 
-  if (cmd == NULL)
-    {
-      perror("Error cmd:");
-      exit(EXIT_FAILURE);
-    }
-
-  token = strtok(lineptr, DELIMIT);
-
-  while (token != NULL)
-    {
-      cmd[i] = token;
-      i = i + 1;
-      if (i >= buffer_size)
+	if (user_cmd == NULL)
 	{
-	  buffer_size = buffer_size + buffer_size;
-	  cmd = realloc(cmd, buffer_size * sizeof(char *));
-	  if (cmd == NULL)
-	    {
-	      perror("Reallocation failed");
-	      exit(EXIT_FAILURE);
-	    }
+		write(STDERR_FILENO, "shell: allocation error\n", 23);
+		return (NULL);
 	}
-      token = strtok(NULL, DELIMIT);
-    }
-  cmd[i] = NULL;
-  return (cmd);
+
+	token = strtok(lineptr, " \t\n");
+	while (token != NULL)
+	{
+		if (i >= (int)buffer_size)
+		{
+			buffer_size += 1024;
+			user_cmd = realloc(user_cmd, sizeof(char *) * buffer_size);
+			if (user_cmd == NULL)
+			{
+				write(STDERR_FILENO, "shell: allocation error\n", 23);
+				free(user_cmd);
+				return (NULL);
+			}
+		}
+		user_cmd[i++] = token;
+		token = strtok(NULL, " \t\n");
+	}
+
+	user_cmd[i] = NULL;
+	return (user_cmd);
 }
+

@@ -28,6 +28,7 @@ char *read_stream(void);
 /** Builtin functions */
 extern char *builtin_list[];
 extern int (*builtin_func[])(char **);
+char **get_builtin_list(void);
 int ss_num(void);
 int ss_exit(char **argv);
 int ss_env(char **argv);
@@ -42,7 +43,13 @@ int _print_str(char *string);
 int _putchar(char c);
 
 /** New processes */
+int execute_command(char **argv);
 int ls_process(char **argv);
-int ls_l_process(char **argv);
+
+/* Compare two strings */
+int _strcmp(const char *str1, const char *str2);
+
+/* Calculates the length of a string */
+int _strlen(const char *str);
 
 #endif

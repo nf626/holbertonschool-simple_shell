@@ -7,21 +7,25 @@
  * Return: 1 on Success, 0 otherwise.
  */
 int execute(char **argv)
-{ 
-  int i = 0;
-  /** empty command was entered */
-  if (argv[0] == NULL)
-    {
-      return (0);
-    }
+{
+	char **builtin_list = get_builtin_list();
+	int i = 0;
 
-  while (i < ss_num())
-    {
-      if (strcmp(argv[0], builtin_list[i]) == 0)
+	/** empty command was entered */
+	if (argv[0] == NULL)
 	{
-	  return ((*builtin_func[i])(argv));
+		return (0);
 	}
-      i = i + 1;
-    }
-  return (fork_process(argv));
+
+	/* Loop through the built-in commands */
+	while (builtin_list[i] != NULL)
+	{
+		if (_strcmp(argv[0], builtin_list[i]) == 0)
+		{
+			return ((*builtin_func[i])(argv));
+		}
+		i++;
+	}
+	
+	return (fork_process(argv));
 }

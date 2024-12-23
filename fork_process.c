@@ -8,36 +8,37 @@
  */
 int fork_process(char **argv)
 {
-  pid_t child_pid;
-  int status;
+	pid_t child_pid;
+	int status;
 
-  /** no commands entered by user */
-  if (argv == NULL)
-    {
-      return (0);
-    }
-  else
-    {
-      child_pid = fork();
-      if (child_pid == 0)
+	/** no commands entered by user */
+	/** no commands entered by user */
+	if (argv[0] == NULL)
 	{
-	  if (execve(argv[0], argv, environ) == -1)
-	    {
-	      perror("./shell");
-	      return (errno);
-	    }
-	  exit(EXIT_FAILURE);
+		write(STDERR_FILENO, "Error: No command provided\n", 27);
+		return (0);
 	}
-      else if (child_pid < 0)
+	else
 	{
-	  perror("Error fork failed");
+		child_pid = fork();
+		if (child_pid == 0)
+		{
+			if (execve(argv[0], argv, environ) == -1)
+			{
+				perror("./shell");
+				exit(EXIT_FAILURE);
+			}
+		}
+		else if (child_pid < 0)
+		{
+			perror("Error fork failed");
+		}
+		else
+		{
+			do {
+				waitpid(child_pid, &status, WUNTRACED);
+			} while (!WIFEXITED(status) && !WIFSIGNALED(status));
+		}
+		return (0);
 	}
-      else
-	{
-	  do {
-	    waitpid(child_pid, &status, WUNTRACED);
-	  } while (!WIFEXITED(status) && !WIFSIGNALED(status));
-	}
-      return (0);
-    }
 }

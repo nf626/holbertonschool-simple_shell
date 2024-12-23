@@ -7,14 +7,15 @@
  */
 int print_env(void)
 {
-  int i = 0;
+	int i = 0;
 
-  while (environ[i] != NULL)
-    {
-      printf("%s\n", environ[i]);
-      i++;
-    }
-  return (1);
+	while (environ[i] != NULL)
+	{
+		write(STDOUT_FILENO, environ[i], _strlen(environ[i]));
+		write(STDOUT_FILENO, "\n", 1);
+		i++;
+	}
+	return (1);
 }
 
 /**
@@ -27,27 +28,25 @@ int print_env(void)
  */
 char *_getenv(const char *name)
 {
-  int i = 0, j;
-  int status;
+	int i = 0, j;
 
-  while (environ[i] != NULL)
-    {
-      status = 1;
-      j = 0;
-      while (environ[i][j] != '=')
+	while (environ[i] != NULL)
 	{
-	  if (name[j] != environ[i][j])
-	    {
-	      status = 0;
-	      break;
-	    }
-	  j = j + 1;
+		j = 0;
+		while (environ[i][j] != '=' && name[j] != '\0')
+		{
+			if (environ[i][j] != name[j])
+			{
+				break;
+			}
+			j++;
+		}
+
+		if (name[j] == '\0' && environ[i][j] == '=')
+		{
+			return (&environ[i][j + 1]);
+		}
+		i++;
 	}
-      if (status)
-	{
-	  return (&environ[i][j + 1]);
-	}
-      i = i + 1;
-    }
-  return (NULL);
+	return (NULL);
 }

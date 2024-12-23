@@ -1,77 +1,71 @@
 #include "shell.h"
 
 /**
- * ls_process - New process created for ls.
- * @argv: String input from user/terminal.
+ * execute_command - Executes a command with arguments.
+ * @argv: Array of command and arguments.
  *
- * Return: 0 on Success.
+ * Return: 0 on success, -1 on failure.
  */
-int ls_process(char **argv)
+int execute_command(char **argv)
 {
-  pid_t child_pid;
-  int status;
-  (void)argv;
+	pid_t child_pid;
+	int status;
 
-  if (strcmp(argv[0], "ls") == 0)
-    {
-      char *ls_argv[] = {"ls", NULL};
-      child_pid = fork();
-      if (child_pid == 0)
+	/* Validate input */
+	if (argv == NULL || argv[0] == NULL)
 	{
-	  if (execve("/bin/ls", ls_argv, environ) == -1)
-	    {
-	      perror("Error:");
-	    }
-	  exit(EXIT_FAILURE);
+		write(STDERR_FILENO, "Error: No command provided\n", 27);
+		return (-1);
 	}
-      else if (child_pid < 0)
+
+	/* Fork a new process */
+	child_pid = fork();
+	if (child_pid == 0) /* Child process */
 	{
-	  perror("Error:");
+		if (execve(argv[0], argv, environ) == -1)
+		{
+			perror("Error executing command");
+			exit(EXIT_FAILURE);
+		}
 	}
-      else
+	else if (child_pid < 0) /* Fork failed */
 	{
-	  do {
-	    waitpid(child_pid, &status, WUNTRACED);
-	  } while (!WIFEXITED(status) && !WIFSIGNALED(status)); 
+		perror("Error: Fork failed");
+		return (-1);
 	}
-    }
-  return (0);
+	else /* Parent process */
+	{
+		do {
+			waitpid(child_pid, &status, WUNTRACED);
+		} while (!WIFEXITED(status) && !WIFSIGNALED(status));
+	}
+
+	return (0);
 }
 
 /**
- * ls_l_process - New process created for ls -l.
- * @argv: String input from user/terminal.
+ * ls_process - Executes the `ls` command dynamically.
+ * @argv: Array of command and arguments.
  *
- * Return: 0 on Success.
+ * Return: 0 on success, -1 on failure.
  */
-int ls_l_process(char **argv)
+int ls_process(char **argv)
 {
-  pid_t child_pid;
-  int status;
-  (void)argv;
-  
-  if (strcmp(argv[1], "-l") == 0)
-    {
-      char *l_flag[] = {"ls", "-l", NULL};
-      child_pid = fork();
-      if (child_pid == 0)
+	/* Check for 'ls' command */
+	if (_strcmp(argv[0], "ls") == 0)
 	{
-	  if (execve("/bin/ls", l_flag, environ) == -1)
-	    {
-	      perror("Error:");
-	    }
-	  exit(EXIT_FAILURE);
+		if (argv[1] != NULL && _strcmp(argv[1], "-l") == 0)
+		{
+			/* Execute 'ls -l' */
+			char *ls_l_args[] = {"/bin/ls", "-l", NULL};
+
+			return (execute_command(ls_l_args));
+		}
+
+		/* Execute 'ls' */
+		char *ls_args[] = {"/bin/ls", NULL};
+
+		return (execute_command(ls_args));
 	}
-      else if (child_pid < 0)
-	{
-	  perror("Error:");
-	}
-      else
-	{
-	  do {
-	    waitpid(child_pid, &status, WUNTRACED);
-	  } while (!WIFEXITED(status) && !WIFSIGNALED(status)); 
-	}
-    }
-  return (0);
+	return (-1); /* Command not handled */
 }

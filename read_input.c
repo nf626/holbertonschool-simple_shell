@@ -7,16 +7,23 @@
  */
 char *read_input(void)
 {
-char *lineptr = NULL;
-size_t n = 0;
-ssize_t char_read;
+	char *lineptr = NULL;
+	size_t n = 0;
 
-char_read = getline(&lineptr, &n, stdin);
-/** Check if failed, EOF and ctrl+D */
-if (char_read == -1)
-{
-free(lineptr);
-exit(EXIT_FAILURE);
-}
-return (lineptr);
+	if (getline(&lineptr, &n, stdin) == -1)
+	{
+		if (feof(stdin)) /* EOF or Ctrl+D */
+		{
+			write(STDOUT_FILENO, "\n", 1);
+			free(lineptr);
+			exit(EXIT_SUCCESS);
+		}
+		else
+		{
+			perror("read_input");
+			free(lineptr);
+			exit(EXIT_FAILURE);
+		}
+	}
+	return (lineptr);
 }
