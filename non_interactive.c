@@ -13,6 +13,11 @@ void non_interactive(void)
    lineptr = read_input();
    argv = parse_line(lineptr);
    status = execute(argv);
+
+   if (status > 1)
+     {
+       exit(EXIT_FAILURE);
+     }
    
    free(lineptr);
    free(argv);

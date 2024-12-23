@@ -1,5 +1,5 @@
 #include "shell.h"
-
+#include <errno.h>
 /**
  * fork_process - Create a new process.
  * @argv: command arguments.
@@ -24,6 +24,7 @@ int fork_process(char **argv)
 	  if (execve(argv[0], argv, environ) == -1)
 	    {
 	      perror("./shell");
+	      return (errno);
 	    }
 	  exit(EXIT_FAILURE);
 	}
