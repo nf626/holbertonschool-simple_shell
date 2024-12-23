@@ -60,19 +60,7 @@ int ss_ls(char **argv)
     {
       ls_process(argv);
     }
-  
-  /** Print ls command 3 times */
-  if (argv[0] != NULL && argv[1] != NULL && argv[2] != NULL)
-    {
-      multi_ls_process(argv);
-    }
-
-  /** Print ls command 4 times */
-  if (argv[0] != NULL && argv[1] != NULL && argv[2] != NULL && argv[3] != NULL)
-    {
-      multi_ls_process(argv);
-    }
-  
+    
   /** Print ls -l command */
   if (argv[1] != NULL)
     {
