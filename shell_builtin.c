@@ -66,13 +66,17 @@ int ss_env(char **argv)
 }
 
 /**
- * ss_ls - Executes the `ls` command, with or without arguments.
- * @argv: Array of command and arguments passed by the user/terminal.
+ * ss_ls - Handles the `ls` command with or without arguments.
+ * @argv: Array of command and arguments.
  *
- * Return: 0 on Success.
+ * Return: 0 on success, -1 on failure.
  */
 int ss_ls(char **argv)
 {
+	/* Declare variables at the top for C90 compliance */
+	char *ls_l_args[] = {"/bin/ls", "-l", NULL};
+	char *ls_args[] = {"/bin/ls", NULL};
+
 	if (argv == NULL || argv[0] == NULL)
 	{
 		write(STDERR_FILENO, "Error: No command provided\n", 27);
@@ -85,12 +89,10 @@ int ss_ls(char **argv)
 		if (argv[1] != NULL && _strcmp(argv[1], "-l") == 0)
 		{
 			/* Execute `ls -l` */
-			char *ls_l_args[] = {"/bin/ls", "-l", NULL};
 			return (execute_command(ls_l_args));
 		}
-
+		
 		/* Execute `ls` */
-		char *ls_args[] = {"/bin/ls", NULL};
 		return (execute_command(ls_args));
 	}
 

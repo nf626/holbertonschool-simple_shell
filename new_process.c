@@ -51,20 +51,20 @@ int execute_command(char **argv)
  */
 int ls_process(char **argv)
 {
+	/* Variable declarations moved to the top */
+	char *ls_l_args[] = {"/bin/ls", "-l", NULL};
+	char *ls_args[] = {"/bin/ls", NULL};
+
 	/* Check for 'ls' command */
 	if (_strcmp(argv[0], "ls") == 0)
 	{
 		if (argv[1] != NULL && _strcmp(argv[1], "-l") == 0)
 		{
 			/* Execute 'ls -l' */
-			char *ls_l_args[] = {"/bin/ls", "-l", NULL};
-
 			return (execute_command(ls_l_args));
 		}
-
+		
 		/* Execute 'ls' */
-		char *ls_args[] = {"/bin/ls", NULL};
-
 		return (execute_command(ls_args));
 	}
 	return (-1); /* Command not handled */

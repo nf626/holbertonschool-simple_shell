@@ -41,4 +41,3 @@ char **parse_line(char *lineptr)
 	user_cmd[i] = NULL;
 	return (user_cmd);
 }
-
