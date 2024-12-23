@@ -13,7 +13,7 @@ char **get_builtin_list(void)
 		"ls",
 		NULL
 	};
-	return builtin_list;
+	return (builtin_list);
 }
 /**
  * builtin_func - Function pointer for list of functions in builtin_list.
@@ -37,7 +37,7 @@ int ss_num(void)
 	{
 		count++;
 	}
-	return count;
+	return (count);
 }
 /**
  * ss_exit - Exit input to terminate shell.
@@ -91,7 +91,7 @@ int ss_ls(char **argv)
 			/* Execute `ls -l` */
 			return (execute_command(ls_l_args));
 		}
-		
+
 		/* Execute `ls` */
 		return (execute_command(ls_args));
 	}
