@@ -26,6 +26,6 @@ int execute(char **argv)
 		}
 		i++;
 	}
-	
+
 	return (fork_process(argv));
 }

@@ -14,7 +14,7 @@ void interactive(void)
 		lineptr = read_input(); /** Read line */
 		argv = parse_line(lineptr); /** Splits line */
 		status = execute(argv); /** returns int value to determine do-while loop */
-		
+
 		if (status > 1)
 		{
 			exit(EXIT_FAILURE);
