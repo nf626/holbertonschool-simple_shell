@@ -63,7 +63,7 @@ int ls_process(char **argv)
 			/* Execute 'ls -l' */
 			return (execute_command(ls_l_args));
 		}
-	
+
 		/* Execute 'ls' */
 		return (execute_command(ls_args));
 	}
