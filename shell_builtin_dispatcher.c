@@ -16,7 +16,10 @@ char **get_builtin_list(void)
 	return (builtin_list);
 }
 /**
- * builtin_func - Function pointer for list of functions in builtin_list.
+ * builtin_func - Array of function pointers for built-in commands.
+ *
+ * Each function takes an array of arguments (`argv`) and performs
+ * a specific built-in command. Functions return 0 on success.
  */
 int (*builtin_func[])(char **) = {
 	&ss_exit,
