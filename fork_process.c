@@ -17,6 +17,7 @@ int fork_process(char **argv)
       if (execve(argv[0], argv, environ) == -1)
 	{
 	  perror("./shell");
+	  return (2);
 	}
       exit(EXIT_FAILURE);
     }

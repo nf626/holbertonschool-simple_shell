@@ -46,13 +46,70 @@ int ls_process(char **argv)
  */
 int ls_l_process(char **argv)
 {
+  pid_t child_pid, pid;
+  int status;
+  (void)argv;
+  
+  if (strcmp(argv[1], "-l") == 0 && argv[2] == NULL)
+    {
+      char *l_flag[] = {"ls", "-l", NULL};
+      child_pid = fork();
+      if (child_pid == 0)
+	{
+	  if (execve("/bin/ls", l_flag, environ) == -1)
+	    {
+	      perror("Error:");
+	    }
+	  exit(EXIT_FAILURE);
+	}
+      else if (child_pid < 0)
+	{
+	  perror("Error:");
+	}
+      else
+	{
+	  do {
+	    waitpid(child_pid, &status, WUNTRACED);
+	  } while (!WIFEXITED(status) && !WIFSIGNALED(status)); 
+	}
+    }
+
+  else if (strcmp(argv[1], "ls") == 0 && argv[2] == NULL)
+    {
+      char *l_flag[] = {"ls", NULL};
+      
+      pid = fork();
+      if (pid == 0)
+	{
+	  if (execve("/bin/ls", l_flag, environ) == -1)
+	    {
+	      perror("Error:");
+	    }
+	  exit(EXIT_FAILURE);
+	}
+      else if (pid < 0)
+	{
+	  perror("Error:");
+	}
+      else
+	{
+	  do {
+	    waitpid(pid, &status, WUNTRACED);
+	  } while (!WIFEXITED(status) && !WIFSIGNALED(status)); 
+	}
+    }
+  return (0);
+}
+
+int ls_l_3_process(char **argv)
+{
   pid_t child_pid;
   int status;
   (void)argv;
   
-  if (strcmp(argv[1], "-l") == 0)
+  if (strcmp(argv[2], "ls") == 0 && argv[3] == NULL)
     {
-      char *l_flag[] = {"ls", "-l", NULL};
+      char *l_flag[] = {"ls", NULL};
       child_pid = fork();
       if (child_pid == 0)
 	{

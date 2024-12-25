@@ -63,15 +63,25 @@ int ss_env(char **argv)
 */
 int ss_ls(char **argv)
 {
-  /** Print ls command */
+  /** Print ls command if argv[0] is entered */
   if (argv[0] != NULL && argv[1] == NULL)
     {
       ls_process(argv);
     }
-  /** Print ls -l command */
-  if (argv[1] != NULL)
+  /** Print with 2 commands */
+  else if (argv[0] != NULL && argv[1] != NULL && argv[2] == NULL)
     {
-      ls_l_process(argv);
+      /** Print ls command 2 times */
+      if (strcmp(argv[1], "ls") == 0)
+	{
+	  ls_process(argv);
+	  ls_l_process(argv);
+	}
+       /** Print ls -l command */
+      else if (strcmp(argv[1], "-l") == 0)
+	{
+	  ls_l_process(argv);
+	}
     }
   return (0);
 }
