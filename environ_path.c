@@ -18,34 +18,26 @@ int print_env(void)
 }
 
 /**
- * _getenv - Get an environment variable.
- * @name: takes the string 'name' as an argument and searches
- *        environ global variable for an
- *        enviroment variable with the given name
+ * _getenv - Function searches the environment list to find the
+ *           environment variable name, and returns a pointer to the
+ *           corresponding value string.
+ * @name: Environment variable name.
  *
- * Return: NULL if variable is not found.
+ * Return: a pointer to the value in the
+ *         environment, or NULL if there is no match.
  */
 char *_getenv(const char *name)
 {
-  int i = 0, j;
-  int status;
-
-  while (environ[i] != NULL)
+  int i = 0;
+  char *token;
+  
+  while(environ[i] != NULL)
     {
-      status = 1;
-      j = 0;
-      while (environ[i][j] != '=')
+      token = strtok(environ[i], "=");
+      if (strcmp(token, name) == 0)
 	{
-	  if (name[j] != environ[i][j])
-	    {
-	      status = 0;
-	      break;
-	    }
-	  j = j + 1;
-	}
-      if (status)
-	{
-	  return (&environ[i][j + 1]);
+	  token = strtok(NULL, "=");
+	  return (token);
 	}
       i = i + 1;
     }
