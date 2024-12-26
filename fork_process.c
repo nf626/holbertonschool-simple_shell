@@ -12,7 +12,6 @@ int fork_process(char **argv)
 	int status;
 
 	/** no commands entered by user */
-	/** no commands entered by user */
 	if (argv[0] == NULL)
 	{
 		write(STDERR_FILENO, "Error: No command provided\n", 27);
