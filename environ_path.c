@@ -25,40 +25,40 @@ int print_env(void)
  * Return: a pointer to the value in the
  *         environment, or NULL if there is no match.
  */
-char *_getenv(const char *env_var)
+char *_getenv(char *env_var)
 {
   int i = 0;
-  char *token;
-  
-  while(environ[i] != NULL)
+  char *name;
+
+  while (environ[i] != NULL)
     {
-      token = strtok(environ[i], "=");
-      if (strcmp(token, env_var) == 0)
+      name = strtok(environ[i], "=");
+      if(strcmp(env_var, name) == 0)
 	{
-	  token = strtok(NULL, "\n");
-	  return (token);
+	  name = strtok(NULL, "\n");
+	  return (name);
 	}
       i = i + 1;
     }
   return (NULL);
 }
+
 /**
  * _getcommand - Function gets the environment path and checks file exists.
  * @command: Path to examine.
  *
  * Return: environment path or NULL if path is not verified.
  */
-char *_getcommand(char *command)
+char *get_command(char *command)
 {
   char *path, *token, *cmd;
   struct stat st;
 
   path = _getenv("PATH");
   token = strtok(path, ":");
-
   while (token != NULL)
     {
-      cmd = malloc(strlen(cmd) + strlen(token) + 2);
+      cmd = malloc(sizeof(char *) * 1024);
       strcpy(cmd, token);
       strcat(cmd, "/");
       strcat(cmd, command);
@@ -70,4 +70,50 @@ char *_getcommand(char *command)
       token = strtok(NULL, ":");
     }
   return (NULL);
+}
+
+/**
+ * _setenv - changes or adds an environment variable
+ *           (without using setenv).
+ * @name: variable name to the environment.
+ * @value: variable value to name.
+ * @overwrite: zero or not zero.
+ *
+ * Return: zero on success, or -1 on error.
+ */
+int _setenv(const char *name, const char *value, int overwrite)
+{
+  int i = 0, len = 0;
+  char *new_var;
+
+  if (name == NULL || value == NULL)
+    {
+      return (-1);
+    }
+  while (environ[i] != NULL)
+    {
+      len = strlen(name);
+      if (strncmp(environ[i], name, len) == 0)
+	{
+	  /** If name does exist in the environment, then its value is changed to value */
+	  if (overwrite != 0)
+	    {
+	      new_var = malloc(sizeof(char *) * 1024);
+	      strcpy(new_var, name);
+	      strcat(new_var, "=");
+	      strcat(new_var, value);
+	      environ[i] = new_var;
+	      return (0);
+	    }
+	  return (0);
+	}
+      i = i + 1;
+    }
+  new_var = malloc(sizeof(char *) * 1024);
+  strcpy(new_var, name);
+  strcat(new_var, "=");
+  strcat(new_var, value);
+  environ[i] = new_var;
+  environ[i + 1] = NULL;
+  return (0);
 }

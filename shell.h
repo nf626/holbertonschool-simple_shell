@@ -35,12 +35,15 @@ int ss_ls(char **argv);
 
 /** Environment variables */
 int print_env(void);
-char *_getenv(const char *name);
+char *_getenv(char *env_var);
+char *get_command(char *command);
+int _setenv(const char *name, const char *value, int overwrite);
 
 /** Check input */
 int _print_str(char *string);
 int _putchar(char c);
 
+/** New process */
 int ls_process(char **argv);
 int ls_l_process(char **argv);
 #endif
