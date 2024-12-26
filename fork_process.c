@@ -14,12 +14,21 @@ int fork_process(char **argv)
   child_pid = fork();
   if (child_pid == 0)
     {
-      if (execve(argv[0], argv, environ) == -1)
+      char *cmd = get_command(argv[0]);
+      if (cmd)
+	{
+	  execve(cmd, argv, environ);
+	}
+      else
+	{
+	  printf("Command not found\n");
+	}
+      if (execve(cmd, argv, environ) == -1)
 	{
 	  perror("./shell");
-	  exit(2);
+	  exit(EXIT_FAILURE);
 	}
-      exit(EXIT_FAILURE);
+      exit(2);
     }
   else if (child_pid < 0)
     {

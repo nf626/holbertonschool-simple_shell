@@ -6,6 +6,7 @@
 #include <string.h>
 #include <sys/types.h>
 #include <sys/wait.h>
+#include <sys/stat.h>
 
 /** Global environment */
 extern char **environ;
@@ -45,5 +46,4 @@ int _putchar(char c);
 
 /** New process */
 int ls_process(char **argv);
-int ls_l_process(char **argv);
 #endif
