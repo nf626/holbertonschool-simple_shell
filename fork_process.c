@@ -15,7 +15,6 @@ int fork_process(char **argv)
   if (!cmd)
     {
       perror("Error");
-      return (2);
     }
   else
     {
