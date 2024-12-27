@@ -66,10 +66,6 @@ int ss_env(char **argv)
 */
 int ss_bin_ls(char **argv)
 {
-  if (strcmp(argv[0], "/bin/ls") == 0)
-    {
-      ls_process(argv);
-      return (0);
-    }
-  return (1);
+  ls_process(argv);
+  return (0);
 }

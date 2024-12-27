@@ -74,8 +74,8 @@ char *get_command(char *command)
 
 /**
  * _setenv - changes or adds an environment variable.
- * @name: variable name to the environment.
- * @value: variable value to name.
+ * @name: path name to the environment.
+ * @value: value to path.
  * @overwrite: zero to keep value or not zero to change value.
  *
  * Return: zero on success, or -1 on error.
