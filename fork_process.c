@@ -4,7 +4,7 @@
  * fork_process - Create a new process.
  * @argv: command arguments.
  *
- * Return: 1 on Success, 0 otherwise.
+ * Return: 0 on Success.
  */
 int fork_process(char **argv)
 {
@@ -14,19 +14,21 @@ int fork_process(char **argv)
   char *cmd = get_command(argv[0]);
   if (!cmd)
     {
-      printf("Command not found\n");
+      perror("Error");
+      return (2);
     }
   else
     {
       child_pid = fork();
       if (child_pid == 0)
 	{
+	  execve(cmd, argv, environ);
 	  if (execve(cmd, argv, environ) == -1)
 	    {
 	      perror("./shell");
 	      exit(EXIT_FAILURE);
 	    }
-	  exit(2);
+	  _exit(2);
 	}
       else if (child_pid < 0)
 	{

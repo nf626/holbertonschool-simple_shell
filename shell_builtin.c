@@ -7,7 +7,8 @@
  */
 char *builtin_list[] = {
   "exit",
-  "env"
+  "env",
+  "/bin/ls"
 };
 /**
  * builtin_func - Function pointer to list the functions to get from builtin_list.
@@ -16,7 +17,8 @@ char *builtin_list[] = {
  */
 int (*builtin_func[])(char **) = {
   &ss_exit,
-  &ss_env
+  &ss_env,
+  &ss_bin_ls
 };
 /**
  * ss_num - Get the number of characters in string.
@@ -35,8 +37,11 @@ int ss_num(void)
 */
 int ss_exit(char **argv)
 {
-  (void)argv;
-  return (0);
+  if (strcmp(argv[0], "exit") == 0)
+    {
+      return (0);
+    }
+  return (1);
 }
 /** 
  * ss_env - Print shell environment.
@@ -54,8 +59,17 @@ int ss_env(char **argv)
 }
 
 /** 
- * ss_ls - Print ls command.
+ * ss_bin_ls - Print ls command.
  * @argv: String passed by user/terminal.
  *
  * Return: 0 on Success.
 */
+int ss_bin_ls(char **argv)
+{
+  if (strcmp(argv[0], "/bin/ls") == 0)
+    {
+      ls_process(argv);
+      return (0);
+    }
+  return (1);
+}
