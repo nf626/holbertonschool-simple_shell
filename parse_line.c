@@ -10,26 +10,18 @@
 char **parse_line(char *lineptr)
 {
   int buffer_size = 64, i = 0;
-  char *token, *ret;
+  char *token;
   char **cmd = malloc(sizeof(char *) * buffer_size);
-  const char ch = '\t';
-
+ 
   if (cmd == NULL)
     {
       perror("Error cmd:");
       free(cmd);
       exit(EXIT_FAILURE);
     }
-  ret = strchr(lineptr, ch);
-
-  printf("String after %c is %s\n", ch, ret);
-  printf("length = %ld\n", strlen(lineptr));
-  token = strtok(lineptr, " \n");
   while (token != NULL)
     {
       cmd[i] = token;
-      printf("cmd[%d] = %s\n", i, cmd[i]);
-      printf("Token length = %ld\n", strlen(token));
       i = i + 1;
       if (i >= buffer_size)
 	{
