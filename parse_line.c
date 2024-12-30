@@ -22,6 +22,11 @@ void parse_line(char *lineptr, char *argv[], size_t n, ssize_t char_read)
       i = 0;
       while (i < n && token != NULL)
 	{
+	  /** Handle comments */
+	  if (token[0] == '#')
+	    {
+	      break;
+	    }
 	  argv[i] = token;
 	  token = strtok(NULL, " \t\n\r");
 	  i = i + 1;
