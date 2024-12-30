@@ -7,42 +7,34 @@
 
 void execute_command(char **args)
 {
-    pid_t child_pid;
-    int status, i = 0;
+	pid_t child_pid;
+	int status, i = 0;
 
-    child_pid = fork();
+	child_pid = fork();
 
-    if (child_pid < 0) /* Fork failed */
-    {
-        perror("Fork failed");
-        exit(1);
-    }
+	if (child_pid < 0) /* Fork failed */
+	{
+		perror("Fork failed");
+		exit(1);
+	}
 
-    if (child_pid == 0) /* Child process */
-    {
-        /* Pass the current environment to execve */
-        extern char **environ;
+	if (child_pid == 0) /* Child process */
+	{
+		/* Pass the current environment to execve */
+		extern char **environ;
 
-        /* Add debug statements */
-        fprintf(stderr, "DEBUG: About to execute: %s with args:\n", args[0]);
-        for (i = 0; args[i] != NULL; i++)
-        {
-            fprintf(stderr, "DEBUG: args[%d]: %s\n", i, args[i]);
-        }
-
-        /* Execute the command */
-        if (execve(args[0], args, environ) == -1)
-        {
-            perror("Execution failed");
-            exit(127);
-        }
-    }
-    else /* Parent process */
-    {
-        if (waitpid(child_pid, &status, 0) == -1) /* Ensure child termination */
-        {
-            perror("Wait failed");
-        }
-    }
+		/* Execute the command */
+		if (execve(args[0], args, environ) == -1)
+		{
+			perror("Execution failed");
+			exit(127);
+		}
+	}
+	else /* Parent process */
+	{
+		if (waitpid(child_pid, &status, 0) == -1) /* Ensure child termination */
+		{
+			perror("Wait failed");
+		}
+	}
 }
-

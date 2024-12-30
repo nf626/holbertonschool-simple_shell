@@ -6,16 +6,19 @@
  */
 void free_args(char **args)
 {
-    int i;
+	int i;
 
-    if (!args)
-        return;
-
-    for (i = 0; args[i]; i++)
-    {
-        free(args[i]);
-        args[i] = NULL; /* Nullify after free to avoid reuse */
-    }
-    free(args);
-    args = NULL; /* Nullify the pointer itself */
+	if (!args)
+	{
+		return;
+	}
+	
+	for (i = 0; args[i]; i++)
+	{
+		free(args[i]);
+		args[i] = NULL; /* Nullify after free to avoid reuse */
+	}
+	
+	free(args);
+	args = NULL; /* Nullify the pointer itself */
 }
