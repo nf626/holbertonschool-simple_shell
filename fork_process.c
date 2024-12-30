@@ -6,32 +6,35 @@
  *
  * Return: 0 on Success.
  */
-int fork_process(char **argv)
+int fork_process(char *lineptr, char *argv[])
 {
   pid_t child_pid;
   int status;
 
-  char *cmd = get_command(argv[0]);
-  if (!cmd)
-    {
-      perror("Error");
-      return (-1);
-    }
-
   child_pid = fork();
-  if (child_pid == 0)
-    {
-      execve(cmd, argv, environ);
-      if (execve(cmd, argv, environ) == -1)
-	{
-	  perror("./shell");
-	  exit(EXIT_FAILURE);
-	}
-      _exit(2);
-    }
-  else if (child_pid < 0)
+  if (child_pid < 0)
     {
       perror("Error fork failed");
+      exit(EXIT_FAILURE);
+    }
+  else if (child_pid == 0)
+    {
+      if (strcmp(argv[0], "ls") == 0)
+	{
+	  char *ls_arg[] = {"ls", NULL};
+	  if (execve("/bin/ls", ls_arg, environ) == -1)
+	    {
+	      free(lineptr);
+	      perror("./shell");
+	    }
+	  _exit(2);
+	}
+      if (execve(argv[0], argv, environ) == -1)
+	{
+	  free(lineptr);
+	  perror("./shell");
+	}
+      _exit(2);
     }
   else
     {

@@ -5,18 +5,7 @@
  *
  * Return: String from standard input.
  */
-char *read_input(void)
+void read_input(char **lineptr, size_t *n, ssize_t *char_read)
 {
-char *lineptr = NULL;
-size_t n = 0;
-ssize_t char_read;
-
-char_read = getline(&lineptr, &n, stdin);
-/** Check if failed, EOF and ctrl+D */
-if (char_read == -1)
-{
-free(lineptr);
-exit(EXIT_FAILURE);
-}
-return (lineptr);
+  *char_read = getline(lineptr, n, stdin);
 }

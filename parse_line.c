@@ -7,34 +7,25 @@
  *
  * Return: Array of splitted string tokens.
  */
-char **parse_line(char *lineptr)
+void parse_line(char *lineptr, char *argv[], size_t n, ssize_t char_read)
 {
-  int buffer_size = 64, i = 0;
-  char *token;
-  char **cmd = malloc(sizeof(char *) * buffer_size);
- 
-  if (cmd == NULL)
+  size_t i;
+  
+  char *token = strtok(lineptr, " \t\n\r");
+
+  if (lineptr[char_read - 1] == '\n')
     {
-      perror("Error cmd:");
-      free(cmd);
-      exit(EXIT_FAILURE);
+      lineptr[char_read - 1] = '\0';
     }
-  while (token != NULL)
+  if (token != NULL)
     {
-      cmd[i] = token;
-      i = i + 1;
-      if (i >= buffer_size)
+      i = 0;
+      while (i < n && token != NULL)
 	{
-	  buffer_size = buffer_size + buffer_size;
-	  cmd = realloc(cmd, buffer_size * sizeof(char *));
-	  if (cmd == NULL)
-	    {
-	      perror("Reallocation failed");
-	      exit(EXIT_FAILURE);
-	    }
+	  argv[i] = token;
+	  token = strtok(NULL, " \t\n\r");
+	  i = i + 1;
 	}
-      token = strtok(NULL, " \n");
+      argv[i] = NULL;
     }
-  cmd[i] = NULL;
-  return (cmd);
 }
