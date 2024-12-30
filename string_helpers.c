@@ -89,3 +89,51 @@ char *_strcat(char *dest, const char *src)
 	dest[dest_len + i] = '\0';
 	return (dest);
 }
+
+/**
+ * _strlen - Returns the length of a string.
+ * @s: The string whose length is to be calculated.
+ *
+ * Return: The length of the string.
+ */
+size_t _strlen(const char *s)
+{
+	size_t len = 0;
+
+	while (s != NULL && s[len] != '\0')
+	{
+		len++;
+	}
+
+	return (len);
+}
+
+/**
+ * _strncmp - Compares two strings up to n characters.
+ * @s1: The first string.
+ * @s2: The second string.
+ * @n: The number of characters to compare.
+ *
+ * Return: 0 if the strings are equal up to n characters,
+ *         a negative value if s1 < s2,
+ *         a positive value if s1 > s2.
+ */
+int _strncmp(const char *s1, const char *s2, size_t n)
+{
+	size_t i;
+
+	if (s1 == NULL || s2 == NULL)
+	{
+		return (-1); /* Handle NULL inputs */
+	}
+	
+	for (i = 0; i < n && (s1[i] != '\0' || s2[i] != '\0'); i++)
+	{
+		if (s1[i] != s2[i])
+		{
+			return ((unsigned char)s1[i] - (unsigned char)s2[i]);
+		}
+	}
+	
+	return (0);
+}
