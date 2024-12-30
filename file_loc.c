@@ -93,10 +93,11 @@ char *get_file_path(char *file_name)
     /* Retrieve PATH environment variable */
     path = get_env_value("PATH"); /* Custom replacement for getenv */
 
-    if (!path)
+    if (!path || path[0] == '\0') /* PATH is missing or empty */
     {
-        perror("Path not found");
-        return (NULL);
+	    write(STDERR_FILENO, file_name, _strlen(file_name));
+	    write(STDERR_FILENO, ": command not found\n", 20);
+	    return (NULL);
     }
 
     /* Check if file_name is an absolute or relative path and executable */

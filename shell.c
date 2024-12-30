@@ -7,45 +7,51 @@
  *
  * Return: Always 0
  */
-int main(int argc, char *argv[])
+int main(void)
 {
     char *input = NULL;
     char *path = NULL;
     char **args = NULL;
 
-    (void)argc;
-    (void)argv;
-
     while (1)
     {
-        print_prompt();
+        print_prompt();  /* Print the shell prompt */
 
-        input = read_input();
-        if (input == NULL) /* Handle EOF (Ctrl+D) */
-        {
+        input = read_input();  /* Get user input */
+        if (!input)  /* Handle EOF (Ctrl+D) */
             break;
-        }
 
-        args = tokenize_input(input);
-        if (args == NULL || args[0] == NULL) /* No command entered */
+        args = tokenize_input(input);  /* Parse the input */
+        if (!args || !args[0])  /* Ignore empty input */
         {
             free(input);
-            free(args);
+            free_args(args);
             continue;
         }
 
-        path = get_file_path(args[0]); /* Get the full path */
-        if (path != NULL) /* If path is valid, execute the command */
+        if (_strcmp(args[0], "exit") == 0)  /* Handle 'exit' */
         {
-            args[0] = path; /* Update the command to the full path */
-            execute_command(args);
-            free(path); /* Free the allocated path */
+            free(input);
+            free_args(args);
+            exit(0);
+        }
+
+        path = get_file_path(args[0]);  /* Resolve command path */
+        if (path)
+        {
+            args[0] = path;  /* Replace with resolved path */
+            execute_command(args);  /* Execute the command */
+            free(path);
+        }
+        else
+        {
+            write(STDERR_FILENO, args[0], _strlen(args[0]));
+            write(STDERR_FILENO, ": command not found\n", 20);
         }
 
         free(input);
-        free(args);
+        free_args(args);  /* Free tokenized arguments */
     }
 
     return (0);
 }
-
