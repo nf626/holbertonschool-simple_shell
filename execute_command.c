@@ -8,7 +8,8 @@
 void execute_command(char **args)
 {
 	pid_t child_pid;
-	int status, i;
+	int status;
+	/* int i; */
 	
 	extern char **environ;
 
