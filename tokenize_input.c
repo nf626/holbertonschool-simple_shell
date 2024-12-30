@@ -14,7 +14,7 @@ char **tokenize_input(char *input)
 	char **args = malloc(size * sizeof(char *));
 	char *token = NULL;
 
-fprintf(stderr, "DEBUG: Entering tokenize_input with input: %s\n", input);
+	/* fprintf(stderr, "DEBUG: Entering tokenize_input with input: %s\n", input); */
 
 	if (args == NULL)
 	{
@@ -26,7 +26,7 @@ fprintf(stderr, "DEBUG: Entering tokenize_input with input: %s\n", input);
 
 	while (token != NULL)
 	{
-fprintf(stderr, "DEBUG: Token found: '%s'\n", token);
+		/* fprintf(stderr, "DEBUG: Token found: '%s'\n", token); */
 
 		if (strlen(token) == 0) /* Skip empty tokens */
 		{
@@ -64,7 +64,7 @@ fprintf(stderr, "DEBUG: Token found: '%s'\n", token);
 			exit(EXIT_FAILURE);
 		}
 		
-fprintf(stderr, "DEBUG: Added token '%s' to args[%lu]\n", args[i], i);
+		/* fprintf(stderr, "DEBUG: Added token '%s' to args[%lu]\n", args[i], i); */
 
 
 		i++;
@@ -72,6 +72,6 @@ fprintf(stderr, "DEBUG: Added token '%s' to args[%lu]\n", args[i], i);
 	}
 	
 	args[i] = NULL; /* NULL-terminate the array */
-fprintf(stderr, "DEBUG: Tokenization complete. Total tokens: %lu\n", i);
+	/* fprintf(stderr, "DEBUG: Tokenization complete. Total tokens: %lu\n", i); */
 	return (args);
 }

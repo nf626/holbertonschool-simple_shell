@@ -45,12 +45,12 @@ int main(void)
             args[0] = path;          /* Replace with resolved path */
             
 	    /* Debugging log before execute_command */
-    fprintf(stderr, "DEBUG: Resolved path: %s\n", path);
-    fprintf(stderr, "DEBUG: About to execute with args:\n");
-    for (i = 0; args[i] != NULL; i++)
-    {
-        fprintf(stderr, "DEBUG: args[%d]: '%s'\n", i, args[i]);
-    }
+	    /* fprintf(stderr, "DEBUG: Resolved path: %s\n", path);
+	    fprintf(stderr, "DEBUG: About to execute with args:\n");
+	    for (i = 0; args[i] != NULL; i++)
+	    {
+		    fprintf(stderr, "DEBUG: args[%d]: '%s'\n", i, args[i]);
+	    } */
 
 	    execute_command(args);   /* Execute the command */
         }
