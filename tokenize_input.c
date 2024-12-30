@@ -8,25 +8,36 @@
  */
 char **tokenize_input(char *input)
 {
-	char **array = malloc(sizeof(char *) * 1024);
+	char **args = malloc(sizeof(char *) * 1024);
 	char *token = NULL;
 	int i = 0;
 
-	if (array == NULL)
+	if (args == NULL)
 	{
 		perror("malloc failed");
 		exit(1);
 	}
 
+	for (int i = 0; i < 1024; i++) /* Initialize all elements to NULL */
+	{
+		args[i] = NULL;
+	}
+	
 	token = strtok(input, " \n");
 
 	while (token != NULL)
 	{
-		array[i] = token;
+		args[i] = _strdup(token);
+		if (!args[index])
+		{
+			perror("strdup failed");
+			exit(1);
+		}
+		args[i] = token;
 		token = strtok(NULL, " \n");
 		i++;
 	}
 
-	array[i] = NULL;
-	return (array);
+	args[i] = NULL;
+	return (args);
 }
