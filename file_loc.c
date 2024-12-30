@@ -25,55 +25,60 @@ int startsWithForwardSlash(const char *str)
  */
 char *get_file_loc(char *path, char *file_name)
 {
-	char *path_copy, *token;
-	struct stat file_stat;
-	char *path_buffer = NULL;
+    char *path_copy, *token;
+    struct stat file_stat;
+    char *path_buffer = NULL;
 
-	path_copy = _strdup(path);
-	if (!path_copy)
-	{
-		perror("Error: strdup failed");
-		return (NULL);
-	}
+    if (!path || !file_name) /* Check for NULL inputs */
+        return (NULL);
 
-	token = strtok(path_copy, ":");
-	while (token)
-	{
-		if (path_buffer)
-		{
-			free(path_buffer);
-			path_buffer = NULL;
-		}
+    path_copy = _strdup(path); /* Duplicate the PATH string */
+    if (!path_copy)
+    {
+        perror("Error: strdup failed");
+        return (NULL);
+    }
 
-		path_buffer = malloc(strlen(token) + strlen(file_name) + 2);
-		if (!path_buffer)
-		{
-			perror("Error: malloc failed");
-			free(path_copy);
-			return (NULL);
-		}
+    token = strtok(path_copy, ":");
+    while (token)
+    {
+        if (*token == '\0') /* Skip empty tokens caused by "::" */
+        {
+            token = strtok(NULL, ":");
+            continue;
+        }
 
-		_strcpy(path_buffer, token);
-		_strcat(path_buffer, "/");
-		_strcat(path_buffer, file_name);
+        /* Allocate memory for path_buffer */
+        path_buffer = malloc(strlen(token) + strlen(file_name) + 2);
+        if (!path_buffer)
+        {
+            perror("Error: malloc failed");
+            free(path_copy);
+            return (NULL);
+        }
 
-		if (stat(path_buffer, &file_stat) == 0 && access(path_buffer, X_OK) == 0)
-		{
-			free(path_copy);
-			return (path_buffer);
-		}
+        /* Construct the potential file path */
+        _strcpy(path_buffer, token);
+        _strcat(path_buffer, "/");
+        _strcat(path_buffer, file_name);
 
-		token = strtok(NULL, ":");
-	}
+        /* Check if the file exists and is executable */
+        if (stat(path_buffer, &file_stat) == 0 && access(path_buffer, X_OK) == 0)
+        {
+            free(path_copy);
+            return (path_buffer); /* Caller must free this */
+        }
 
-	free(path_copy);
-	if (path_buffer)
-	{
-		free(path_buffer);
-	}
+        free(path_buffer); /* Free buffer if not valid */
+        path_buffer = NULL;
+        token = strtok(NULL, ":"); /* Move to the next PATH token */
+    }
 
-	return (NULL);
+    /* Clean up */
+    free(path_copy);
+    return (NULL);
 }
+
 
 /**
  * get_file_path - Get the full file path for an executable
