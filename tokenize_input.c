@@ -24,7 +24,7 @@ char **tokenize_input(char *input)
 
     token = strtok(input, " \n");
 
-    while (token != NULL)
+    while (token != NULL && i < 1023)
     {
         if (i >= size) /* Resize if we exceed the current size */
         {
