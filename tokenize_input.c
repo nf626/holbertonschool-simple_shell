@@ -14,6 +14,8 @@ char **tokenize_input(char *input)
 	char **args = malloc(size * sizeof(char *));
 	char *token = NULL;
 
+fprintf(stderr, "DEBUG: Entering tokenize_input with input: %s\n", input);
+
 	if (args == NULL)
 	{
 		perror("malloc failed");
@@ -24,6 +26,8 @@ char **tokenize_input(char *input)
 
 	while (token != NULL)
 	{
+fprintf(stderr, "DEBUG: Token found: '%s'\n", token);
+
 		if (strlen(token) == 0) /* Skip empty tokens */
 		{
 			token = strtok(NULL, " \n");
@@ -60,10 +64,14 @@ char **tokenize_input(char *input)
 			exit(EXIT_FAILURE);
 		}
 		
+fprintf(stderr, "DEBUG: Added token '%s' to args[%lu]\n", args[i], i);
+
+
 		i++;
 		token = strtok(NULL, " \n");
 	}
 	
 	args[i] = NULL; /* NULL-terminate the array */
+fprintf(stderr, "DEBUG: Tokenization complete. Total tokens: %lu\n", i);
 	return (args);
 }

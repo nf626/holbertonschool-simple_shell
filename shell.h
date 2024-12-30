@@ -22,5 +22,6 @@ size_t _strlen(const char *s);
 int _strncmp(const char *s1, const char *s2, size_t n);
 char *get_env_value(const char *name);
 void free_args(char **args);
+void trim_trailing_newline_and_spaces(char *str);
 
 #endif /* MAIN_H */

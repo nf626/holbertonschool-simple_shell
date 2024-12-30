@@ -12,6 +12,7 @@ int main(void)
     char *input = NULL;
     char *path = NULL;
     char **args = NULL;
+    int i;
 
     while (1)
     {
@@ -42,7 +43,16 @@ int main(void)
         {
             free(args[0]);           /* Free the old args[0] */
             args[0] = path;          /* Replace with resolved path */
-            execute_command(args);   /* Execute the command */
+            
+	    /* Debugging log before execute_command */
+    fprintf(stderr, "DEBUG: Resolved path: %s\n", path);
+    fprintf(stderr, "DEBUG: About to execute with args:\n");
+    for (i = 0; args[i] != NULL; i++)
+    {
+        fprintf(stderr, "DEBUG: args[%d]: '%s'\n", i, args[i]);
+    }
+
+	    execute_command(args);   /* Execute the command */
         }
         else
         {

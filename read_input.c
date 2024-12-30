@@ -9,7 +9,7 @@ char *read_input(void)
 {
     char *buf = NULL;
     size_t count = 0;
-    ssize_t nread;
+    ssize_t nread, i;
 
     nread = getline(&buf, &count, stdin);
 
@@ -26,6 +26,20 @@ char *read_input(void)
         }
         return (NULL);
     }
+
+    /* Debug: Log the input read from stdin */
+    fprintf(stderr, "DEBUG: Input read: '%s', Length: %ld\n", buf, nread);
+
+    /* Debug: Log each character in the input */
+    for (i = 0; i < nread; i++)
+    {
+        fprintf(stderr, "DEBUG: buf[%lu]: '%c' (ASCII: %d)\n", i, buf[i], buf[i]);
+    }
+    /* Trim trailing newline and spaces */
+    trim_trailing_newline_and_spaces(buf);
+
+    /* Debug statement to verify the trimmed input */
+    fprintf(stderr, "DEBUG: Trimmed input: '%s', Length: %lu\n", buf, strlen(buf));
 
     return (buf);
 }

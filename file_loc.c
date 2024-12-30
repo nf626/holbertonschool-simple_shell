@@ -95,8 +95,12 @@ char *get_file_path(char *file_name)
 	/* Retrieve PATH environment variable */
 	path = get_env_value("PATH"); /* Custom replacement for getenv */
 
+fprintf(stderr, "DEBUG: Entering get_file_path with file_name: %s\n", file_name);
+    fprintf(stderr, "DEBUG: PATH: %s\n", path);
+
 	if (!path || path[0] == '\0') /* PATH is missing or empty */
 	{
+		fprintf(stderr, "DEBUG: PATH is missing or empty\n");
 		write(STDERR_FILENO, file_name, _strlen(file_name));
 		write(STDERR_FILENO, ": command not found\n", 20);
 		return (NULL);
@@ -106,6 +110,7 @@ char *get_file_path(char *file_name)
 	if ((file_name[0] == '/' || file_name[0] == '.') && access(file_name, X_OK) == 0)
 	{
 		result = _strdup(file_name); /* Duplicate the file name */
+		fprintf(stderr, "DEBUG: file_name: %s is executable\n", file_name);
 		if (!result)
 		{
 			perror("Error: strdup failed");
@@ -122,8 +127,13 @@ char *get_file_path(char *file_name)
 	
 	if (!full_path)
 	{
+		fprintf(stderr, "DEBUG: Command %s not found in PATH\n", file_name);
 		write(STDERR_FILENO, file_name, _strlen(file_name));
 		write(STDERR_FILENO, ": command not found\n", 20);
+	}
+	else
+	{
+		fprintf(stderr, "DEBUG: Found full_path: %s\n", full_path);
 	}
 	
 	return (full_path); /* Caller must free the returned value */
