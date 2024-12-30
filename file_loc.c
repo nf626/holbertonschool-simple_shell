@@ -1,11 +1,11 @@
 #include "shell.h"
 
 /**
-  * startsWithForwardSlash - Checks if file starts with "/"
-  * @str: The filename to be checked
-  *
-  * Return: 1 if yes and 0 if no
-  */
+ * startsWithForwardSlash - Checks if file starts with "/"
+ * @str: The filename to be checked
+ *
+ * Return: 1 if yes, 0 if no
+ */
 int startsWithForwardSlash(const char *str)
 {
     if (str != NULL && str[0] == '/')
@@ -63,7 +63,7 @@ char *get_file_path(char *file_name)
 
     if (startsWithForwardSlash(file_name) && access(file_name, X_OK) == 0)
     {
-        return (strdup(file_name));
+        return (_strdup(file_name));
     }
 
     if (!path)

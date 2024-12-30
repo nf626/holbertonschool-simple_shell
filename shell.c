@@ -26,7 +26,7 @@ int main(int argc, char *argv[])
 
 		args = tokenize_input(input);
 
-		path = get_file_path(array[0]);
+		path = get_file_path(args[0]);
 
 		if (args[0] != NULL) /* Only execute if a command is entered */
 		{
