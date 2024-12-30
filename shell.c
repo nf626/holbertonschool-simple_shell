@@ -9,10 +9,12 @@
  */
 int main(int argc, char *argv[])
 {
+	char *input = NULL;
+	char *path = NULL;
+	char **args = NULL;
+
 	(void)argc;
 	(void)argv;
-	char *input = NULL, *path;
-	char **args = NULL;
 
 	while (1)
 	{
