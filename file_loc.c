@@ -1,4 +1,4 @@
-#include "main.h"
+#include "shell.h"
 
 /**
   * startsWithForwardSlash - Checks if file starts with "/"
