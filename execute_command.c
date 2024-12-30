@@ -8,7 +8,7 @@
 void execute_command(char **args)
 {
 	pid_t child_pid;
-	int status, i = 0;
+	int status;
 
 	child_pid = fork();
 
