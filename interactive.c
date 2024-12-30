@@ -22,7 +22,7 @@ void interactive(void)
       }    
     parse_line(lineptr, argv, n , char_read); /** Splits line */
     status = execute(lineptr, argv); /** returns int value to determine do-while loop */
-    printf("status is %d\n", status);   
+    /** printf("status is %d\n", status); Debug status */   
     /** free memory */
     free(lineptr);
   } while (status);

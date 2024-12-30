@@ -7,7 +7,7 @@
  */
 char *builtin_list[] = {
   "exit",
-  "env"
+  "env",
 };
 /**
  * builtin_func - Function pointer to list the functions to get from builtin_list.
