@@ -19,6 +19,7 @@ char *read_input(void)
 		{
 			free(buf);
 			write(STDOUT_FILENO, "\n", 1); /* Gracefully exit with newline */
+			fprintf(stderr, "DEBUG: EOF detected.\n");
 			return (NULL);
 		}
 		free(buf);
