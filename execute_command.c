@@ -27,11 +27,12 @@ void execute_command(char **args)
 	if (child_pid == 0) /* Child process */
 	{
 		/* fprintf(stderr, "DEBUG: In child process (PID: %d)\n", getpid());
-		 * fprintf(stderr, "DEBUG: About to execute: %s with args:\n", args[0]);
-		 * for (i = 0; args[i] != NULL; i++)
-		 * {
-		 * fprintf(stderr, "DEBUG: args[%d]: '%s'\n", i, args[i]);
-		 * } */
+		 * fprintf(stderr, "DEBUG: About to execute: %s with args:\n", args[0]); */
+		for (i = 0; args[i] != NULL; i++)
+		{
+			trim_trailing_newline_and_spaces(args[i]);
+			fprintf(stderr, "DEBUG: args[%d]: '%s'\n", i, args[i]);
+		}
 
 		/* Execute the command */
 		if (execve(args[0], args, environ) == -1)

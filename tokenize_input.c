@@ -26,6 +26,8 @@ char **tokenize_input(char *input)
 
 	while (token != NULL)
 	{
+		trim_trailing_newline_and_spaces(token);
+		/* fprintf(stderr, "DEBUG: Cleaned token: '%s'\n", token); */
 		/* fprintf(stderr, "DEBUG: Token found: '%s'\n", token); */
 
 		if (strlen(token) == 0) /* Skip empty tokens */

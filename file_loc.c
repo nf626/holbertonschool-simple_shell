@@ -110,6 +110,7 @@ char *get_file_path(char *file_name)
 	if ((file_name[0] == '/' || file_name[0] == '.') && access(file_name, X_OK) == 0)
 	{
 		result = _strdup(file_name); /* Duplicate the file name */
+		trim_trailing_newline_and_spaces(result);
 		/* fprintf(stderr, "DEBUG: file_name: %s is executable\n", file_name); */
 		if (!result)
 		{
