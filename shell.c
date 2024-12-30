@@ -42,8 +42,7 @@ if (path)
     free(args[0]);           /* Free the old args[0] */
     args[0] = path;          /* Replace with resolved path */
     execute_command(args);   /* Execute the command */
-    free(path);              /* Free path after execution */
-}
+  }
 else
 {
     write(STDERR_FILENO, args[0], _strlen(args[0]));

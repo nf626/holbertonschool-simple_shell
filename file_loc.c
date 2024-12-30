@@ -95,29 +95,28 @@ char *get_file_path(char *file_name)
 
     if (!path || path[0] == '\0') /* PATH is missing or empty */
     {
-	    write(STDERR_FILENO, file_name, _strlen(file_name));
-	    write(STDERR_FILENO, ": command not found\n", 20);
-	    return (NULL);
+        write(STDERR_FILENO, file_name, _strlen(file_name));
+        write(STDERR_FILENO, ": command not found\n", 20);
+        return (NULL);
     }
 
     /* Check if file_name is an absolute or relative path and executable */
     if ((file_name[0] == '/' || file_name[0] == '.') && access(file_name, X_OK) == 0)
     {
         result = _strdup(file_name); /* Attempt to duplicate the file name */
-    free(path); /* Free the previously allocated path */
-
-    if (!result) /* Check if _strdup failed */
-    {
-        perror("Error: strdup failed");
-        return (NULL);
-    }
-
-    return (result); 
+        if (!result) /* Check if _strdup failed */
+        {
+            perror("Error: strdup failed");
+            free(path);
+            return (NULL);
+        }
+        free(path); /* Free the previously allocated path */
+        return (result);
     }
 
     /* Search for the file in PATH directories */
     full_path = get_file_loc(path, file_name); /* Helper function for PATH search */
-    free(path);
+    free(path); /* Free path after search */
 
     if (!full_path)
     {
@@ -127,3 +126,4 @@ char *get_file_path(char *file_name)
 
     return (full_path); /* Caller must free the returned value */
 }
+

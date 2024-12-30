@@ -12,7 +12,10 @@ void free_args(char **args)
         return;
 
     for (i = 0; args[i]; i++)
+    {
         free(args[i]);
+        args[i] = NULL; /* Nullify after free to avoid reuse */
+    }
     free(args);
-    args = NULL;
+    args = NULL; /* Nullify the pointer itself */
 }

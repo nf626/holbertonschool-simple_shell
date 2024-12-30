@@ -14,7 +14,6 @@ void execute_command(char **args)
 	if (child_pid < 0)
 	{
 		perror("Failed to create process");
-		free(args);
 		exit(1);
 	}
 
@@ -23,7 +22,6 @@ void execute_command(char **args)
 		if (execve(args[0], args, NULL) == -1)
 		{
 			perror("Failed to execute");
-			free(args);
 			exit(127);
 		}
 	}
