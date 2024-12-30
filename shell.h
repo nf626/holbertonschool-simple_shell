@@ -20,5 +20,6 @@ char *_strcpy(char *dest, const char *src);
 char *_strcat(char *dest, const char *src);
 size_t _strlen(const char *s);
 int _strncmp(const char *s1, const char *s2, size_t n);
+char *get_env_value(const char *name);
 
 #endif /* MAIN_H */
