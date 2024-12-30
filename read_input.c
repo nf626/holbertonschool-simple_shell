@@ -15,6 +15,12 @@ char *read_input(void)
 
 	if (nread == -1)
 	{
+		if (!buf || buf[0] == '\0') /* Detect EOF (Ctrl+D) */
+		{
+			free(buf);
+			write(STDOUT_FILENO, "\n", 1); /* Gracefully exit with newline */
+			return (NULL);
+		}
 		free(buf);
 		perror("Exiting shell");
 		exit(1);

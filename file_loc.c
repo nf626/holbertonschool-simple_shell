@@ -89,13 +89,14 @@ char *get_file_path(char *file_name)
     if (!path)
     {
         perror("Path not found");
+	free(path);
         return (NULL);
     }
 
     if (file_name[0] == '/' && access(file_name, X_OK) == 0)
     {
         free(path);
-        return (strdup(file_name));
+        return (_strdup(file_name));
     }
 
     full_path = get_file_loc(path, file_name);
