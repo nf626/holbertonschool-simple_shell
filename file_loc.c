@@ -98,7 +98,7 @@ char *get_file_path(char *file_name)
     if ((file_name[0] == '/' || file_name[0] == '.') && access(file_name, X_OK) == 0)
     {
         free(path);
-        return (_strdup(file_name));
+        return (_strdup(file_name)); /* Caller must free the returned value */
     }
 
     /* Search for the file in PATH directories */
@@ -111,5 +111,5 @@ char *get_file_path(char *file_name)
         write(STDERR_FILENO, ": command not found\n", 20);
     }
 
-    return (full_path);
+    return (full_path); /* Caller must free the returned value */
 }
