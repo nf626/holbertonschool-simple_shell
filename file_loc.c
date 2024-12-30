@@ -88,7 +88,7 @@ char *get_file_loc(char *path, char *file_name)
  */
 char *get_file_path(char *file_name)
 {
-    char *path, *full_path;
+    char *path, *full_path, *result;
 
     /* Retrieve PATH environment variable */
     path = get_env_value("PATH"); /* Custom replacement for getenv */
@@ -103,8 +103,16 @@ char *get_file_path(char *file_name)
     /* Check if file_name is an absolute or relative path and executable */
     if ((file_name[0] == '/' || file_name[0] == '.') && access(file_name, X_OK) == 0)
     {
-        free(path);
-        return (_strdup(file_name)); /* Caller must free the returned value */
+        result = _strdup(file_name); /* Attempt to duplicate the file name */
+    free(path); /* Free the previously allocated path */
+
+    if (!result) /* Check if _strdup failed */
+    {
+        perror("Error: strdup failed");
+        return (NULL);
+    }
+
+    return (result); 
     }
 
     /* Search for the file in PATH directories */

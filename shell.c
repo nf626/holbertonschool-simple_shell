@@ -39,7 +39,10 @@ int main(void)
         path = get_file_path(args[0]);  /* Resolve command path */
         if (path)
         {
-            args[0] = path;  /* Replace with resolved path */
+		if (args[0] != path) /* Avoid overwriting without freeing */
+		{
+			free(args[0]);
+		}
             execute_command(args);  /* Execute the command */
             free(path);
         }
