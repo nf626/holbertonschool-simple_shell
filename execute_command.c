@@ -9,7 +9,7 @@ void execute_command(char **args)
 {
 	pid_t child_pid;
 	int status;
-	/* int i; */
+	int i;
 	
 	extern char **environ;
 
