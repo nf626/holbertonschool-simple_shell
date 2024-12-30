@@ -18,5 +18,7 @@ char *get_file_loc(char *path, char *file_name);
 char *_strdup(const char *str);
 char *_strcpy(char *dest, const char *src);
 char *_strcat(char *dest, const char *src);
+size_t _strlen(const char *s);
+int _strncmp(const char *s1, const char *s2, size_t n);
 
 #endif /* MAIN_H */
