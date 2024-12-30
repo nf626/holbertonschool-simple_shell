@@ -18,7 +18,7 @@ char **tokenize_input(char *input)
 		exit(1);
 	}
 
-	for (int i = 0; i < 1024; i++) /* Initialize all elements to NULL */
+	for (i = 0; i < 1024; i++)
 	{
 		args[i] = NULL;
 	}
