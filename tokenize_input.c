@@ -1,12 +1,4 @@
 #include "shell.h"
-
-/**
- * tokenize_input - Tokenizes the user input into an array of strings
- * @input: The input string
- *
- * Return: Array of tokens
- */
-
 #define INITIAL_SIZE 16
 
 /**
@@ -22,6 +14,9 @@ char **tokenize_input(char *input)
     char **args = malloc(size * sizeof(char *));
     char *token = NULL;
 
+    /* Debug: Starting function */
+    fprintf(stderr, "DEBUG: Entering tokenize_input with input: %s\n", input);
+
     if (args == NULL)
     {
         perror("malloc failed");
@@ -32,15 +27,22 @@ char **tokenize_input(char *input)
 
     while (token != NULL)
     {
-        /* Resize the array if we exceed the current size */
-        if (i >= size - 1) /* Leave room for NULL terminator */
+        fprintf(stderr, "DEBUG: Token found: '%s'\n", token);
+
+        if (strlen(token) == 0) /* Skip empty tokens */
+        {
+            fprintf(stderr, "DEBUG: Skipping empty token\n");
+            token = strtok(NULL, " \n");
+            continue;
+        }
+
+        if (i >= size - 1) /* Resize if needed */
         {
             size_t new_size = size * 2;
             char **new_args = realloc(args, new_size * sizeof(char *));
             if (new_args == NULL)
             {
                 perror("realloc failed");
-                /* Free previously allocated memory before exiting */
                 while (i > 0)
                     free(args[--i]);
                 free(args);
@@ -48,23 +50,28 @@ char **tokenize_input(char *input)
             }
             args = new_args;
             size = new_size;
+            fprintf(stderr, "DEBUG: Resized args array to new size: %lu\n", (unsigned long)size);
         }
 
-        args[i] = _strdup(token); /* Use _strdup to copy the token */
+        args[i] = _strdup(token);
         if (args[i] == NULL)
         {
             perror("strdup failed");
-            /* Free previously allocated memory before exiting */
             while (i > 0)
                 free(args[--i]);
             free(args);
             exit(EXIT_FAILURE);
         }
 
+       fprintf(stderr, "DEBUG: Added token '%s' to args[%lu]\n", args[i], (unsigned long)i);
+
         i++;
         token = strtok(NULL, " \n");
     }
 
     args[i] = NULL; /* NULL-terminate the array */
+    fprintf(stderr, "DEBUG: Tokenization complete. Total tokens: %lu\n", (unsigned long)i);
+
     return args;
 }
+

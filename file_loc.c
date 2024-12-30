@@ -93,26 +93,31 @@ char *get_file_path(char *file_name)
     /* Retrieve PATH environment variable */
     path = get_env_value("PATH"); /* Custom replacement for getenv */
 
+    fprintf(stderr, "DEBUG: Entering get_file_path with file_name: %s\n", file_name);
+
     if (!path || path[0] == '\0') /* PATH is missing or empty */
     {
+        fprintf(stderr, "DEBUG: PATH is missing or empty\n");
         write(STDERR_FILENO, file_name, _strlen(file_name));
         write(STDERR_FILENO, ": command not found\n", 20);
         return (NULL);
     }
 
     /* Check if file_name is an absolute or relative path and executable */
-    if ((file_name[0] == '/' || file_name[0] == '.') && access(file_name, X_OK) == 0)
+    fprintf(stderr, "DEBUG: file_name: %s\n", file_name);
+if ((file_name[0] == '/' || file_name[0] == '.') && access(file_name, X_OK) == 0)
+{
+    fprintf(stderr, "DEBUG: %s is an executable path\n", file_name);
+    result = _strdup(file_name); /* Duplicate the file name */
+    if (!result)
     {
-        result = _strdup(file_name); /* Attempt to duplicate the file name */
-        if (!result) /* Check if _strdup failed */
-        {
-            perror("Error: strdup failed");
-            free(path);
-            return (NULL);
-        }
-        free(path); /* Free the previously allocated path */
-        return (result);
+        perror("Error: strdup failed");
+        free(path);
+        return (NULL);
     }
+    free(path); /* Free the allocated PATH */
+    return (result);
+}
 
     /* Search for the file in PATH directories */
     full_path = get_file_loc(path, file_name); /* Helper function for PATH search */

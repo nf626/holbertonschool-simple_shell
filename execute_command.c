@@ -4,10 +4,11 @@
  * execute_command - Executes a command
  * @args: The array of arguments
  */
+
 void execute_command(char **args)
 {
     pid_t child_pid;
-    int status;
+    int status, i = 0;
 
     child_pid = fork();
 
@@ -19,7 +20,18 @@ void execute_command(char **args)
 
     if (child_pid == 0) /* Child process */
     {
-        if (execve(args[0], args, NULL) == -1)
+        /* Pass the current environment to execve */
+        extern char **environ;
+
+        /* Add debug statements */
+        fprintf(stderr, "DEBUG: About to execute: %s with args:\n", args[0]);
+        for (i = 0; args[i] != NULL; i++)
+        {
+            fprintf(stderr, "DEBUG: args[%d]: %s\n", i, args[i]);
+        }
+
+        /* Execute the command */
+        if (execve(args[0], args, environ) == -1)
         {
             perror("Execution failed");
             exit(127);
@@ -33,3 +45,4 @@ void execute_command(char **args)
         }
     }
 }
+
