@@ -6,38 +6,49 @@
  *
  * Return: Array of tokens
  */
+
+#define INITIAL_SIZE 16
+
 char **tokenize_input(char *input)
 {
-	char **args = malloc(sizeof(char *) * 1024);
-	char *token = NULL;
-	int i = 0;
+    size_t size = INITIAL_SIZE; /* Initial size of the array */
+    size_t i = 0;
+    char **args = malloc(size * sizeof(char *));
+    char *token = NULL;
 
-	if (args == NULL)
-	{
-		perror("malloc failed");
-		exit(1);
-	}
+    if (args == NULL)
+    {
+        perror("malloc failed");
+        exit(1);
+    }
 
-	for (i = 0; i < 1024; i++)
-	{
-		args[i] = NULL;
-	}
-	
-	token = strtok(input, " \n");
+    token = strtok(input, " \n");
 
-	while (token != NULL)
-	{
-		args[i] = _strdup(token);
-		if (!args[i])
-		{
-			perror("strdup failed");
-			exit(1);
-		}
-		args[i] = token;
-		token = strtok(NULL, " \n");
-		i++;
-	}
+    while (token != NULL)
+    {
+        if (i >= size) /* Resize if we exceed the current size */
+        {
+            size *= 2;
+            args = realloc(args, size * sizeof(char *));
+            if (args == NULL)
+            {
+                perror("realloc failed");
+                exit(1);
+            }
+        }
 
-	args[i] = NULL;
-	return (args);
+        args[i] = _strdup(token); /* Use _strdup to copy the token */
+        if (args[i] == NULL)
+        {
+            perror("strdup failed");
+            exit(1);
+        }
+
+        i++;
+        token = strtok(NULL, " \n");
+    }
+
+    args[i] = NULL; /* NULL-terminate the array */
+    return args;
 }
+

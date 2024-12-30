@@ -83,23 +83,26 @@ char *get_file_loc(char *path, char *file_name)
  */
 char *get_file_path(char *file_name)
 {
-    char *path = get_env_value("PATH"); /* Replace getenv */
-    char *full_path;
+    char *path, *full_path;
+
+    /* Retrieve PATH environment variable */
+    path = get_env_value("PATH"); /* Custom replacement for getenv */
 
     if (!path)
     {
         perror("Path not found");
-	free(path);
         return (NULL);
     }
 
-    if (file_name[0] == '/' && access(file_name, X_OK) == 0)
+    /* Check if file_name is an absolute or relative path and executable */
+    if ((file_name[0] == '/' || file_name[0] == '.') && access(file_name, X_OK) == 0)
     {
         free(path);
         return (_strdup(file_name));
     }
 
-    full_path = get_file_loc(path, file_name);
+    /* Search for the file in PATH directories */
+    full_path = get_file_loc(path, file_name); /* Helper function for PATH search */
     free(path);
 
     if (!full_path)
