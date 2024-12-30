@@ -6,27 +6,30 @@
  */
 void execute_command(char **args)
 {
-	pid_t child_pid;
-	int status;
+    pid_t child_pid;
+    int status;
 
-	child_pid = fork();
+    child_pid = fork();
 
-	if (child_pid < 0)
-	{
-		perror("Failed to create process");
-		exit(1);
-	}
+    if (child_pid < 0) /* Fork failed */
+    {
+        perror("Fork failed");
+        exit(1);
+    }
 
-	if (child_pid == 0) /* Child process */
-	{
-		if (execve(args[0], args, NULL) == -1)
-		{
-			perror("Failed to execute");
-			exit(127);
-		}
-	}
-	else /* Parent process */
-	{
-		wait(&status);
-	}
+    if (child_pid == 0) /* Child process */
+    {
+        if (execve(args[0], args, NULL) == -1)
+        {
+            perror("Execution failed");
+            exit(127);
+        }
+    }
+    else /* Parent process */
+    {
+        if (waitpid(child_pid, &status, 0) == -1) /* Ensure child termination */
+        {
+            perror("Wait failed");
+        }
+    }
 }
