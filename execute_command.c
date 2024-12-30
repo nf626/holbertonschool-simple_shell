@@ -31,7 +31,7 @@ void execute_command(char **args)
 		for (i = 0; args[i] != NULL; i++)
 		{
 			trim_trailing_newline_and_spaces(args[i]);
-			fprintf(stderr, "DEBUG: args[%d]: '%s'\n", i, args[i]);
+			/* fprintf(stderr, "DEBUG: args[%d]: '%s'\n", i, args[i]); */
 		}
 
 		/* Execute the command */
