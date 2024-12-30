@@ -14,5 +14,5 @@ void free_args(char **args)
     for (i = 0; args[i]; i++)
         free(args[i]);
     free(args);
-    args = NULL; // Avoid accidental reuse
+    args = NULL;
 }
