@@ -19,9 +19,19 @@ int fork_process(char *lineptr, char *argv[])
     }
   else if (child_pid == 0)
     {
-      if (strcmp(argv[0], "ls") == 0)
+      if (strcmp(argv[0], "ls") == 0 && argv[1] == NULL)
 	{
 	  char *ls_arg[] = {"ls", NULL};
+	  if (execve("/bin/ls", ls_arg, environ) == -1)
+	    {
+	      free(lineptr);
+	      perror("./shell");
+	    }
+	}
+      
+      if (strcmp(argv[0], "ls") == 0 && strcmp(argv[1], "-l") == 0 && argv[2] == NULL)
+	{
+	  char *ls_arg[] = {"ls", "-l", NULL};
 	  if (execve("/bin/ls", ls_arg, environ) == -1)
 	    {
 	      free(lineptr);

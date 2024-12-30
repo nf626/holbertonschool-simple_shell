@@ -24,5 +24,5 @@ void non_interactive(void)
     /** printf("status is: %d\n", status); Debug status*/
     /** free memory */
     free(lineptr);
-  } while (status);
+  } while (status == 1);
 }
