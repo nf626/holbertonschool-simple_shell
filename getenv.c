@@ -15,7 +15,9 @@ char *get_env_value(const char *name)
 	int i;
 
 	if (!name)
+	{
 		return (NULL);
+	}
 
 	name_len = _strlen(name);
 
