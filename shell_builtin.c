@@ -37,9 +37,9 @@ int ss_exit(char **argv)
 {
   if (strcmp(argv[0], "exit") == 0)
     {
-      return (0);
+      exit(EXIT_SUCCESS);
     }
-  return (1);
+      return (0);
 }
 /** 
  * ss_env - Print shell environment.

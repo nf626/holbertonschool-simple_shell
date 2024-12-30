@@ -21,20 +21,19 @@ int fork_process(char *lineptr, char *argv[])
     {
       if (strcmp(argv[0], "ls") == 0)
 	{
-	  char *ls_arg[] = {"ls", "-l", NULL};
+	  char *ls_arg[] = {"ls", NULL};
 	  if (execve("/bin/ls", ls_arg, environ) == -1)
 	    {
 	      free(lineptr);
 	      perror("./shell");
 	    }
-	  _exit(2);
 	}
       if (execve(argv[0], argv, environ) == -1)
 	{
 	  free(lineptr);
 	  perror("./shell");
 	}
-      _exit(2);
+      exit(EXIT_SUCCESS);
     }
   else
     {
