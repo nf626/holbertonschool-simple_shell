@@ -29,7 +29,7 @@ int main(void)
             continue;
         }
 
-        if (_strncmp(args[0], "exit") == 0)  /* Handle 'exit' */
+        if (_strncmp(args[0], "exit", 4) == 0)  /* Handle 'exit' */
         {
             free(input);
             free_args(args);
