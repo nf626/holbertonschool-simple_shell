@@ -28,7 +28,7 @@ char **tokenize_input(char *input)
 	while (token != NULL)
 	{
 		args[i] = _strdup(token);
-		if (!args[index])
+		if (!args[i])
 		{
 			perror("strdup failed");
 			exit(1);
