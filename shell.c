@@ -11,7 +11,7 @@ int main(int argc, char *argv[])
 {
 	(void)argc;
 	(void)argv;
-	char *input = NULL;
+	char *input = NULL, *path;
 	char **args = NULL;
 
 	while (1)
@@ -20,12 +20,18 @@ int main(int argc, char *argv[])
 		input = read_input();
 
 		if (input == NULL) /* Handle EOF (Ctrl+D) */
+		{
 			break;
+		}
 
 		args = tokenize_input(input);
 
+		path = get_file_path(array[0]);
+
 		if (args[0] != NULL) /* Only execute if a command is entered */
+		{
 			execute_command(args);
+		}
 
 		free(input);
 		free(args);

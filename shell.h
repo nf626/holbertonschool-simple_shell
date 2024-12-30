@@ -12,5 +12,7 @@ void print_prompt(void);
 char *read_input(void);
 char **tokenize_input(char *input);
 void execute_command(char **args);
+char *get_file_path(char *file_name);
+char *get_file_loc(char *path, char *file_name);
 
 #endif /* MAIN_H */
