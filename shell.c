@@ -30,7 +30,13 @@ int main(int argc, char *argv[])
 
 		if (args[0] != NULL) /* Only execute if a command is entered */
 		{
-			execute_command(args);
+			path = get_file_path(args[0]); /* Get the full path */
+			if (path != NULL) /* If path is valid, execute the command */
+			{
+				args[0] = path; /* Update the command to the full path */
+				execute_command(args);
+				free(path); /* Free the allocated path */
+			}
 		}
 
 		free(input);

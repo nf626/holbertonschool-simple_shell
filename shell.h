@@ -14,5 +14,8 @@ char **tokenize_input(char *input);
 void execute_command(char **args);
 char *get_file_path(char *file_name);
 char *get_file_loc(char *path, char *file_name);
+char *_strdup(const char *str);
+char *_strcpy(char *dest, const char *src);
+char *_strcat(char *dest, const char *src);
 
 #endif /* MAIN_H */
