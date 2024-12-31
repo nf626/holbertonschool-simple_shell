@@ -1,4 +1,5 @@
 #include "shell.h"
+#define DELIMIT " \t\n"
 
 /**
  * parse_line - Split string into multiple strings.
@@ -6,30 +7,36 @@
  *
  * Return: Array of splitted string tokens.
  */
-void parse_line(char *lineptr, char *argv[], size_t n, ssize_t char_read)
+char **parse_line(char *lineptr)
 {
-  size_t i;
-  
-  char *token = strtok(lineptr, " \t\n\r");
+  int buffer_size = 64, i = 0;
+  char *token;
+  char **cmd = malloc(sizeof(char *) * buffer_size);
 
-  if (lineptr[char_read - 1] == '\n')
+  if (cmd == NULL)
     {
-      lineptr[char_read - 1] = '\0';
+      perror("Error cmd:");
+      exit(EXIT_FAILURE);
     }
-  if (token != NULL)
+
+  token = strtok(lineptr, DELIMIT);
+
+  while (token != NULL)
     {
-      i = 0;
-      while (i < n && token != NULL)
+      cmd[i] = token;
+      i = i + 1;
+      if (i >= buffer_size)
 	{
-	  /** Handle comments */
-	  if (token[0] == '#')
+	  buffer_size = buffer_size + buffer_size;
+	  cmd = realloc(cmd, buffer_size * sizeof(char *));
+	  if (cmd == NULL)
 	    {
-	      break;
+	      perror("Reallocation failed");
+	      exit(EXIT_FAILURE);
 	    }
-	  argv[i] = token;
-	  token = strtok(NULL, " \t\n\r");
-	  i = i + 1;
 	}
-      argv[i] = NULL;
+      token = strtok(NULL, DELIMIT);
     }
+  cmd[i] = NULL;
+  return (cmd);
 }

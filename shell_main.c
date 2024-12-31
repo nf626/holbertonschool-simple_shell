@@ -7,16 +7,22 @@
  */
 int main(void)
 {
-  while (1)
+  int status = 1;
+  
+  if (isatty(STDIN_FILENO) == 1)
     {
-      if (isatty(STDIN_FILENO) == 1)
+      while (status == 1)
 	{
-	  interactive();
-	}
-      else
-	{
-	  non_interactive();
+	  status = interactive();
 	}
     }
+  else
+    {
+      while (1)
+	{
+	  status = non_interactive();
+	}
+    }
+      
 return (0);
 }

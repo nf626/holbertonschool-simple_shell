@@ -6,7 +6,7 @@
  *
  * Return: 1 on Success, 0 otherwise.
  */
-int execute(char *lineptr, char *argv[])
+int execute(char **argv)
 { 
   int i = 0;
   /** empty command was entered */
@@ -23,5 +23,5 @@ int execute(char *lineptr, char *argv[])
 	}
       i = i + 1;
     }
-  return (fork_process(lineptr, argv));
+  return (fork_process(argv));
 }
