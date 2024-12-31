@@ -13,9 +13,10 @@ int ls_process(char **argv)
 
   if (argv == NULL)
     {
-      return (1);
+      exit(EXIT_FAILURE);
     }
-  else
+
+  if (argv[1] == NULL)
     {
       child_pid = fork();
       if (child_pid == 0)
@@ -41,5 +42,32 @@ int ls_process(char **argv)
 	  } while (!WIFEXITED(status) && !WIFSIGNALED(status));
 	}
     }
+  else if (strcmp(argv[1], "-l") == 0 && argv[1] != NULL)
+    {
+      child_pid = fork();
+      if (child_pid == 0)
+	{
+	  char *ls_l[] = {"ls", "-l", NULL};
+	  execve("/bin/ls", ls_l, environ);
+	  if (execve("/bin/ls", ls_l, environ) == -1)
+	    {
+	      perror("./builtin_shell");
+	      exit(EXIT_FAILURE);
+	    }
+	  exit(EXIT_SUCCESS);
+	}
+      else if (child_pid < 0)
+	{
+	  perror("Error builtin");
+	  _exit(0);
+	}
+      else
+	{
+	  do {
+	    waitpid(child_pid, &status, WUNTRACED);
+	  } while (!WIFEXITED(status) && !WIFSIGNALED(status));
+	}
+    }
+  
   return (0);
 }
