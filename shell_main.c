@@ -20,8 +20,9 @@ int main(void)
     {
       while (1)
 	{
-	  status = non_interactive();
+	  non_interactive();
 	}
+      return (0);
     }
       
 return (0);

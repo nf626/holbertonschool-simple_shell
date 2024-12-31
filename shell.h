@@ -13,7 +13,7 @@ extern char **environ;
 
 /** shell_main.c */
 int interactive(void);
-int non_interactive(void);
+void non_interactive(void);
 
 /** Shell interactive */
 char *read_input(void);
