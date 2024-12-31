@@ -1,5 +1,5 @@
 #include "shell.h"
-#define DELIMIT " \t\n\r;"
+#define DELIMIT " \t\n\r"
 
 /**
  * parse_input - Split string into multiple strings.
@@ -32,7 +32,7 @@ char **parse_input(char *lineptr)
       if (i >= buffer_size)
 	{
 	  buffer_size = buffer_size + buffer_size;
-	  cmd = realloc(cmd, buffer_size * sizeof(char *));
+	  cmd = realloc(cmd, sizeof(char *) * buffer_size);
 	  if (cmd == NULL)
 	    {
 	      perror("Reallocation failed");

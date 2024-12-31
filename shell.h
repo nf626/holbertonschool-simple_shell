@@ -23,10 +23,7 @@ int execute(char **argv);
 /** Execute arguments */
 int fork_process(char **argv);
 
-/** Builtin functions */
-extern char *builtin_list[];
-extern int (*builtin_func[])(char **);
-int ss_num(void);
+/** Builtin functions and Execute */
 int ss_exit(char **argv);
 int ss_env(char **argv);
 int ss_bin_ls(char **argv);
