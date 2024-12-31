@@ -1,5 +1,4 @@
 #include "shell.h"
-#define DELIMIT " \t\n\r"
 
 /**
  * parse_line - Split string into multiple strings.
