@@ -3,7 +3,7 @@
 /**
  * interactive - User command input to terminal.
  */
-int interactive(void)
+void interactive(void)
 {
   char *lineptr = NULL;
   char **argv;
@@ -19,5 +19,4 @@ int interactive(void)
     free(lineptr);
     free(argv);
   } while (status == 1);
-  return (status);
 }

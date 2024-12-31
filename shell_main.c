@@ -6,12 +6,10 @@
  * Return: 0 on Success.
  */
 int main(void)
-{
-  int status = 1;
-  
+{ 
   if (isatty(STDIN_FILENO) == 1)
     {
-      status = interactive();
+      interactive();
     }
   else
     {
