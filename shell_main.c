@@ -11,18 +11,11 @@ int main(void)
   
   if (isatty(STDIN_FILENO) == 1)
     {
-      while (status == 1)
-	{
-	  status = interactive();
-	}
+      status = interactive();
     }
   else
     {
-      while (1)
-	{
-	  non_interactive();
-	}
-      return (0);
+      non_interactive();
     }
       
 return (0);
