@@ -7,13 +7,22 @@
  */
 int main(void)
 {
-if (isatty(STDIN_FILENO) == 1)
-{
-interactive();
-}
-else
-{
-non_interactive();
-}
+  int status = 1;
+  
+  if (isatty(STDIN_FILENO) == 1)
+    {
+      while (status == 1)
+	{
+	  status = interactive();
+	}
+    }
+  else
+    {
+      while (1)
+	{
+	  status = non_interactive();
+	}
+    }
+      
 return (0);
 }

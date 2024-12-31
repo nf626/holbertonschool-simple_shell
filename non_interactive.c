@@ -3,7 +3,7 @@
 /**
  * non_interactive - Terminal command.
  */
-void non_interactive(void)
+int non_interactive(void)
 {
  char *lineptr = NULL;
  char **argv;
@@ -16,5 +16,7 @@ void non_interactive(void)
    
    free(lineptr);
    free(argv);
+   printf("status = %d\n", status);
  } while (status);
+ return (status);
 }

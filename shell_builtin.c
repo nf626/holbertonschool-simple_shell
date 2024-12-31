@@ -8,7 +8,7 @@
 char *builtin_list[] = {
   "exit",
   "env",
-  "/bin/ls"
+  "ls"
 };
 /**
  * builtin_func - Function pointer to list the functions to get from builtin_list.
@@ -66,7 +66,7 @@ int ss_env(char **argv)
 */
 int ss_bin_ls(char **argv)
 {
-  if (strcmp(argv[0], "/bin/ls") == 0)
+  if (strcmp(argv[0], "ls") == 0)
     {
       ls_process(argv);
       return (0);

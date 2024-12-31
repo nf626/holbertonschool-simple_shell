@@ -27,11 +27,12 @@ int ls_process(char **argv)
 	      perror("./builtin_shell");
 	      exit(EXIT_FAILURE);
 	    }
-	  _exit(2);
+	  exit(EXIT_SUCCESS);
 	}
       else if (child_pid < 0)
 	{
 	  perror("Error builtin");
+	  _exit(0);
 	}
       else
 	{
