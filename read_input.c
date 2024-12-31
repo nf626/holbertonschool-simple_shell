@@ -16,7 +16,7 @@ char_read = getline(&lineptr, &n, stdin);
 if (char_read == -1)
 {
 free(lineptr);
-exit(EXIT_FAILURE);
+exit(EXIT_SUCCESS);
 }
 return (lineptr);
 }
