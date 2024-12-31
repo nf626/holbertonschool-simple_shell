@@ -20,9 +20,13 @@ char **parse_input(char *lineptr)
     }
 
   token = strtok(lineptr, DELIMIT);
-
   while (token != NULL)
     {
+      /** Handle comments */
+      if (token[0] == '#')
+	{
+	  break;
+	}
       cmd[i] = token;
       i = i + 1;
       if (i >= buffer_size)

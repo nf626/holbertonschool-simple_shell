@@ -12,7 +12,7 @@ int execute(char **argv)
   /** empty command was entered */
   if (argv[0] == NULL)
     {
-      return (0);
+      return (-1);
     }
 
   while (i < ss_num())
