@@ -1,13 +1,21 @@
 #include "shell.h"
 
 /**
+<<<<<<< HEAD
  * fork_process - Forks a child process to execute a command.
  * @argv: Arguments array where argv[0] is the command name.
  *
  * Return: 1 on success.
+=======
+ * fork_process - Create a new process.
+ * @argv: command arguments.
+ *
+ * Return: 0 on Success.
+>>>>>>> nigel_shell
  */
-int fork_process(char **argv)
+int fork_process(char *lineptr, char *argv[])
 {
+<<<<<<< HEAD
 	pid_t child_pid;
 	int status;
 	char *path = getenv("PATH");
@@ -84,4 +92,50 @@ int fork_process(char **argv)
 	}
 	
 	return (1); /* Success in executing fork_process */
+=======
+  pid_t child_pid;
+  int status;
+
+  child_pid = fork();
+  if (child_pid < 0)
+    {
+      perror("Error fork failed");
+      exit(EXIT_FAILURE);
+    }
+  else if (child_pid == 0)
+    {
+      if (strcmp(argv[0], "ls") == 0 && argv[1] == NULL)
+	{
+	  char *ls_arg[] = {"ls", NULL};
+	  if (execve("/bin/ls", ls_arg, environ) == -1)
+	    {
+	      free(lineptr);
+	      perror("./shell");
+	    }
+	}
+      
+      if (strcmp(argv[0], "ls") == 0 && strcmp(argv[1], "-l") == 0 && argv[2] == NULL)
+	{
+	  char *ls_arg[] = {"ls", "-l", NULL};
+	  if (execve("/bin/ls", ls_arg, environ) == -1)
+	    {
+	      free(lineptr);
+	      perror("./shell");
+	    }
+	}
+      if (execve(argv[0], argv, environ) == -1)
+	{
+	  free(lineptr);
+	  perror("./shell");
+	}
+      exit(EXIT_SUCCESS);
+    }
+  else
+    {
+      do {
+	waitpid(child_pid, &status, WUNTRACED);
+      } while (!WIFEXITED(status) && !WIFSIGNALED(status));
+    }
+  return (0);
+>>>>>>> nigel_shell
 }
