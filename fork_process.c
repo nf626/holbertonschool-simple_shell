@@ -28,7 +28,6 @@ int fork_process(char *lineptr, char *argv[])
 	      perror("./shell");
 	    }
 	}
-      
       if (strcmp(argv[0], "ls") == 0 && strcmp(argv[1], "-l") == 0 && argv[2] == NULL)
 	{
 	  char *ls_arg[] = {"ls", "-l", NULL};
@@ -43,7 +42,7 @@ int fork_process(char *lineptr, char *argv[])
 	  free(lineptr);
 	  perror("./shell");
 	}
-      exit(EXIT_SUCCESS);
+      exit(EXIT_FAILURE);
     }
   else
     {
