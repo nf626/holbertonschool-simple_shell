@@ -6,15 +6,17 @@
  * Return: 0 on Success.
  */
 int main(void)
-{ 
-  if (isatty(STDIN_FILENO) == 1)
+{
+  while (1)
     {
-      interactive();
+      if (isatty(STDIN_FILENO) == 1)
+	{
+	  interactive();
+	}
+      else
+	{
+	  non_interactive();
+	}
     }
-  else
-    {
-      non_interactive();
-    }
-      
 return (0);
 }

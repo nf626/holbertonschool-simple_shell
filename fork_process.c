@@ -19,11 +19,11 @@ int fork_process(char **argv)
 	  perror("./shell");
 	  exit(EXIT_FAILURE);
 	}
-      exit(EXIT_SUCCESS);
     }
   else if (child_pid < 0)
     {
       perror("Error fork failed");
+      _exit(EXIT_FAILURE);
     }
   else
     {

@@ -13,7 +13,7 @@ int ls_process(char **argv)
 
   if (argv == NULL)
     {
-      exit(EXIT_FAILURE);
+      exit(EXIT_SUCCESS);
     }
 
   if (argv[1] == NULL)
@@ -22,18 +22,17 @@ int ls_process(char **argv)
       if (child_pid == 0)
 	{
 	  char *ls[] = {"ls", NULL};
-	  execve("/bin/ls", ls, environ);
 	  if (execve("/bin/ls", ls, environ) == -1)
 	    {
 	      perror("./builtin_shell");
 	      exit(EXIT_FAILURE);
 	    }
-	  exit(EXIT_SUCCESS);
+	  return (0);
 	}
       else if (child_pid < 0)
 	{
 	  perror("Error builtin");
-	  _exit(0);
+	  _exit(EXIT_FAILURE);
 	}
       else
 	{
@@ -48,18 +47,17 @@ int ls_process(char **argv)
       if (child_pid == 0)
 	{
 	  char *ls_l[] = {"ls", "-l", NULL};
-	  execve("/bin/ls", ls_l, environ);
 	  if (execve("/bin/ls", ls_l, environ) == -1)
 	    {
 	      perror("./builtin_shell");
 	      exit(EXIT_FAILURE);
 	    }
-	  exit(EXIT_SUCCESS);
+	  return (0);
 	}
       else if (child_pid < 0)
 	{
 	  perror("Error builtin");
-	  _exit(0);
+	  _exit(EXIT_FAILURE);
 	}
       else
 	{
@@ -68,6 +66,5 @@ int ls_process(char **argv)
 	  } while (!WIFEXITED(status) && !WIFSIGNALED(status));
 	}
     }
-  
   return (0);
 }
