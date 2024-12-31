@@ -1,13 +1,13 @@
 #include "shell.h"
-#define DELIMIT " \t\n"
+#define DELIMIT " \t\n\r"
 
 /**
- * parse_line - Split string into multiple strings.
+ * parse_input - Split string into multiple strings.
  * @lineptr: String passed to be splitted.
  *
  * Return: Array of splitted string tokens.
  */
-char **parse_line(char *lineptr)
+char **parse_input(char *lineptr)
 {
   int buffer_size = 64, i = 0;
   char *token;

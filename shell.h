@@ -17,14 +17,11 @@ void non_interactive(void);
 
 /** Shell interactive */
 char *read_input(void);
-char **parse_line(char *lineptr);
+char **parse_input(char *lineptr);
 int execute(char **argv);
 
 /** Execute arguments */
 int fork_process(char **argv);
-
-/** Shell non-interactive */
-char *read_stream(void);
 
 /** Builtin functions */
 extern char *builtin_list[];
@@ -36,13 +33,9 @@ int ss_bin_ls(char **argv);
 
 /** Environment variables */
 int print_env(void);
-char *_getenv(char *env_var);
+char *get_env(char *env_var);
 char *get_command(char *command);
-int _setenv(const char *name, const char *value, int overwrite);
-
-/** Check input */
-int _print_str(char *string);
-int _putchar(char c);
+int set_env(const char *name, const char *value, int overwrite);
 
 /** New process */
 int ls_process(char **argv);

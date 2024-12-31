@@ -11,7 +11,7 @@ void non_interactive(void)
 
  do {
    lineptr = read_input();
-   argv = parse_line(lineptr);
+   argv = parse_input(lineptr);
    status = execute(argv);
    
    free(lineptr);
