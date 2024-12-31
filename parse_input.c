@@ -1,5 +1,5 @@
 #include "shell.h"
-#define DELIMIT " \t\n\r"
+#define DELIMIT " \t\n\r;"
 
 /**
  * parse_input - Split string into multiple strings.
