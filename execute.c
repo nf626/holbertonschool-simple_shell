@@ -29,21 +29,6 @@ int ss_env(char **argv)
   return (0);
 }
 
-/** 
- * ss_bin_ls - Print ls command.
- * @argv: String passed by user/terminal.
- *
- * Return: 0 on Success.
-*/
-int ss_bin_ls(char **argv)
-{
-  if (strcmp(argv[0], "ls") == 0)
-    {
-      ls_process(argv);
-    }
-  return (0);
-}
-
 /**
  * execute - map if command is a builtin or a process.
  * @argv: command arguments.
@@ -59,8 +44,7 @@ int execute(char **argv)
  */
 char *builtin_list[] = {
   "exit",
-  "env",
-  "ls"
+  "env"
 };
 /**
  * builtin_func - Function pointer to list the functions to get from builtin_list.
@@ -69,8 +53,7 @@ char *builtin_list[] = {
  */
 int (*builtin_func[])(char **) = {
   &ss_exit,
-  &ss_env,
-  &ss_bin_ls
+  &ss_env
 };
  
   unsigned int i = 0;
