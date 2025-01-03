@@ -1,56 +1,69 @@
-.TH PROLOG
-This manual is for the ./hsh simple shell program made for Holberton school. 
+.TH man 1 "December 2024" "V1.0" "UNIX simple shell man page"
 
 .SH NAME
-hsh - initializes the simple shell
+hsh \- initialises the UNIX simple shell standard command-line interpreter.
 
 .SH SYNOPSIS
-
+[command_file [argument...]]
 
 .SH DESCRIPTION
-The .hsh program is a command language interpreter that reads and executes commands from a command
-line string or standard input.
+The .hsh simple shell is a command-line interpreter that reads and executes commands from a command line string, standard input or a specified file.
 
-.SH RETURN
+# - Insert the character '#' at any point in the current command line and treat the resulting edit line as a comment. This line shall return nothing.
 
-.SH BUILTIN COMMANDS
-env - environment 
-Run a program in a modified environment.
+.SH ENVIRONMENT VARIABLES
+.SS ENV
+.P
+This variable when invoked in the simple shell, shall be subjected to parameter expansion by the shell. This variable stores the string of arrays (list) of environment variables in the format of: VARIABLE=value. The resulting value will be used as a pathname of a file containing shell commands to execute in the current environment.
 
-exit - 
-Exits the currently running program.
+.SS PATH
+.P
+Specifies a set of directories where executable programs are located.
 
-ls - list directory
-List information about the files and directories in the current directory. 
+.SS PWD
+.P
+This variable represents an absolute pathname of the current working directory.
 
-.SH PARAMETERS
+.SS SHELL VARIABLES
+.SS EXIT
+.P
+Exits the currently running shell program.
 
-.SH USAGE EXAMPLE
-Initilize the program with ./hsh 
+.SH EXAMPLES
+.P
+Interactive mode:
+root:~/shell$ ./hsh
+#cisfun$ /bin/ls
+barbie_j       env-main.c  exec.c  fork.c  pid.c  ppid.c    prompt   prompt.c  shell.c  stat.c         wait
+env-environ.c  exec    fork    mypid   ppid   printenv  promptc  shell     stat test_scripting.sh  wait.c
 
-Input a given command and press enter
-
-View the bulitin commands section for list of avaliable commands. 
+.P
+Non-interactive mode:
+root:~/shell$ echo "/bin/ls" | ./hsh
+barbie_j       env-main.c  exec.c  fork.c  pid.c  ppid.c    prompt   prompt.c  shell.c  stat.c         wait
+env-environ.c  exec    fork    mypid   ppid   printenv  promptc  shell     stat test_scripting.sh  wait.c
 
 .SH LIMITATIONS
 
-.SH BUGS
 
-.SH ERRORS
+.SH BUGS
+No known bugs as of December 2024.
+
+
+.SH NOTES
+This implementation of simple shell does not handle all builtin commands.
+
 
 .SH CONFORMING TO
 
-The _printf() follows the standard
+The .hsh simple shell follows the standard
 .B ANSI C, C89 C programming language
 , any later versions of C programming language may cause syntax errors.
 
-.SH AUTHOR
-This function was developed by Nigel Feng, Rico Pascua and Won Chak Leung as a project of the Holberton School Australia.
-.B Simple Shell
-This function was developed by Nigel Feng, Rico Pascua and Won Chak Leung as a project of the Holberton School Australia.
+.SH AUTHORS
+.B .hsh Simple Shell
+This function was developed by Nigel Feng, Rico Pascua and Won Chak Leung as a project of the Holberton School Australia curriculum.
 
 .SH SEE ALSO
-.B printf(1), printf(3), stdarg(3), string(3), stdlib.h(0p), limits.h(0p).
-
-.SH COPYRIGHT
-lolololololol
+.B
+sh(1), csh(1), ksh(1), bash(1), exit(1)
