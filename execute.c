@@ -37,20 +37,11 @@ int ss_env(char **argv)
  */
 int execute(char **argv)
 {
-  /**
- * builtin_list - Pointer to list of strings.
- * 
- * Return: String matched to user/terminal input.
- */
 char *builtin_list[] = {
   "exit",
   "env"
 };
-/**
- * builtin_func - Function pointer to list the functions to get from builtin_list.
- * 
- * Return: builtin_list command.
- */
+
 int (*builtin_func[])(char **) = {
   &ss_exit,
   &ss_env
