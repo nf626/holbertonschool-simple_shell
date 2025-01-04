@@ -5,7 +5,7 @@ This repository contains the files required to initialise the UNIX simple shell 
 ___
 
 ## About this project
-This project is made for Holberton School. It is a simple, stripped down version of the linux shell, created with the C programming language, 
+This project is made for Holberton School Australia. It is a simple, stripped down version of the UNIX shell, created with the C programming language.
 ___
 
 ## Flowchart
@@ -89,7 +89,7 @@ total 68
 ```
 ___
 
-# Authors
--[Nigel Feng] - (https://github.com/nf626)
-*[Rico Pascua] - (https://github.com/FullTiltHeatstroke)
-+[Won Chak Leung] - (https://github.com/chak8x8)
+## Authors
+- [Nigel Feng](https://github.com/nf626)
+- [Rico Pascua](https://github.com/FullTiltHeatstroke)
+- [Won Chak Leung](https://github.com/chak8x8)
