@@ -9,7 +9,7 @@ This project is made for Holberton School Australia. It is a simple, stripped do
 ___
 
 ## Flowchart
-Our thought process for developing a UNIX simple shell.
+Our thought process for developing an UNIX simple shell.
 ![image](https://github.com/user-attachments/assets/7386f02d-16f7-4074-aca0-2a476dfc9aa6)
 ___
 
