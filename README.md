@@ -34,6 +34,7 @@ ___
 
 # Examples
 ## Interactive Mode
+Using /bin/ls or ls command lists the current directory contents of files and directories.
 ```c
 #cisfun$ /bin/ls
 AUTHORS         execute.c       interactive.c       parse_input.c  shell_main.c
@@ -41,6 +42,7 @@ README.md       fork_process.c  man_1_simple_shell  read_input.c
 environ_path.c  hsh             non_interactive.c   shell.h
 #cisfun$ exit
 ```
+Using /bin/ls -l or ls -l command lists the current directory contents of files and directories in long format.
 ```c
 #cisfun$ /bin/ls -l
 total 68
@@ -88,7 +90,6 @@ total 68
 ___
 
 # Authors
-<hr>
-[Nigel Feng] - (https://github.com/nf626)
-[Rico Pascua] - (https://github.com/FullTiltHeatstroke)
-[Won Chak Leung] - (https://github.com/chak8x8)
+-[Nigel Feng] - (https://github.com/nf626)
+*[Rico Pascua] - (https://github.com/FullTiltHeatstroke)
++[Won Chak Leung] - (https://github.com/chak8x8)
