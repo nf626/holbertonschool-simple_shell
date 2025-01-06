@@ -60,7 +60,7 @@ char *find_command_in_path(char *command)
 	}
 
 	/* Get PATH from environment (allowed to pass environ) */
-	path_env = getenv("PATH");
+	path_env = _getenv("PATH");
 	if (!path_env)
 		return (NULL);
 
