@@ -15,7 +15,7 @@ Our thought process of how an UNIX shell works.
 
 ___
 ## How to Compile
-All files are compiled using gcc (Ubuntu 9.4.0-1ubuntu1~22.04) using flags: -Wall -Werror -Wextra -pedantic -std=gnu89
+All files are compiled using gcc (Ubuntu 12.3.0-1ubuntu1~22.04) using flags: -Wall -Werror -Wextra -pedantic -std=gnu89
 
 ```bash
 gcc -Wall -Werror -Wextra -pedantic -std=gnu89 *.c -o hsh
