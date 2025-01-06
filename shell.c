@@ -32,8 +32,9 @@ int main(int argc, char **argv)
 		if (nread == -1) /* EOF or error => exit */
 		{
 			free(buffer);
-			exit(0);
+			exit(last_status);
 		}
+		line_count++;
 
 		/* Remove trailing newline if present */
 		if (buffer[nread - 1] == '\n')
