@@ -1,73 +1,42 @@
 #include "shell.h"
 
 /**
-  * main - Getline function
-  * @argc: Argument count
-  * @argv: Array of argument values
-  *
-  * Return: 0 on success
-  */
-
+ * main - Entry point for the shell
+ * @argc: Argument count (unused)
+ * @argv: Argument vector (used for error messages)
+ *
+ * Return: 0 on success, various error codes on failure
+ */
 int main(int argc, char **argv)
 {
-        (void)argc, (void)argv;
-        char *buf = NULL, *token, *path;
-        size_t count = 0;
-        ssize_t nread;
-        pid_t child_pid;
-        int i, status;
-        char **array;
+	char *buffer = NULL;
+	size_t bufsize = 0;
+	ssize_t nread;
+	int last_status = 0;
+	int line_count = 0;
+	char **args = NULL;
 
-        while (1)
-        {
-                if (isatty(STDIN_FILENO))
-                        write(STDOUT_FILENO, "MyShell$ ", 9);
+	(void)argc;
 
-                nread = getline(&buf, &count, stdin);
+	while (1)
+	{
+		display_prompt();
+		nread = read_command_line(&buffer, &bufsize, &last_status);
+		line_count++;
+		if (buffer[nread - 1] == '\n')
+			buffer[nread - 1] = '\0';
 
-                if (nread ==  -1)
-                {
-                        exit(0);
-                }
+		args = tokenize_line(buffer);
+		if (!args || !args[0])
+		{
+			free(args);
+			continue;
+		}
+		if (handle_builtins(args, buffer, &last_status))
+			continue;
 
-                token = strtok(buf, " \n");
-
-                array = malloc(sizeof(char*) * 1024);
-                i = 0;
-
-                while (token)
-                {
-                        array[i] = token;
-                        token = strtok(NULL, " \n");
-                        i++;
-                }
-
-                array[i] = NULL;
-
-                path = get_file_path(array[0]);
-
-                child_pid = fork();
-
-                if (child_pid == -1)
-                {
-                        perror("Failed to create.");
-                        exit (41);
-                }
-
-                if (child_pid == 0)
-                {
-                        if (execve(path, array, NULL) == -1)
-                        {
-                                perror("Failed to execute");
-                                exit(97);
-                        }
-                }
-                else
-                {
-                        wait(&status);
-                }
-        }
-        free(path);
-        free(buf);
-        return (0);
+		execute_command(argv[0], args, line_count, &last_status);
+	}
+	free(buffer);
+	return (0);
 }
