@@ -5,7 +5,8 @@
  *           without using the standard getenv function.
  * @name: The name of the variable to look up (e.g., "PATH")
  *
- * Return: Pointer to the value (a substring of environ[i]) or NULL if not found
+ * Return: Pointer to the value (a substring of environ[i])
+ *         or NULL if not found
  */
 char *_getenv(const char *name)
 {
