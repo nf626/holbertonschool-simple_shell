@@ -120,13 +120,6 @@ int main(int argc, char **argv)
 				free(cmd_path);
 				free(args);
 			}
-			/* ... later, if user types 'exit' with no arguments ... */
-			if (strcmp(args[0], "exit") == 0)
-			{
-				free(args);
-				free(buffer);
-				exit(last_status);
-			}
 		}
 	}
 	/* Unreachable normally, but for completeness: */
