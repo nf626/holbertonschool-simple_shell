@@ -1,5 +1,5 @@
-#ifndef MAIN_H
-#define MAIN_H
+#ifndef SHELL_H
+#define SHELL_H
 
 #include <stdio.h>
 #include <unistd.h>
@@ -15,4 +15,4 @@ char *get_file_loc(char *path, char *file_name);
 int startsWithForwardSlash(const char *str);
 
 
-#endif /* MAIN_H */
+#endif /* SHELL_H */
