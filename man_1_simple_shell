@@ -24,10 +24,6 @@ This variable stores the string of arrays (list) of environment variables in the
 VARIABLE=value. The resulting value will be used as a pathname of a file containing shell 
 commands to execute in the current environment.
 
-.SS PATH
-.P
-Specifies a set of directories where executable programs are located.
-
 .SS PWD
 .P
 This variable represents an absolute pathname of the current working directory.
