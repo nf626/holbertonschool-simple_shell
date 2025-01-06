@@ -1,124 +1,66 @@
-.\"*****************************************************************
-.\"  man_1_simple_shell
-.\"*****************************************************************
-.TH simple_shell 1 "December 2024" "v1.0" "User Commands"
+.TH man 1 “December 2024” “V1.0” “UNIX simple shell man page”
+
 .SH NAME
-simple_shell \- a simple UNIX command line interpreter
+hsh \- initialises the UNIX simple shell standard command-line interpreter.
+
 .SH SYNOPSIS
-.B simple_shell
-[
-.I options
-]
+[command_file [argument...]]
+
 .SH DESCRIPTION
-The
-.B simple_shell
-program provides a minimal, interactive command line interface that
-parses commands, locates executables in the user's PATH, and executes them.
+The .hsh simple shell is a command-line interpreter that reads and executes commands from a command line string, standard input or a specified file.
 
-It supports:
-.IP \[bu] 4
-Interactive and non-interactive modes
-.IP \[bu] 4
-Built-in commands such as
-.B exit
-and
-.B env
-.IP \[bu] 4
-Basic error handling and status reporting
-.PP
+.SH EXTENDED DESCRIPTION
+.SS Line Editing Command Mode
+.P
+# - Insert the character '#' at any point in the current command line and treat the resulting edit line as a comment. This line shall return nothing.
 
-The shell reads commands from either standard input or a script file,
-tokenizes them, then searches for the corresponding executables.
-If an executable is found, the shell forks a new child process
-and executes the command in that child.
+.SH ENVIRONMENT VARIABLES
+.SS ENV
+.P
+This variable when invoked in the simple shell, shall be subjected to parameter expansion by the shell. This variable stores the string of arrays (list) of environment variables in the format of: VARIABLE=value. The resulting value will be used as a pathname of a file containing shell commands to execute in the current environment.
 
-.SH USAGE
-.PP
-Users can invoke the shell by simply running:
-.RS 4
-.EX
-simple_shell
-.EE
-.RE
-.PP
-When run interactively (e.g., in a terminal), the shell prints a prompt
-such as:
-.I "#cisfun$"
-.PP
-When run non-interactively, the shell reads from stdin until EOF.
+.SS PATH
+.P
+Specifies a set of directories where executable programs are located.
 
-.SH BUILT-INS
-.TP
-.B exit
-Exits the shell with the status of the last executed command.
-.TP
-.B env
-Prints the current environment variables.
+.SS PWD
+.P
+This variable represents an absolute pathname of the current working directory.
 
-.SH OPTIONS
-The
-.B simple_shell
-program does not currently support command-line options in this version.
+.SS SHELL VARIABLES
+.SS EXIT
+.P
+Exits the currently running shell program.
 
 .SH EXAMPLES
-.IP \[bu] 2
-To run simple shell interactively:
-.RS 4
-.EX
-$ ./simple_shell
-#cisfun$ ls
+.P
+Interactive mode:
+root:~/shell$ ./hsh
 #cisfun$ /bin/ls
-#cisfun$ env
-#cisfun$ exit
-.EE
-.RE
+barbie_j       env-main.c  exec.c  fork.c  pid.c  ppid.c    prompt   prompt.c  shell.c  stat.c         wait
+env-environ.c  exec    fork    mypid   ppid   printenv  promptc  shell     stat test_scripting.sh  wait.c
 
-.IP \[bu] 2
-To run a command list from a file:
-.RS 4
-.EX
-$ cat commands.txt
-ls
-pwd
-exit
-$ ./simple_shell < commands.txt
-.EE
-.RE
-
-.SH RETURN VALUE
-On success, returns the exit status of the last executed command
-or 0 if no commands were executed. On error, returns a non-zero value.
-
-.SH ENVIRONMENT
-The
-.B simple_shell
-relies on the
-.B PATH
-environment variable to locate executables.  
-Additionally, it uses and may modify:
-.IP \[bu] 4
-.I HOME
-- home directory for certain built-in expansions  
-.IP \[bu] 4
-.I PWD
-- current working directory  
-
-.SH FILES
-None.
+.P
+Non-interactive mode:
+root:~/shell$ echo "/bin/ls" | ./hsh
+barbie_j       env-main.c  exec.c  fork.c  pid.c  ppid.c    prompt   prompt.c  shell.c  stat.c         wait
+env-environ.c  exec    fork    mypid   ppid   printenv  promptc  shell     stat test_scripting.sh  wait.c
 
 .SH BUGS
-The shell does not support advanced features such as piping, redirection,
-or job control in this version. For bug reports or feature requests, please
-email the maintainers or open an issue in the repository.
+No known bugs as of December 2024.
 
-.SH AUTHOR
-Written by [Your Name or Team Name].
+.SH NOTES
+This implementation of simple shell does not handle all builtin commands.
+
+.SH CONFORMING TO
+The .hsh simple shell follows the standard
+.B ANSI C, C89 C programming language
+, any later versions of C programming language may cause syntax errors.
+
+.SH AUTHORS
+.B .hsh Simple Shell
+This function was developed by Nigel Feng, Rico Pascua and Won Chak Leung as a project of the Holberton School Australia curriculum.
 
 .SH SEE ALSO
-.BR sh (1),
-.BR bash (1),
-.BR dash (1),
-.BR execve (2),
-.BR fork (2)
-
-.TH
+.B
+sh(1), csh(1), ksh(1), bash(1), execve(2), exit(3), _exit(2), fork(2), free(3), getline(3), getpid(2), isatty(3), malloc(3), perror(3), printf(3), fprintf(3), signal(2), stat(2), strtok(3), wait(2), waitpid(2)
