@@ -107,8 +107,25 @@ int main(int argc, char **argv)
 			{
 				/* Parent process: wait */
 				wait(&status);
+				if (WIFEXITED(status))
+				{
+					/* Capture the child's exit code */
+					last_status = WEXITSTATUS(status);
+				}
+				else
+				{
+					/* Child didn't exit normally; pick a custom code, e.g. 2 */
+					last_status = 2;
+				}
 				free(cmd_path);
 				free(args);
+			}
+			/* ... later, if user types 'exit' with no arguments ... */
+			if (strcmp(args[0], "exit") == 0)
+			{
+				free(args);
+				free(buffer);
+				exit(last_status);
 			}
 		}
 	}
