@@ -21,6 +21,11 @@ char **tokenize_line(char *line)
 	token = strtok(line, " \t\r\n");
 	while (token != NULL)
 	{
+	  /** Handle comments */
+	  if (token[0] == '#')
+	    {
+	      break;
+	    }
 		tokens[i] = token;
 		i++;
 		if (i >= bufsize)
