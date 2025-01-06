@@ -21,6 +21,6 @@ void display_prompt(void);
 ssize_t read_command_line(char **buffer, size_t *bufsize, int *last_status);
 int handle_builtins(char **args, char *buffer, int *last_status);
 void execute_command(char *argv0, char **args,
-	       	int line_count, int *last_status);
+		int line_count, int *last_status);
 
 #endif /* SHELL_H */
