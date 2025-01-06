@@ -37,6 +37,10 @@ This variable represents an absolute pathname of the current working directory.
 .P
 Exits the currently running shell program.
 
+.SS CLEAR
+.P
+Clears the shell terminal screen.
+
 .SH EXAMPLES
 .P
 Interactive mode:
