@@ -18,7 +18,7 @@ ___
 All files are compiled using gcc (Ubuntu 9.4.0-1ubuntu1~22.04) using flags: -Wall -Werror -Wextra -pedantic -std=gnu89
 
 ```bash
-gcc -Wall -Werror -Wextra -pedantic -std=gnu89 *.c
+gcc -Wall -Werror -Wextra -pedantic -std=gnu89 *.c -o hsh
 ```
 ___
 ## Installation
