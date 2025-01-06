@@ -1,141 +1,98 @@
-#include "shell.h"
+#include "main.h"
 
 /**
- * startsWithForwardSlash - Checks if file starts with "/"
- * @str: The filename to be checked
- *
- * Return: 1 if yes, 0 if no
- */
+  * startsWithForwardSlash - Checks if file starts with "/"
+  * @str: The filename to be checked
+  *
+  * Return: 0 if yes and 1 if NO
+  */
+
 int startsWithForwardSlash(const char *str)
 {
-	if (str != NULL && str[0] == '/')
-	{
-		return (1);
-	}
-	
-	return (0);
+        if (str != NULL || str[0] == '/')
+                return (1);
+
+        return (0);
 }
 
 /**
- * get_file_loc - Find the full path of a file in a given PATH
- * @path: The PATH string
- * @file_name: The file name to locate
- *
- * Return: Full path to the file if found and executable, NULL otherwise
- */
+  * get_file_loc - Get the executable path of file
+  * @path: Full path variable
+  * @file_name: The executable file
+  *
+  * Return: Full path to the executable file
+  */
+
 char *get_file_loc(char *path, char *file_name)
 {
-	char *path_copy, *token;
-	struct stat file_stat;
-	char *path_buffer = NULL;
+        char *path_copy, *token;
+        struct stat file_path;
+        char *path_buffer = NULL;
 
-	if (!path || !file_name) /* Check for NULL inputs */
-	{
-		return (NULL);
-	}
-	
-	path_copy = _strdup(path); /* Duplicate the PATH string */
-	if (!path_copy)
-	{
-		perror("Error: strdup failed");
-		return (NULL);
-	}
+        path_copy = strdup(path);
+        token = strtok(path_copy, ":");
 
-	token = strtok(path_copy, ":");
-	while (token)
-	{
-		if (*token == '\0') /* Skip empty tokens caused by "::" */
-		{
-			token = strtok(NULL, ":");
-			continue;
-		}
+        while (token)
+        {
+                if (path_buffer)
+                {
+                        free(path_buffer);
+                        path_buffer = NULL;
+                }
+                path_buffer = malloc(strlen(token) + strlen(file_name) + 2);
+                if (!path_buffer)
+                {
+                        perror("Error: malloc failed");
+                        exit(EXIT_FAILURE);
+                }
+                strcpy(path_buffer, token);
+                strcat(path_buffer, "/");
+                strcat(path_buffer, file_name);
+                strcat(path_buffer, "\0");
 
-		/* Allocate memory for path_buffer */
-		path_buffer = malloc(strlen(token) + strlen(file_name) + 2);
-		if (!path_buffer)
-		{
-			perror("Error: malloc failed");
-			free(path_copy);
-			return (NULL);
-		}
-
-		/* Construct the potential file path */
-		_strcpy(path_buffer, token);
-		_strcat(path_buffer, "/");
-		_strcat(path_buffer, file_name);
-
-		/* Check if the file exists and is executable */
-		if (stat(path_buffer, &file_stat) == 0 && access(path_buffer, X_OK) == 0)
-		{
-			free(path_copy);
-			return (path_buffer); /* Caller must free this */
-		}
-
-		free(path_buffer); /* Free buffer if not valid */
-		path_buffer = NULL;
-		token = strtok(NULL, ":"); /* Move to the next PATH token */
-	}
-	
-	/* Clean up */
-	free(path_copy);
-	return (NULL);
+                if (stat(path_buffer, &file_path) == 0 && access(path_buffer, X_OK) == 0)
+                {
+                        free(path_copy);
+                        return (path_buffer);
+                }
+                token = strtok(NULL, ":");
+        }
+        free(path_copy);
+        if (path_buffer)
+                free(path_buffer);
+        return (NULL);
 }
 
-
 /**
- * get_file_path - Get the full file path for an executable
- * @file_name: Name of the file to find
- *
- * Return: Full path of the file if found and executable, or NULL
- */
+  * get_file_path - Get's the full path of the file
+  * @file_name: Argument name
+  *
+  * Return: The full path argument to the file
+  */
+
 char *get_file_path(char *file_name)
 {
-	char *path, *full_path, *result;
+        char *path = getenv("PATH");
+        char *full_path;
 
-	/* Retrieve PATH environment variable */
-	path = get_env_value("PATH"); /* Custom replacement for getenv */
+        if (startsWithForwardSlash(file_name) &&
+                        access(file_name, X_OK) == 0)
+                return (strdup(file_name));
 
-	/* fprintf(stderr, "DEBUG: Entering get_file_path with file_name: %s\n", file_name);
-	 * fprintf(stderr, "DEBUG: PATH: %s\n", path); */
+        if (!path)
+        {
+                perror("Path not found");
+                return (NULL);
+        }
 
-	if (!path || path[0] == '\0') /* PATH is missing or empty */
-	{
-		/* fprintf(stderr, "DEBUG: PATH is missing or empty\n");*/
-		write(STDERR_FILENO, file_name, _strlen(file_name));
-		write(STDERR_FILENO, ": command not found\n", 20);
-		return (NULL);
-	}
+        full_path = get_file_loc(path, file_name);
 
-	/* Check if file_name is an absolute or relative path and executable */
-	if ((file_name[0] == '/' || file_name[0] == '.') && access(file_name, X_OK) == 0)
-	{
-		result = _strdup(file_name); /* Duplicate the file name */
-		trim_trailing_newline_and_spaces(result);
-		/* fprintf(stderr, "DEBUG: file_name: %s is executable\n", file_name); */
-		if (!result)
-		{
-			perror("Error: strdup failed");
-			free(path);
-			return (NULL);
-		}
-		free(path); /* Free the allocated PATH */
-		return (result);
-	}
+        if (full_path == NULL)
+        {
+                write(2, file_name, strlen(file_name));
+                write(2, ": command not found\n", 19);
+                return (NULL);
+        }
 
-	/* Search for the file in PATH directories */
-	full_path = get_file_loc(path, file_name); /* Helper function for PATH search */
-	free(path); /* Free path after search */
-	
-	if (!full_path)
-	{
-		/* fprintf(stderr, "DEBUG: Command %s not found in PATH\n", file_name); */
-		write(STDERR_FILENO, file_name, _strlen(file_name));
-		write(STDERR_FILENO, ": command not found\n", 20);
-	}
-	/* else
-	{
-		fprintf(stderr, "DEBUG: Found full_path: %s\n", full_path);
-	} */
-	
-	return (full_path); /* Caller must free the returned value */
+        return (full_path);
 }

@@ -6,22 +6,13 @@
 #include <stdlib.h>
 #include <sys/types.h>
 #include <sys/wait.h>
-#include <string.h>
 #include <sys/stat.h>
+#include <string.h>
 
-void print_prompt(void);
-char *read_input(void);
-char **tokenize_input(char *input);
-void execute_command(char **args);
+/* Helper Funcitons */
 char *get_file_path(char *file_name);
 char *get_file_loc(char *path, char *file_name);
-char *_strdup(const char *str);
-char *_strcpy(char *dest, const char *src);
-char *_strcat(char *dest, const char *src);
-size_t _strlen(const char *s);
-int _strncmp(const char *s1, const char *s2, size_t n);
-char *get_env_value(const char *name);
-void free_args(char **args);
-void trim_trailing_newline_and_spaces(char *str);
+int startsWithForwardSlash(const char *str);
+
 
 #endif /* MAIN_H */

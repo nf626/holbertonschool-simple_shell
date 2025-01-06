@@ -1,74 +1,73 @@
-#include "shell.h"
+#include "main.h"
 
 /**
- * main - Entry point of the shell
- * @argc: Argument count
- * @argv: Argument vector
- *
- * Return: Always 0
- */
-int main(void)
+  * main - Getline function
+  * @argc: Argument count
+  * @argv: Array of argument values
+  *
+  * Return: 0 on success
+  */
+
+int main(int argc, char **argv)
 {
-	char *input = NULL;
-	char *path = NULL;
-	char **args = NULL;
-	/* int i; */
+        (void)argc, (void)argv;
+        char *buf = NULL, *token, *path;
+        size_t count = 0;
+        ssize_t nread;
+        pid_t child_pid;
+        int i, status;
+        char **array;
 
-	while (1)
-	{
-		print_prompt(); /* Print the shell prompt */
-		
-		input = read_input(); /* Get user input */
-		
-		if (!input) /* Handle EOF (Ctrl+D) */
-		{
-			break;
-		}
-		
-		args = tokenize_input(input); /* Parse the input */
-		if (!args || !args[0]) /* Ignore empty input */
-		{
-			free(input);
-			free_args(args);
-			continue;
-		}
+        while (1)
+        {
+                if (isatty(STDIN_FILENO))
+                        write(STDOUT_FILENO, "MyShell$ ", 9);
 
-		if (_strncmp(args[0], "exit", 4) == 0) /* Handle 'exit' */
-		{
-			free(input);
-			free_args(args);
-			exit(0);
-		}
+                nread = getline(&buf, &count, stdin);
 
-		/* Replace this block with the updated logic */
-		path = get_file_path(args[0]);
-		if (path)
-		{
-			free(args[0]);           /* Free the old args[0] */
-			args[0] = path;          /* Replace with resolved path */
-			
-			/* Debugging log before execute_command */
-			/* fprintf(stderr, "DEBUG: Resolved path: %s\n", path);
-			 * fprintf(stderr, "DEBUG: About to execute with args:\n");
-			 * for (i = 0; args[i] != NULL; i++)
-			 * {
-			 * fprintf(stderr, "DEBUG: args[%d]: '%s'\n", i, args[i]);
-			 * } */
-			
-			execute_command(args);   /* Execute the command */
-		}
-		else
-		{
-			if (strlen(args[0]) > 0) /* Avoid printing if input was empty */
-			{
-				write(STDERR_FILENO, args[0], _strlen(args[0]));
-				write(STDERR_FILENO, ": command not found\n", 20);
-			}
-		}
+                if (nread ==  -1)
+                {
+                        exit(0);
+                }
 
-		free(input);
-		free_args(args); /* Free tokenized arguments */
-	}
+                token = strtok(buf, " \n");
 
-	return (0);
+                array = malloc(sizeof(char*) * 1024);
+                i = 0;
+
+                while (token)
+                {
+                        array[i] = token;
+                        token = strtok(NULL, " \n");
+                        i++;
+                }
+
+                array[i] = NULL;
+
+                path = get_file_path(array[0]);
+
+                child_pid = fork();
+
+                if (child_pid == -1)
+                {
+                        perror("Failed to create.");
+                        exit (41);
+                }
+
+                if (child_pid == 0)
+                {
+                        if (execve(path, array, NULL) == -1)
+                        {
+                                perror("Failed to execute");
+                                exit(97);
+                        }
+                }
+                else
+                {
+                        wait(&status);
+                }
+        }
+        free(path);
+        free(buf);
+        return (0);
 }
