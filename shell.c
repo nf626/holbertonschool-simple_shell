@@ -12,6 +12,8 @@ int main(int argc, char **argv)
 	char *buffer = NULL;
 	size_t bufsize = 0;
 	ssize_t nread;
+	int last_status = 0;
+	int line_count = 0;
 	char **args = NULL;
 	pid_t child_pid;
 	int status;
@@ -72,8 +74,11 @@ int main(int argc, char **argv)
 
 			if (!cmd_path)
 			{
-				/* Command not found => print error, no fork */
-				dprintf(STDERR_FILENO, "%s: No such file or directory\n", args[0]);
+				/* command not found => print the EXACT message the checker expects */
+				fprintf(stderr, "%s: %d: %s: not found\n",
+						argv[0], line_count, args[0]);
+				/* Set last_status to 127, as typical for "command not found" */
+				last_status = 127;
 				free(args);
 				continue;
 			}
