@@ -53,7 +53,7 @@ int main(int argc, char **argv)
 		{
 			free(args);
 			free(buffer);
-			exit(0);
+			exit(last_status);
 		}
 
 		/* Check for built-in "env" */
