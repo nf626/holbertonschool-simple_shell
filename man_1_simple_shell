@@ -7,17 +7,22 @@ hsh \- initialises the UNIX simple shell standard command-line interpreter.
 [command_file [argument...]]
 
 .SH DESCRIPTION
-The .hsh simple shell is a command-line interpreter that reads and executes commands from a command line string, standard input or a specified file.
+The .hsh simple shell is a command-line interpreter that reads and executes commands from a 
+command line string, standard input or a specified file.
 
 .SH EXTENDED DESCRIPTION
 .SS Line Editing Command Mode
 .P
-# - Insert the character '#' at any point in the current command line and treat the resulting edit line as a comment. This line shall return nothing.
+# - Insert the character '#' at any point in the current command line and 
+    treat the resulting edit line as a comment. This line shall return nothing.
 
 .SH ENVIRONMENT VARIABLES
 .SS ENV
 .P
-This variable when invoked in the simple shell, shall be subjected to parameter expansion by the shell. This variable stores the string of arrays (list) of environment variables in the format of: VARIABLE=value. The resulting value will be used as a pathname of a file containing shell commands to execute in the current environment.
+This variable when invoked in the simple shell, shall be subjected to parameter expansion by the shell. 
+This variable stores the string of arrays (list) of environment variables in the format of: 
+VARIABLE=value. The resulting value will be used as a pathname of a file containing shell 
+commands to execute in the current environment.
 
 .SS PATH
 .P
@@ -37,14 +42,16 @@ Exits the currently running shell program.
 Interactive mode:
 root:~/shell$ ./hsh
 #cisfun$ /bin/ls
-barbie_j       env-main.c  exec.c  fork.c  pid.c  ppid.c    prompt   prompt.c  shell.c  stat.c         wait
-env-environ.c  exec    fork    mypid   ppid   printenv  promptc  shell     stat test_scripting.sh  wait.c
+barbie_j       env-main.c  exec.c  fork.c  pid.c  ppid.c    prompt   prompt.c  shell.c  stat.c    
+wait env-environ.c  exec    fork    mypid   ppid   printenv  promptc  shell   
+stat test_scripting.sh  wait.c
 
 .P
 Non-interactive mode:
 root:~/shell$ echo "/bin/ls" | ./hsh
-barbie_j       env-main.c  exec.c  fork.c  pid.c  ppid.c    prompt   prompt.c  shell.c  stat.c         wait
-env-environ.c  exec    fork    mypid   ppid   printenv  promptc  shell     stat test_scripting.sh  wait.c
+barbie_j       env-main.c  exec.c  fork.c  pid.c  ppid.c    prompt   prompt.c  shell.c  stat.c   
+wait env-environ.c  exec    fork    mypid   ppid   printenv  promptc  shell   
+stat test_scripting.sh  wait.c
 
 .SH BUGS
 No known bugs as of December 2024.
@@ -59,8 +66,10 @@ The .hsh simple shell follows the standard
 
 .SH AUTHORS
 .B .hsh Simple Shell
-This function was developed by Nigel Feng, Rico Pascua and Won Chak Leung as a project of the Holberton School Australia curriculum.
+This function was developed by Nigel Feng, Rico Pascua and Won Chak Leung 
+as a project of the Holberton School Australia curriculum.
 
 .SH SEE ALSO
 .B
-sh(1), csh(1), ksh(1), bash(1), execve(2), exit(3), _exit(2), fork(2), free(3), getline(3), getpid(2), isatty(3), malloc(3), perror(3), printf(3), fprintf(3), signal(2), stat(2), strtok(3), wait(2), waitpid(2)
+sh(1), csh(1), ksh(1), bash(1), execve(2), exit(3), _exit(2), fork(2), free(3), getline(3), getpid(2), 
+isatty(3), malloc(3), perror(3), printf(3), fprintf(3), signal(2), stat(2), strtok(3), wait(2), waitpid(2)
