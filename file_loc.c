@@ -72,7 +72,7 @@ char *get_file_loc(char *path, char *file_name)
 
 char *get_file_path(char *file_name)
 {
-        char *path = getenv("PATH");
+        char *path = _getenv("PATH");
         char *full_path;
 
         if (startsWithForwardSlash(file_name) &&
