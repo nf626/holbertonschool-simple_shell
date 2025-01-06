@@ -16,5 +16,6 @@ extern char **environ;
 char **tokenize_line(char *line);
 char *find_command_in_path(char *command);
 void print_env(void);
+char *_getenv(const char *name);
 
 #endif /* SHELL_H */
