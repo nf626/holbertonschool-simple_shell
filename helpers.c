@@ -19,8 +19,8 @@ char **tokenize_line(char *line)
 		return (NULL);
 
 	token = strtok(line, " \t\r\n");
-	while (token != NULL)
-	{
+while (token != NULL)
+{
 /** Handle comments */
 if (token[0] == '#')
 {
